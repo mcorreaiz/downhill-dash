@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/sprites/player_placeholder.png" type="Texture" id=1]
-[ext_resource path="res://scripts/player.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 18.2147
 height = 13.2334
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -37,6 +37,15 @@ margin_right = 112.0
 margin_bottom = -162.0
 rect_pivot_offset = Vector2( -299.272, 30.8909 )
 text = "ASD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="."]
+margin_left = -19.8438
+margin_top = -43.4673
+margin_right = 20.1562
+margin_bottom = -29.4673
 __meta__ = {
 "_edit_use_anchors_": false
 }
