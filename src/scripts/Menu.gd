@@ -19,3 +19,4 @@ func _on_JoinButton_pressed():
 
 func _load_game():
 	get_tree().change_scene("res://scenes/Game.tscn")
+	queue_free()

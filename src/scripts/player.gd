@@ -42,7 +42,12 @@ func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
 
-func _physics_process(delta) -> void:	
+
+func _physics_process(delta) -> void:
+	var accel := Input.get_accelerometer().normalized()	
+	text_accel.text = String(accel)
+	text_speed.text = String(y_vel)
+	
 	if is_network_master():
 		get_input()
 
@@ -77,12 +82,13 @@ func _physics_process(delta) -> void:
 	if position.y > 1280:
 		Network.close()
 		emit_signal('server_disconnected')		
+		get_tree().change_scene('res://scenes/EndRace.tscn')
 		queue_free()
-		get_tree().change_scene('res://scenes/Menu.tscn')
-		
+
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)	
 	
+
 
 func flip() -> void:
 	facing_right = !facing_right
