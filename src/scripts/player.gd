@@ -22,6 +22,8 @@ const MAX_SPEED: int = 1000
 
 
 func get_input():
+	#var accel := Input.get_accelerometer().normalized()	
+	
 	look_at(get_global_mouse_position())
 	
 	var ski_accel = Vector2(30, 0).rotated(rotation)
@@ -44,10 +46,6 @@ func init(name, position, is_slave):
 
 
 func _physics_process(delta) -> void:
-	var accel := Input.get_accelerometer().normalized()	
-	text_accel.text = String(accel)
-	text_speed.text = String(y_vel)
-	
 	if is_network_master():
 		get_input()
 
