@@ -8,6 +8,8 @@ const MAX_PLAYERS = 2
 
 var players = {}
 var self_data = { name="", position = Vector2(300, 100)}
+
+var race_time = 0
 	
 signal player_disconnected
 signal server_disconnected

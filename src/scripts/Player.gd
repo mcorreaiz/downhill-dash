@@ -6,6 +6,7 @@ slave var slave_position = Vector2()
 slave var slave_movement = Vector2()
 
 var y_vel: int = 0
+var timer = 0
 
 var facing_right: bool = true
 var frozen: bool = false
@@ -15,6 +16,7 @@ var velocity = Vector2()
 
 export (int) var speed = 10
 export (int) var inertia = 30
+
 
 const MAX_SPEED: int = 1000
 
@@ -40,6 +42,8 @@ func get_input():
 func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
+	timer = OS.get_system_time_secs()
+	
 	
 func _physics_process(delta) -> void:
 	if is_network_master():
@@ -65,8 +69,9 @@ func _physics_process(delta) -> void:
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
 			print("I collided with ", collision.collider.name)
-			get_tree().reload_current_scene()
+			# get_tree().reload_current_scene()
 			frozen = true
+			velocity /= 2
 			
 	else:
 		pass
@@ -74,6 +79,7 @@ func _physics_process(delta) -> void:
 		
 	
 	if position.y > 3500:
+		Network.race_time = OS.get_system_time_secs() - timer
 		Network.close()
 		emit_signal('server_disconnected')		
 		get_tree().change_scene('res://scenes/EndRace.tscn')

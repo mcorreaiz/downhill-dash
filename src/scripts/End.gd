@@ -4,7 +4,8 @@ var timer: Timer = Timer.new()
 
 func _ready():
 	#Timer para ejecutar cambio de escena
-	timer.set_wait_time(3)
+	$TimeLabel.text += str(Network.race_time) + " seconds"
+	timer.set_wait_time(5)
 	timer.set_one_shot(true)
 	self.add_child(timer)
 	timer.start()
