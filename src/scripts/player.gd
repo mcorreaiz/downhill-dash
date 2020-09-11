@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
 onready var sprite: Sprite = $Sprite
-onready var text_accel: Label = $Label
-onready var text_speed: Label = $Label2
 
 slave var slave_position = Vector2()
 slave var slave_movement = Vector2()
@@ -28,7 +26,6 @@ func get_input():
 	
 	var ski_accel = Vector2(30, 0).rotated(rotation)
 	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
-	text_speed.text = String(rotation)
 	
 	accel = ski_accel + hill_accel
 	

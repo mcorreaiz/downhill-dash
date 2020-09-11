@@ -3,8 +3,7 @@
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 
 [node name="Control" type="Control"]
-anchor_left = 0.00209981
-anchor_right = 1.0021
+anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -12,41 +11,54 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_top = 362.0
-margin_right = 600.0
-margin_bottom = 662.0
-alignment = 1
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.5
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TooltipLabel" type="Label" parent="VBoxContainer"]
-margin_top = 105.0
 margin_right = 600.0
-margin_bottom = 119.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "Haz click en iniciar juego"
 align = 1
+valign = 2
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
-margin_top = 123.0
+margin_top = 18.0
 margin_right = 600.0
-margin_bottom = 143.0
+margin_bottom = 77.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
 text = "Unirse al juego"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CreateButton" type="Button" parent="VBoxContainer"]
-margin_top = 147.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 167.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
 text = "Crear juego"
 
 [node name="NameField" type="LineEdit" parent="VBoxContainer"]
-margin_top = 171.0
+margin_top = 180.0
 margin_right = 600.0
-margin_bottom = 195.0
+margin_bottom = 204.0
+size_flags_horizontal = 3
+size_flags_vertical = 10
+align = 1
+max_length = 25
+secret = true
 placeholder_text = "Nombre"
+placeholder_alpha = 0.686
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="text_changed" from="VBoxContainer/NameField" to="." method="_on_NameField_text_changed"]
