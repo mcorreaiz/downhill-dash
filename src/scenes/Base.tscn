@@ -53,14 +53,9 @@ __meta__ = {
 }
 
 [node name="InstructionsLabel" type="Label" parent="."]
-anchor_left = 0.4
-anchor_top = 0.4
-anchor_right = 0.6
-anchor_bottom = 0.45
-margin_left = -108.879
-margin_top = 202.043
-margin_right = 110.121
-margin_bottom = 215.833
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 0.6
 text = "Compite con tus amigos para ver quién logra
  bajar más rápidamente por la pista. Para controlar tu
 dirección, mueve el mouse o toca las secciones 

@@ -2,11 +2,11 @@ extends KinematicBody2D
 
 onready var sprite: Sprite = $Sprite
 
-slave var slave_position = Vector2()
-slave var slave_movement = Vector2()
+slave var slave_position: Vector2 = Vector2()
+slave var slave_movement: Vector2 = Vector2()
 
 var y_vel: int = 0
-var timer = 0
+var timer: int = 0
 
 var facing_right: bool = true
 var rock_timer: int = OS.get_system_time_secs()
@@ -19,8 +19,8 @@ export (int) var inertia = 30
 
 
 const MAX_SPEED: int = 1000
-const ROCK = 3
-const ROCK_DURATION = 2
+const ROCK: int = 3
+const ROCK_DURATION: int = 2
 
 
 func get_input():
@@ -60,7 +60,6 @@ func _physics_process(delta) -> void:
 		get_input()
 
 		#Movimiento
-		#if !frozen:
 		velocity += accel
 		# Roce
 		velocity *= 0.9
