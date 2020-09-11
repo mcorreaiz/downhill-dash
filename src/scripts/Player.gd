@@ -9,7 +9,7 @@ var y_vel: int = 0
 var timer = 0
 
 var facing_right: bool = true
-var frozen: bool = false
+var rock_timer: int = OS.get_system_time_secs()
 
 var accel = Vector2()
 var velocity = Vector2()
@@ -19,6 +19,8 @@ export (int) var inertia = 30
 
 
 const MAX_SPEED: int = 1000
+const ROCK = 3
+const ROCK_DURATION = 2
 
 
 func get_input():
@@ -46,6 +48,14 @@ func init(name, position, is_slave):
 	
 	
 func _physics_process(delta) -> void:
+	var current_time = OS.get_system_time_secs()
+	
+	if current_time < rock_timer:
+		velocity.y /= 2
+	else:
+		$CollisionShape2D.disabled = false
+		
+		
 	if is_network_master():
 		get_input()
 
@@ -65,14 +75,21 @@ func _physics_process(delta) -> void:
 		if !facing_right  and (rotation < PI/2) and (rotation > -1*PI/2):
 			flip()
 		
-		#Chequeo de colisión		
+		#Chequeo de colisión
+		var tm = get_node("../Game/TileMap")
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
-			print("I collided with ", collision.collider.name)
+			var tile_pos = tm.world_to_map(collision.position)
+			var tile = tm.get_cellv(tile_pos)
+			print("I collided with ", tile)
 			# get_tree().reload_current_scene()
-			frozen = true
-			velocity /= 2
+			if tile == ROCK:
+				$CollisionShape2D.disabled = true
+				rock_timer = OS.get_system_time_secs() + ROCK_DURATION
 			
+			else:
+				velocity /= 2
+	
 	else:
 		pass
 		# Ver como manejar el movimiento de los 'slaves'

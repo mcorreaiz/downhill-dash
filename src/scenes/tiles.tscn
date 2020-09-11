@@ -18,12 +18,23 @@ hframes = 37
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/StaticBody2D"]
 shape = SubResource( 1 )
 
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 0, 56 )
+texture = ExtResource( 1 )
+vframes = 28
+hframes = 37
+frame = 173
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite3/StaticBody2D"]
+shape = SubResource( 1 )
+
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 40.75, -0.5 )
 texture = ExtResource( 1 )
 vframes = 28
 hframes = 37
-frame = 192
 __meta__ = {
 "_edit_group_": true
 }
