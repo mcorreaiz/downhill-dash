@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Base.gd" type="Script" id=1]
+
+[node name="Base" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 0.492
+margin_bottom = 0.191986
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 598.0
+margin_bottom = 467.0
+color = Color( 0.501961, 0.713726, 0.729412, 1 )
+
+[node name="GameLobbyButton" type="Button" parent="."]
+margin_left = 101.0
+margin_top = 326.0
+margin_right = 223.0
+margin_bottom = 374.0
+text = "Lobby"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EditorButton" type="Button" parent="."]
+margin_left = 383.0
+margin_top = 325.0
+margin_right = 505.0
+margin_bottom = 372.0
+disabled = true
+text = "Crear pista"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BaseTitleLabel" type="Label" parent="."]
+margin_left = 137.0
+margin_top = 100.0
+margin_right = 455.0
+margin_bottom = 168.0
+text = "Downhill Dash"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]

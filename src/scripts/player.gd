@@ -22,6 +22,8 @@ const MAX_SPEED: int = 1000
 
 
 func get_input():
+	#var accel := Input.get_accelerometer().normalized()	
+	
 	look_at(get_global_mouse_position())
 	
 	var ski_accel = Vector2(30, 0).rotated(rotation)
@@ -42,7 +44,8 @@ func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
 
-func _physics_process(delta) -> void:	
+
+func _physics_process(delta) -> void:
 	if is_network_master():
 		get_input()
 
@@ -77,12 +80,13 @@ func _physics_process(delta) -> void:
 	if position.y > 1280:
 		Network.close()
 		emit_signal('server_disconnected')		
+		get_tree().change_scene('res://scenes/EndRace.tscn')
 		queue_free()
-		get_tree().change_scene('res://scenes/Menu.tscn')
-		
+
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)	
 	
+
 
 func flip() -> void:
 	facing_right = !facing_right
