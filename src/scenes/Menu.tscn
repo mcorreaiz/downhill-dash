@@ -56,7 +56,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 10
 align = 1
 max_length = 25
-secret = true
 placeholder_text = "Nombre"
 placeholder_alpha = 0.686
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]

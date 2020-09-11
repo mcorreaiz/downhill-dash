@@ -21,27 +21,6 @@ current = true
 limit_left = 0
 limit_right = 600
 
-[node name="Label" type="Label" parent="."]
-margin_left = -112.081
-margin_top = -138.702
-margin_right = 123.919
-margin_bottom = -53.7015
-text = "ASD"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="."]
-margin_left = -124.0
-margin_top = -205.0
-margin_right = 112.0
-margin_bottom = -162.0
-rect_pivot_offset = Vector2( -299.272, 30.8909 )
-text = "ASD"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="NameLabel" type="Label" parent="."]
 margin_left = -19.8438
 margin_top = -43.4673
