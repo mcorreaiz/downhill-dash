@@ -65,7 +65,7 @@ func _physics_process(delta) -> void:
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
 			print("I collided with ", collision.collider.name)
-			#get_tree().reload_current_scene()
+			get_tree().reload_current_scene()
 			frozen = true
 			
 	else:
@@ -73,7 +73,7 @@ func _physics_process(delta) -> void:
 		# Ver como manejar el movimiento de los 'slaves'
 		
 	
-	if position.y > 1280:
+	if position.y > 3500:
 		Network.close()
 		emit_signal('server_disconnected')		
 		get_tree().change_scene('res://scenes/EndRace.tscn')
