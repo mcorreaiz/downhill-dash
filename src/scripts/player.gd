@@ -24,7 +24,7 @@ const MAX_SPEED: int = 1000
 func get_input():
 	look_at(get_global_mouse_position())
 	
-	var ski_accel = Vector2(10, 0).rotated(rotation)
+	var ski_accel = Vector2(30, 0).rotated(rotation)
 	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
 	print(hill_accel)
 	text_speed.text = String(rotation)
