@@ -20,10 +20,10 @@ const MAX_SPEED: int = 1000
 
 
 func get_input():
-	#var accel := Input.get_accelerometer().normalized()	
+	var mouse_pos = get_global_mouse_position()
 	
-	look_at(get_global_mouse_position())
-	
+	look_at(Vector2(mouse_pos.x, max(global_position.y, mouse_pos.y)))
+
 	var ski_accel = Vector2(30, 0).rotated(rotation)
 	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
 	
@@ -40,8 +40,7 @@ func get_input():
 func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
-
-
+	
 func _physics_process(delta) -> void:
 	if is_network_master():
 		get_input()

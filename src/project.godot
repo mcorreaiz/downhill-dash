@@ -15,8 +15,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SnowHill"
-run/main_scene="res://scenes/Base.tscn"
+config/name="DownhillDash"
+run/main_scene="res://scenes/Menu.tscn"
 config/icon="res://assets/sprites/icon.png"
 
 [autoload]
