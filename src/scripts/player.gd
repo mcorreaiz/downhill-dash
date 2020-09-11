@@ -26,7 +26,6 @@ func get_input():
 	
 	var ski_accel = Vector2(30, 0).rotated(rotation)
 	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
-	print(hill_accel)
 	text_speed.text = String(rotation)
 	
 	accel = ski_accel + hill_accel
@@ -53,7 +52,6 @@ func _physics_process(delta) -> void:
 		# Roce
 		velocity *= 0.9
 		
-		print(velocity)
 		velocity = move_and_slide(velocity) 
 		
 		#Velocidad máxima
@@ -77,8 +75,10 @@ func _physics_process(delta) -> void:
 		
 	
 	if position.y > 1280:
-		get_tree().change_scene('res://scenes/Menu.tscn')
+		Network.close()
+		emit_signal('server_disconnected')		
 		queue_free()
+		get_tree().change_scene('res://scenes/Menu.tscn')
 		
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)	
