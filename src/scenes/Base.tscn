@@ -51,4 +51,23 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="InstructionsLabel" type="Label" parent="."]
+anchor_left = 0.4
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.45
+margin_left = -108.879
+margin_top = 202.043
+margin_right = 110.121
+margin_bottom = 215.833
+text = "Compite con tus amigos para ver quién logra
+ bajar más rápidamente por la pista. Para controlar tu
+dirección, mueve el mouse o toca las secciones 
+laterales de la pantalla  de tu teléfono."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
