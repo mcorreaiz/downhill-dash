@@ -1,9 +1,5 @@
 extends KinematicBody2D
 
-const GRAVITY: int = 350
-const MOVE_SPEED: int = 400
-const MAX_FALL_SPEED: int = 1000
-
 onready var sprite: Sprite = $Sprite
 onready var text_accel: Label = $Label
 onready var text_speed: Label = $Label2
@@ -12,52 +8,81 @@ slave var slave_position = Vector2()
 slave var slave_movement = Vector2()
 
 var y_vel: int = 0
-var facing_right: bool = true
 
+var facing_right: bool = true
+var frozen: bool = false
+
+var accel = Vector2()
+var velocity = Vector2()
+
+export (int) var speed = 10
+export (int) var inertia = 30
+
+const MAX_SPEED: int = 1000
+
+
+func get_input():
+	look_at(get_global_mouse_position())
+	
+	var ski_accel = Vector2(10, 0).rotated(rotation)
+	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
+	print(hill_accel)
+	text_speed.text = String(rotation)
+	
+	accel = ski_accel + hill_accel
+	
+	#La inercia se define en base al ángulo
+	"""
+	if rotation > 0:
+		inertia = 30 * abs(sin(rotation))
+	else:
+		inertia = 0
+ 	"""
+	
 func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
 
-func _physics_process(delta) -> void:
-	var accel := Input.get_accelerometer().normalized()	
-	text_accel.text = String(accel)
-	text_speed.text = String(y_vel)
-	
-	print(delta, position)
-	
+func _physics_process(delta) -> void:	
 	if is_network_master():
-		y_vel += GRAVITY * delta
-		if is_on_floor():
-			y_vel = 0
-	
-		if y_vel > MAX_FALL_SPEED:
-			y_vel = MAX_FALL_SPEED
+		get_input()
+
+		#Movimiento
+		#if !frozen:
+		velocity += accel
+		# Roce
+		velocity *= 0.9
 		
-		var move_dir: int = 0
-		if Input.is_action_pressed("move_left") or accel.x < 0:
-			move_dir -= 1
-		if Input.is_action_pressed("move_right") or accel.x > 0:
-			move_dir += 1
-			
-		var move_direction = Vector2(move_dir * MOVE_SPEED, y_vel)
-		move_and_slide(move_direction, Vector2.UP)
-		rset_unreliable('slave_position', position)
-		rset('slave_movement', move_direction)
-		if facing_right and move_dir < -0.05:
+		print(velocity)
+		velocity = move_and_slide(velocity) 
+		
+		#Velocidad máxima
+		if velocity.y > MAX_SPEED:
+			velocity.y = MAX_SPEED
+		
+		#Voltear sprite
+		if !facing_right  and (rotation < PI/2) and (rotation > -1*PI/2):
 			flip()
-		if !facing_right and move_dir > 0.05:
-			flip()
+		
+		#Chequeo de colisión		
+		for i in get_slide_count():
+			var collision = get_slide_collision(i)
+			print("I collided with ", collision.collider.name)
+			#get_tree().reload_current_scene()
+			frozen = true
 			
 	else:
-		move_and_slide(slave_movement)
-		position = slave_position
+		pass
+		# Ver como manejar el movimiento de los 'slaves'
+		
 	
 	if position.y > 1280:
 		get_tree().change_scene('res://scenes/Menu.tscn')
 		queue_free()
 		
 	if get_tree().is_network_server():
-		Network.update_position(int(name), position)
+		Network.update_position(int(name), position)	
+	
 
 func flip() -> void:
 	facing_right = !facing_right
