@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Base.gd" type="Script" id=1]
+
+[node name="Base" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 0.191986
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.501961, 0.713726, 0.729412, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameLobbyButton" type="Button" parent="."]
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.4
+anchor_bottom = 0.55
+text = "Lobby"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EditorButton" type="Button" parent="."]
+anchor_left = 0.6
+anchor_top = 0.5
+anchor_right = 0.8
+anchor_bottom = 0.55
+disabled = true
+text = "Crear pista"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BaseTitleLabel" type="Label" parent="."]
+anchor_left = 0.4
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.45
+text = "Downhill Dash"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InstructionsLabel" type="Label" parent="."]
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 0.6
+text = "Compite con tus amigos para ver quién logra
+ bajar más rápidamente por la pista. Para controlar tu
+dirección, mueve el mouse o toca las secciones 
+laterales de la pantalla  de tu teléfono."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
