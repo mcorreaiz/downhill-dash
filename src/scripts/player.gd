@@ -52,7 +52,7 @@ func _physics_process(delta) -> void:
 		move_and_slide(slave_movement)
 		position = slave_position
 	
-	if position.y > 1110:
+	if position.y > 1280:
 		get_tree().change_scene('res://scenes/Menu.tscn')
 		queue_free()
 		
