@@ -95,7 +95,7 @@ func _physics_process(delta) -> void:
 		
 	
 	if position.y > 3500:
-		Network.race_time = OS.get_system_time_secs() - timer
+		Globals.race_time = OS.get_system_time_secs() - timer
 		Network.close()
 		emit_signal('server_disconnected')		
 		get_tree().change_scene('res://scenes/EndRace.tscn')

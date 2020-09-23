@@ -21,6 +21,7 @@ config/icon="res://assets/sprites/icon.png"
 
 [autoload]
 
+Globals="*res://scripts/Globals.gd"
 Network="*res://scripts/Network.gd"
 
 [display]
