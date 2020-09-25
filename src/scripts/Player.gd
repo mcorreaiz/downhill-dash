@@ -5,11 +5,7 @@ onready var sprite: Sprite = $Sprite
 slave var slave_position: Vector2 = Vector2()
 slave var slave_movement: Vector2 = Vector2()
 
-var y_vel: int = 0
-var timer: int = 0
-
 var facing_right: bool = true
-var rock_timer: int = OS.get_system_time_secs()
 
 var accel = Vector2()
 var velocity = Vector2()
@@ -17,11 +13,22 @@ var velocity = Vector2()
 export (int) var speed = 10
 export (int) var inertia = 30
 
-
 const MAX_SPEED: int = 1000
 const ROCK: int = 3
 const ROCK_DURATION: int = 2
 
+var rock_effect: bool = false
+var ice_effect: bool = false
+var jump_effect: bool = false
+
+signal rock_collision # Debe pertenecer a Rock.gd
+
+func _ready():
+	connect("rock_collision", self, "_on_rock_collision")
+	
+func init(name, position, is_slave):
+	$NameLabel.text = name
+	global_position = position
 
 func get_input():
 	var mouse_pos = get_global_mouse_position()
@@ -41,26 +48,21 @@ func get_input():
 		inertia = 0
  	"""
 	
-func init(name, position, is_slave):
-	$NameLabel.text = name
-	global_position = position
-	timer = OS.get_system_time_secs()
-	
 	
 func _physics_process(delta) -> void:
-	var current_time = OS.get_system_time_secs()
+	Globals.race_time += delta
 	
-	if current_time < rock_timer:
+	#process_modifiers(delta)
+	
+	if rock_effect:
 		velocity.y /= 2
-	else:
-		$CollisionShape2D.disabled = false
-		
 		
 	if is_network_master():
 		get_input()
 
 		#Movimiento
 		velocity += accel
+		
 		# Roce
 		velocity *= 0.9
 		
@@ -71,7 +73,7 @@ func _physics_process(delta) -> void:
 			velocity.y = MAX_SPEED
 		
 		#Voltear sprite
-		if !facing_right  and (rotation < PI/2) and (rotation > -1*PI/2):
+		if !facing_right  and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
 		
 		#Chequeo de colisión
@@ -82,12 +84,9 @@ func _physics_process(delta) -> void:
 			var tile = tm.get_cellv(tile_pos)
 			print("I collided with ", tile)
 			# get_tree().reload_current_scene()
-			if tile == ROCK:
-				$CollisionShape2D.disabled = true
-				rock_timer = OS.get_system_time_secs() + ROCK_DURATION
-			
-			else:
-				velocity /= 2
+			if tile == ROCK and !rock_effect:
+				# Esto debiera vivir en Rock.gd
+				emit_signal("rock_collision")
 	
 	else:
 		pass
@@ -95,7 +94,6 @@ func _physics_process(delta) -> void:
 		
 	
 	if position.y > 3500:
-		Globals.race_time = OS.get_system_time_secs() - timer
 		Network.close()
 		emit_signal('server_disconnected')		
 		get_tree().change_scene('res://scenes/EndRace.tscn')
@@ -104,7 +102,13 @@ func _physics_process(delta) -> void:
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)	
 	
-
+func _on_rock_collision():
+	rock_effect = true
+	$CollisionShape2D.set_deferred('disabled', true)
+	yield(get_tree().create_timer(ROCK_DURATION), "timeout")
+	$CollisionShape2D.set_deferred('disabled', false)
+	rock_effect = false
+	
 
 func flip() -> void:
 	facing_right = !facing_right
