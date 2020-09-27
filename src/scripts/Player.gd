@@ -30,15 +30,10 @@ func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
 
-func get_input():
+func update_rotation():
 	var mouse_pos = get_global_mouse_position()
 	
 	look_at(Vector2(mouse_pos.x, max(global_position.y, mouse_pos.y)))
-
-	var ski_accel = Vector2(30, 0).rotated(rotation)
-	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
-	
-	accel = ski_accel + hill_accel
 	
 	#La inercia se define en base al ángulo
 	"""
@@ -47,30 +42,38 @@ func get_input():
 	else:
 		inertia = 0
  	"""
+func update_accel():
+	var ski_accel = Vector2(30, 0).rotated(rotation)
+	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
 	
+	accel = ski_accel + hill_accel
 	
-func _physics_process(delta) -> void:
-	Globals.race_time += delta
-	
-	#process_modifiers(delta)
-	
-	if rock_effect:
-		velocity.y /= 2
-		
-	if is_network_master():
-		get_input()
-
-		#Movimiento
+func update_velocity():
 		velocity += accel
 		
 		# Roce
 		velocity *= 0.9
 		
-		velocity = move_and_slide(velocity) 
-		
 		#Velocidad máxima
 		if velocity.y > MAX_SPEED:
 			velocity.y = MAX_SPEED
+			
+func apply_modifiers():
+	if rock_effect:
+		velocity /= 1.5
+		
+func _physics_process(delta) -> void:
+	Globals.race_time += delta
+		
+	if is_network_master():
+		update_rotation()
+		update_accel()
+		update_velocity()
+		apply_modifiers()
+
+		#Movimiento
+		velocity = move_and_slide(velocity)
+		
 		
 		#Voltear sprite
 		if !facing_right  and (rotation < PI/2) and (rotation > -PI/2):
@@ -82,7 +85,6 @@ func _physics_process(delta) -> void:
 			var collision = get_slide_collision(i)
 			var tile_pos = tm.world_to_map(collision.position)
 			var tile = tm.get_cellv(tile_pos)
-			print("I collided with ", tile)
 			# get_tree().reload_current_scene()
 			if tile == ROCK and !rock_effect:
 				# Esto debiera vivir en Rock.gd
@@ -93,7 +95,7 @@ func _physics_process(delta) -> void:
 		# Ver como manejar el movimiento de los 'slaves'
 		
 	
-	if position.y > 3500:
+	if position.y > get_node("../Game/FinishLine").position.y:
 		Network.close()
 		emit_signal('server_disconnected')		
 		get_tree().change_scene('res://scenes/EndRace.tscn')
