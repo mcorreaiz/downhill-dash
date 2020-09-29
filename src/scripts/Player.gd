@@ -14,7 +14,7 @@ var direction: Vector2 = Vector2.DOWN
 const hill_slope: float = PI / 8
 const gravity: int = 2000
 
-const MAX_SPEED: int = 300
+const MAX_SPEED: int = 400
 const MIN_SPEED_Y: int = 50
 const MIN_DIR_Y: float = 0.4
 
@@ -45,20 +45,21 @@ func update_accel():
 	var angle_y_axis = rotation - (PI / 2)
 	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 	
-	var multiplier = 1 + 2 * (MAX_SPEED - velocity.length()) / MAX_SPEED
+	var accel_mult = 1 + 2 * (MAX_SPEED - velocity.length()) / MAX_SPEED
+	var frict_mult = 2 - (MAX_SPEED - velocity.length()) / MAX_SPEED
 	
-	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle()) * multiplier
-	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle())
+	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle()) * accel_mult
+	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle()) * frict_mult
 	
 	accel = (dir_accel - dir_friction) * sin(hill_slope) * gravity
 	
 func update_velocity(delta):
 	velocity += accel * delta
 	
-	
 	#Velocidad máxima
-	velocity.y = clamp(velocity.y, MIN_SPEED_Y, MAX_SPEED)
-			
+	velocity = velocity.clamped(MAX_SPEED)
+	velocity.y = max(velocity.y, MIN_SPEED_Y)
+	
 func apply_modifiers():
 	if rock_effect:
 		pass
