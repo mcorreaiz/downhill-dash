@@ -14,8 +14,8 @@ var direction: Vector2 = Vector2.DOWN
 const hill_slope: float = PI / 8
 const gravity: int = 2000
 
-const MAX_SPEED: int = 400
-const MIN_SPEED_Y: int = 50
+const MAX_SPEED: int = 500
+const MIN_SPEED_Y: int = 30
 const MIN_DIR_Y: float = 0.4
 
 const ROCK: int = 3
