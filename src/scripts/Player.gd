@@ -7,13 +7,17 @@ slave var slave_movement: Vector2 = Vector2()
 
 var facing_right: bool = true
 
-var accel = Vector2()
-var velocity = Vector2()
+var accel: Vector2 = Vector2.DOWN
+var velocity: Vector2 = Vector2.DOWN
+var direction: Vector2 = Vector2.DOWN
 
-export (int) var speed = 10
-export (int) var inertia = 30
+const hill_slope: float = PI / 8
+const gravity: int = 2000
 
-const MAX_SPEED: int = 1000
+const MAX_SPEED: int = 300
+const MIN_SPEED_Y: int = 30
+const MIN_DIR_Y: float = 0.4
+
 const ROCK: int = 3
 const ROCK_DURATION: int = 2
 
@@ -31,36 +35,30 @@ func init(name, position, is_slave):
 	global_position = position
 
 func update_rotation():
-	var mouse_pos = get_global_mouse_position()
+	# TODO: refactorear usando angulos
+	direction = (get_global_mouse_position() - global_position).normalized()
+	direction.y = max(direction.y, MIN_DIR_Y)
 	
-	look_at(Vector2(mouse_pos.x, max(global_position.y, mouse_pos.y)))
+	rotation = direction.angle()
 	
-	#La inercia se define en base al ángulo
-	"""
-	if rotation > 0:
-		inertia = 30 * abs(sin(rotation))
-	else:
-		inertia = 0
- 	"""
 func update_accel():
-	var ski_accel = Vector2(30, 0).rotated(rotation)
-	var hill_accel = Vector2(0, abs(sin(rotation)) * 20)
+	var angle_y_axis = rotation - (PI / 2)
+	var difference = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 	
-	accel = ski_accel + hill_accel
+	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle())
+	var dir_friction = Vector2(sin(difference), 0).rotated(velocity.angle())
 	
-func update_velocity():
-		velocity += accel
+	accel = (dir_accel - dir_friction) * sin(hill_slope) * gravity
+	
+func update_velocity(delta):
+	velocity += accel * delta
 		
-		# Roce
-		velocity *= 0.9
-		
-		#Velocidad máxima
-		if velocity.y > MAX_SPEED:
-			velocity.y = MAX_SPEED
+	#Velocidad máxima
+	velocity.y = clamp(velocity.y, MIN_SPEED_Y, MAX_SPEED)
 			
 func apply_modifiers():
 	if rock_effect:
-		velocity /= 1.5
+		pass
 		
 func _physics_process(delta) -> void:
 	Globals.race_time += delta
@@ -68,15 +66,14 @@ func _physics_process(delta) -> void:
 	if is_network_master():
 		update_rotation()
 		update_accel()
-		update_velocity()
+		update_velocity(delta)
 		apply_modifiers()
 
 		#Movimiento
 		velocity = move_and_slide(velocity)
 		
-		
 		#Voltear sprite
-		if !facing_right  and (rotation < PI/2) and (rotation > -PI/2):
+		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
 		
 		#Chequeo de colisión
