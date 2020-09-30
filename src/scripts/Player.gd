@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 onready var sprite: Sprite = $Sprite
 
+var player_id
+
 slave var slave_position: Vector2 = Vector2()
 slave var slave_movement: Vector2 = Vector2()
 
@@ -30,9 +32,11 @@ signal rock_collision # Debe pertenecer a Rock.gd
 func _ready():
 	connect("rock_collision", self, "_on_rock_collision")
 	
-func init(name, position, is_slave):
+func init(id, name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
+	Globals.race_time = 0
+	player_id = id
 
 func update_rotation():
 	# TODO: refactorear usando angulos
@@ -98,12 +102,12 @@ func _physics_process(delta) -> void:
 	
 	if position.y > get_node("../Game/FinishLine").position.y:
 		Network.close()
-		emit_signal('server_disconnected')		
+		emit_signal('server_disconnected')
 		get_tree().change_scene('res://scenes/EndRace.tscn')
 		queue_free()
 
 	if get_tree().is_network_server():
-		Network.update_position(int(name), position)	
+		Network.update_position(int(player_id), position)	
 	
 func _on_rock_collision():
 	rock_effect = true

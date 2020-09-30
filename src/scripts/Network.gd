@@ -37,6 +37,7 @@ func _connected_to_server():
 	rpc('_send_player_info', local_player_id, self_data)
 
 func _on_player_disconnected(id):
+	# TODO: Remove player from game scene
 	players.erase(id)
 
 func _on_player_connected(connected_player_id):
@@ -57,11 +58,28 @@ remote func _request_players(request_from_id):
 
 remote func _send_player_info(id, info):
 	players[id] = info
-	var new_player = load('res://scenes/Player.tscn').instance()
-	new_player.name = str(id)
-	new_player.set_network_master(id)
-	$'.'.add_child(new_player)
-	new_player.init(info.name, info.position, true)
+	if players.size() == MAX_PLAYERS:
+		pre_configure_game()
+
+func pre_configure_game():
+	var selfPeerID = get_tree().get_network_unique_id()
+
+	# Load world
+	get_tree().change_scene("res://scenes/Game.tscn")
+
+	# Load players
+	for p in players:
+		var player = preload("res://scenes/Player.tscn").instance()
+		var data = players[p]
+		var is_slave = p == selfPeerID
+		player.set_network_master(p)
+		get_tree().get_root().add_child(player)
+		player.init(p, data.name, data.position, is_slave)
+		
+
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
+	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	rpc_id(1, "done_preconfiguring")
 
 func update_position(id, position):
 	players[id].position = position
