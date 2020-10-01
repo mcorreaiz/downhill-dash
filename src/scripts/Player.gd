@@ -3,9 +3,7 @@ extends KinematicBody2D
 onready var sprite: Sprite = $Sprite
 
 var player_id
-
-slave var slave_position: Vector2 = Vector2()
-slave var slave_movement: Vector2 = Vector2()
+var finished: bool = false
 
 var facing_right: bool = true
 
@@ -29,6 +27,8 @@ var jump_effect: bool = false
 
 signal rock_collision # Debe pertenecer a Rock.gd
 
+remote var slave_position: Vector2 = Vector2(0, 0)
+
 func _ready():
 	connect("rock_collision", self, "_on_rock_collision")
 	
@@ -37,7 +37,7 @@ func init(id, name, position, is_slave):
 	global_position = position
 	Globals.race_time = 0
 	player_id = id
-
+	
 func update_rotation():
 	# TODO: refactorear usando angulos
 	direction = (get_global_mouse_position() - global_position).normalized()
@@ -69,22 +69,28 @@ func apply_modifiers():
 		pass
 		
 func _physics_process(delta) -> void:
-	Globals.race_time += delta
-		
 	if is_network_master():
+		if position.y > get_node("../Game/FinishLine").position.y:
+			if not finished:
+				Network.notify_finish(Globals.race_time)
+				finished = true
+			return
+		
+		Globals.race_time += delta	
+		
 		update_rotation()
 		update_accel()
 		update_velocity(delta)
 		apply_modifiers()
 
-		#Movimiento
+		# Movimiento
 		velocity = move_and_slide(velocity)
 		
-		#Voltear sprite
+		# Voltear sprite
 		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
 		
-		#Chequeo de colisión
+		# Chequeo de colisión
 		var tm = get_node("../Game/TileMap")
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
@@ -95,20 +101,19 @@ func _physics_process(delta) -> void:
 				# Esto debiera vivir en Rock.gd
 				emit_signal("rock_collision")
 	
+		# TODO: Hacer funcionar la actualización de posición con rset
+		rpc_unreliable("_update_position", player_id, position)
+		
 	else:
 		pass
-		# Ver como manejar el movimiento de los 'slaves'
 		
+remote func _update_position(id, pos):
+	Network.update_position(id, pos)
 	
-	if position.y > get_node("../Game/FinishLine").position.y:
-		Network.close()
-		emit_signal('server_disconnected')
-		get_tree().change_scene('res://scenes/EndRace.tscn')
-		queue_free()
-
-	if get_tree().is_network_server():
-		Network.update_position(int(player_id), position)	
-	
+func slave_move(pos):
+	print(pos)
+	position = pos
+		
 func _on_rock_collision():
 	rock_effect = true
 	$CollisionShape2D.set_deferred('disabled', true)

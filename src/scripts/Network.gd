@@ -69,25 +69,29 @@ func pre_configure_game():
 
 	# Load players
 	for p in players:
-		var player = preload("res://scenes/Player.tscn").instance()
+		players[p].instance = preload("res://scenes/Player.tscn").instance()
 		var data = players[p]
 		var is_slave = p != selfPeerID
-		player.set_network_master(p)
-		get_tree().get_root().add_child(player)
-		player.init(p, data.name, data.position, is_slave)
+		data.instance.set_network_master(p)
+		get_tree().get_root().add_child(data.instance)
+		data.instance.init(p, data.name, data.position, is_slave)
 		
 		# Esto no supe como hacerlo de otra forma
 		if not is_slave:
 			var camera = preload("res://scenes/PlayerCamera.tscn").instance()
-			player.add_child(camera)
+			data.instance.add_child(camera)
 		
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
 	rpc_id(1, "done_preconfiguring")
-
+	
+remote func done_preconfiguring():
+	print("Iniciar juego")
+	
 func update_position(id, position):
 	players[id].position = position
+	players[id].instance.slave_move(position)
 	
 func close():
 	players.clear()

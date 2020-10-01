@@ -17,3 +17,5 @@ tile_data = PoolIntArray( -1048575, 1, 0, -1048574, 1, 0, -1048573, 1, 0, -10485
 
 [node name="FinishLine" type="Node2D" parent="."]
 position = Vector2( 544.279, 3463.65 )
+
+[node name="Players" type="Node" parent="."]
