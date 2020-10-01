@@ -71,10 +71,15 @@ func pre_configure_game():
 	for p in players:
 		var player = preload("res://scenes/Player.tscn").instance()
 		var data = players[p]
-		var is_slave = p == selfPeerID
+		var is_slave = p != selfPeerID
 		player.set_network_master(p)
 		get_tree().get_root().add_child(player)
 		player.init(p, data.name, data.position, is_slave)
+		
+		# Esto no supe como hacerlo de otra forma
+		if not is_slave:
+			var camera = preload("res://scenes/PlayerCamera.tscn").instance()
+			player.add_child(camera)
 		
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
