@@ -4,6 +4,7 @@ onready var sprite: Sprite = $Sprite
 
 var player_id
 var finished: bool = false
+var race_time: float = 0
 
 var facing_right: bool = true
 
@@ -35,7 +36,6 @@ func _ready():
 func init(id, name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
-	Globals.race_time = 0
 	player_id = id
 	
 func update_rotation():
@@ -70,13 +70,14 @@ func apply_modifiers():
 		
 func _physics_process(delta) -> void:
 	if is_network_master():
-		if position.y > get_node("../Game/FinishLine").position.y:
+		if position.y + 3000 > get_node("../FinishLine").position.y:
 			if not finished:
-				Network.notify_finish(Globals.race_time)
+				print_tree_pretty()
+				Network.notify_finish(player_id, race_time)
 				finished = true
 			return
 		
-		Globals.race_time += delta	
+		race_time += delta
 		
 		update_rotation()
 		update_accel()
@@ -91,7 +92,7 @@ func _physics_process(delta) -> void:
 			flip()
 		
 		# Chequeo de colisión
-		var tm = get_node("../Game/TileMap")
+		var tm = get_node("../TileMap")
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
 			var tile_pos = tm.world_to_map(collision.position)

@@ -7,7 +7,8 @@ const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
 var players = {}
-var self_data = { name="", position = Vector2(300, 100)}
+var times = {}
+var self_data = { name="", position=Vector2(300, 100)}
 
 signal player_disconnected
 signal server_disconnected
@@ -64,23 +65,30 @@ remote func _send_player_info(id, info):
 func pre_configure_game():
 	var selfPeerID = get_tree().get_network_unique_id()
 
-	# Load world
-	get_tree().change_scene("res://scenes/Game.tscn")
+	# Load game
+	var game = preload("res://scenes/Game.tscn").instance()
+	get_tree().get_root().add_child(game)
+	get_tree().set_current_scene(game)
+	
+	# Remove menu
+	var menu = get_tree().get_root().get_node("Control")
+	get_tree().get_root().remove_child(menu)
+	menu.call_deferred("free")
 
 	# Load players
 	for p in players:
 		players[p].instance = preload("res://scenes/Player.tscn").instance()
+		
 		var data = players[p]
 		var is_slave = p != selfPeerID
 		data.instance.set_network_master(p)
-		get_tree().get_root().add_child(data.instance)
 		data.instance.init(p, data.name, data.position, is_slave)
+		game.add_child(data.instance)
 		
 		# Esto no supe como hacerlo de otra forma
 		if not is_slave:
 			var camera = preload("res://scenes/PlayerCamera.tscn").instance()
 			data.instance.add_child(camera)
-		
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
@@ -92,6 +100,26 @@ remote func done_preconfiguring():
 func update_position(id, position, rotation):
 	players[id].position = position
 	players[id].instance.on_slave_update(position, rotation)
+	
+func notify_finish(id, time):
+	rpc('_update_time', id, time)
+	
+sync func _update_time(id, time):
+	var is_self = id == get_tree().get_network_unique_id()
+	times[id] = { time=time, name=players[id].name, is_self=is_self }
+	
+	if times.size() == players.size():
+		# Load end
+		var end_race = preload("res://scenes/EndRace.tscn").instance()
+		end_race.set_results(times)
+		get_tree().get_root().add_child(end_race)
+		get_tree().set_current_scene(end_race)
+		
+		# Remove game
+		var game = get_tree().get_root().get_node("Game")
+		get_tree().get_root().remove_child(game)
+		game.call_deferred("free")
+	
 	
 func close():
 	players.clear()
