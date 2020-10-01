@@ -89,9 +89,9 @@ func pre_configure_game():
 remote func done_preconfiguring():
 	print("Iniciar juego")
 	
-func update_position(id, position):
+func update_position(id, position, rotation):
 	players[id].position = position
-	players[id].instance.slave_move(position)
+	players[id].instance.on_slave_update(position, rotation)
 	
 func close():
 	players.clear()

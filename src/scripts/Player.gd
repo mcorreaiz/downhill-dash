@@ -102,17 +102,17 @@ func _physics_process(delta) -> void:
 				emit_signal("rock_collision")
 	
 		# TODO: Hacer funcionar la actualización de posición con rset
-		rpc_unreliable("_update_position", player_id, position)
+		rpc_unreliable("_update_slave", player_id, position, rotation)
 		
 	else:
 		pass
 		
-remote func _update_position(id, pos):
-	Network.update_position(id, pos)
+remote func _update_slave(id, position, rotation):
+	Network.update_position(id, position, rotation)
 	
-func slave_move(pos):
-	print(pos)
+func on_slave_update(pos, rot):
 	position = pos
+	rotation = rot
 		
 func _on_rock_collision():
 	rock_effect = true
