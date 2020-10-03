@@ -18,18 +18,18 @@ const MAX_SPEED: int = 300
 const MIN_SPEED_Y: int = 30
 const MIN_DIR_Y: float = 0.4
 
-const ROCK: int = 3
-const ROCK_DURATION: int = 2
+const ROCK_FALLING: float = 0.5
+const ROCK_STUN: float = 1.5
+const ROCK_INNMUNITY: float = 1.0
 
 var rock_effect: bool = false
 var ice_effect: bool = false
 var jump_effect: bool = false
 
-signal rock_collision # Debe pertenecer a Rock.gd
 
 func _ready():
-	connect("rock_collision", self, "_on_rock_collision")
-	
+	pass
+
 func init(name, position, is_slave):
 	$NameLabel.text = name
 	global_position = position
@@ -55,11 +55,12 @@ func update_velocity(delta):
 		
 	#Velocidad máxima
 	velocity.y = clamp(velocity.y, MIN_SPEED_Y, MAX_SPEED)
-			
-func apply_modifiers():
+
+func apply_modifiers(delta):
+	#Rock effect stuns player after falling
 	if rock_effect:
-		pass
-		
+		velocity = Vector2(0, 0)
+
 func _physics_process(delta) -> void:
 	Globals.race_time += delta
 		
@@ -67,7 +68,7 @@ func _physics_process(delta) -> void:
 		update_rotation()
 		update_accel()
 		update_velocity(delta)
-		apply_modifiers()
+		apply_modifiers(delta)
 
 		#Movimiento
 		velocity = move_and_slide(velocity)
@@ -75,18 +76,7 @@ func _physics_process(delta) -> void:
 		#Voltear sprite
 		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
-		
-		#Chequeo de colisión
-		var tm = get_node("../Game/TileMap")
-		for i in get_slide_count():
-			var collision = get_slide_collision(i)
-			var tile_pos = tm.world_to_map(collision.position)
-			var tile = tm.get_cellv(tile_pos)
-			# get_tree().reload_current_scene()
-			if tile == ROCK and !rock_effect:
-				# Esto debiera vivir en Rock.gd
-				emit_signal("rock_collision")
-	
+
 	else:
 		pass
 		# Ver como manejar el movimiento de los 'slaves'
@@ -94,21 +84,29 @@ func _physics_process(delta) -> void:
 	
 	if position.y > get_node("../Game/FinishLine").position.y:
 		Network.close()
-		emit_signal('server_disconnected')		
+		emit_signal('server_disconnected')
 		get_tree().change_scene('res://scenes/EndRace.tscn')
 		queue_free()
 
 	if get_tree().is_network_server():
-		Network.update_position(int(name), position)	
+		Network.update_position(int(name), position)
 	
 func _on_rock_collision():
-	rock_effect = true
-	$CollisionShape2D.set_deferred('disabled', true)
-	yield(get_tree().create_timer(ROCK_DURATION), "timeout")
-	$CollisionShape2D.set_deferred('disabled', false)
-	rock_effect = false
+	print("ROCK HIOT")
+	# Needs to trigger an animation and a sound as feedback
+	# First timer its the "falling" animation, second its the stuntime
+	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
+	rock_effect = true #Player cant move
+	set_collision_mask_bit(2, false)
+	yield(get_tree().create_timer(ROCK_STUN), "timeout")
+	rock_effect = false #Player starts to move
+	yield(get_tree().create_timer(ROCK_INNMUNITY), "timeout")
+	set_collision_mask_bit(2, true) #Player can hit a rock again
 	
-
+func _on_ice_collision():
+	# Needs to trigger an animation and a sound as feedback
+	print("Ice skiiiing")
+	
 func flip() -> void:
 	facing_right = !facing_right
 	sprite.flip_h = !sprite.flip_h
