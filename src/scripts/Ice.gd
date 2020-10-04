@@ -9,4 +9,4 @@ func _ready():
 
 
 func _on_Area2D_body_entered(body):
-	pass
+	emit_signal("ice_collision")

@@ -16,7 +16,10 @@ func _ready():
 	for rock in rock_group:
 		rock.connect("rock_collision", new_player, "_on_rock_collision")
 		print("rock", rock)
-
+	var ice_group = get_tree().get_nodes_in_group("Ice")
+	for ice in ice_group:
+		ice.connect("ice_collision", new_player, "_on_ice_collision")
+		print("ice", ice)
 
 func _on_player_disconnected(id):
 	get_node(str(id)).queue_free()
