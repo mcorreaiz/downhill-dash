@@ -14,8 +14,9 @@ var direction: Vector2 = Vector2.DOWN
 const hill_slope: float = PI / 8
 const gravity: int = 2000
 
-const MAX_SPEED: int = 200
+const MAX_SPEED: int = 500
 const MAX_SPEED_MODIFIER = 1.5
+const AIR_MAX_SPEED_MODIFIER: float = 0.8
 var current_MAX_SPEED: int = MAX_SPEED
 const MIN_SPEED_Y: int = 30
 const MIN_DIR_Y: float = 0.4
@@ -140,7 +141,7 @@ func _on_jump_exit() -> void:
 	# Needs to trigger a sound as feedback
 	var jump_time = JUMP_MAX_AIR_TIME*velocity.length()/current_MAX_SPEED
 	set_collision_mask_bit(2, false) #Air, can't collide
-	current_MAX_SPEED = MAX_SPEED * 1.1
+	current_MAX_SPEED = MAX_SPEED * AIR_MAX_SPEED_MODIFIER
 	jump_effect = true
 	jump_scale_modifier = 1
 	yield(get_tree().create_timer(jump_time/2), "timeout") # Timer for "jupming" animation
