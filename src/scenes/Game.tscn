@@ -45,6 +45,11 @@ position = Vector2( 362.429, 1880.2 )
 ] instance=ExtResource( 5 )]
 position = Vector2( 510.753, 2219.23 )
 
+[node name="Rock6" parent="." groups=[
+"Rocks",
+] instance=ExtResource( 5 )]
+position = Vector2( 676.753, 2939.23 )
+
 [node name="Jump" parent="." groups=[
 "Jumps",
 ] instance=ExtResource( 4 )]
@@ -63,7 +68,22 @@ position = Vector2( 436.703, 1132.82 )
 [node name="Ice" parent="." groups=[
 "Ices",
 ] instance=ExtResource( 3 )]
-position = Vector2( 352.613, 2047.71 )
+position = Vector2( 352.613, 2015.76 )
+
+[node name="Ice3" parent="." groups=[
+"Ices",
+] instance=ExtResource( 3 )]
+position = Vector2( 551.064, 2126.75 )
+
+[node name="Ice4" parent="." groups=[
+"Ices",
+] instance=ExtResource( 3 )]
+position = Vector2( 196.206, 2555.61 )
+
+[node name="Ice5" parent="." groups=[
+"Ices",
+] instance=ExtResource( 3 )]
+position = Vector2( 229.842, 2675.02 )
 
 [node name="Ice2" parent="." groups=[
 "Ices",
