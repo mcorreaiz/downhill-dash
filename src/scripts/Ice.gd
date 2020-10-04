@@ -11,9 +11,10 @@ func _ready():
 
 
 func _on_Area2D_body_entered(body):
-	if (body.name != "TileMap"):
+	if (body is KinematicBody2D):
 		emit_signal("ice_enter")
 
 
 func _on_Area2D_body_exited(body):
-	emit_signal("ice_exit")
+	if (body is KinematicBody2D):
+		emit_signal("ice_exit")
