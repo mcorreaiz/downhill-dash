@@ -119,6 +119,9 @@ sync func _update_time(id, time):
 		var game = get_tree().get_root().get_node("Game")
 		get_tree().get_root().remove_child(game)
 		game.call_deferred("free")
+		
+		players.clear()
+		times.clear()
 	
 	
 func close():

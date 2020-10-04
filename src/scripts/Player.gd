@@ -72,7 +72,6 @@ func _physics_process(delta) -> void:
 	if is_network_master():
 		if position.y + 3000 > get_node("../FinishLine").position.y:
 			if not finished:
-				print_tree_pretty()
 				Network.notify_finish(player_id, race_time)
 				finished = true
 			return
