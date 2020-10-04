@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/sprites/Skier2RightTurn.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
-[ext_resource path="res://assets/sounds/SNOWSKI.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/curve_sound.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 13.5838

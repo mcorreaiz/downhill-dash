@@ -46,8 +46,8 @@ func init(name, position, is_slave):
 	#$NameLabel.text = name
 	global_position = position
 
-#func playCurveSound():
-#	$CurveSound.play()
+func playCurveSound():
+	$CurveSound.play()
 
 
 func update_rotation(delta):
@@ -67,10 +67,10 @@ func update_accel():
 	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 
 	#Sound effect when there is sudden change of direction
-	#if sound_effect_playing == false:
-	#	if (turn_angle < PI/10) or (turn_angle > 4*PI/10) :
-	#		sound_effect_playing = true
-	#		playCurveSound()
+	if sound_effect_playing == false:
+		if (turn_angle < PI/10) or (turn_angle > 4*PI/10) :
+			sound_effect_playing = true
+			playCurveSound()
 
 
 	var accel_mult = 1 + 2 * (current_MAX_SPEED - velocity.length()) / current_MAX_SPEED
