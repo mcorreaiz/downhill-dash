@@ -1,12 +1,19 @@
 extends Node2D
 
 
-signal ice_collision
+signal ice_enter
+signal ice_exit
 
 
 func _ready():
-	pass
+	$Area2D/CollisionPolygon2D.polygon = $Area2D/Path2D.curve.tessellate()
+	$Area2D/Polygon2D.polygon = $Area2D/Path2D.curve.tessellate()
 
 
 func _on_Area2D_body_entered(body):
-	emit_signal("ice_collision")
+	if (body.name != "TileMap"):
+		emit_signal("ice_enter")
+
+
+func _on_Area2D_body_exited(body):
+	emit_signal("ice_exit")
