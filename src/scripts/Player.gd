@@ -14,25 +14,26 @@ var direction: Vector2 = Vector2.DOWN
 const hill_slope: float = PI / 8
 const gravity: int = 2000
 
-const MAX_SPEED: int = 500
+const MAX_SPEED: int = 200
 const MAX_SPEED_MODIFIER = 1.5
 var current_MAX_SPEED: int = MAX_SPEED
 const MIN_SPEED_Y: int = 30
 const MIN_DIR_Y: float = 0.4
 
 const ROCK_FALLING: float = 0.5
-const ROCK_STUN: float = 1.5
-const ROCK_INNMUNITY: float = 1.0
+const STUN_TIME: float = 1.5
+const STUN_INNMUNITY: float = 1.0
 const SPRITE_ANGLE_ROTATION: int = 7
 const ICE_MAX_TURN_ANGLE: float = 1.35
 const ICE_ACCEL_MULT: float = 1.5
 const ICE_FRICT_MULT: float = 0.5
-const JUMP_MAX_AIR_TIME: float = 1.2
+const JUMP_MAX_AIR_TIME: float = 1.0
 
-var object_rotation_effect: bool = false
+var stun_rotation_effect: bool = false
 var rock_effect: bool = false
 var ice_effect: bool = false
 var jump_effect: bool = false
+var stun_effect: bool = false
 var jump_scale_modifier: int = 0
 
 func _ready():
@@ -44,13 +45,14 @@ func init(name, position, is_slave):
 
 func update_rotation(delta):
 	# Hardcoded Sprite anim for rock hit
-	if object_rotation_effect:
+	if stun_rotation_effect:
 		sprite.rotation += delta * SPRITE_ANGLE_ROTATION
+		return
+	if jump_effect:
 		return
 	# TODO: refactorear usando angulos
 	direction = (get_global_mouse_position() - global_position).normalized()
 	direction.y = max(direction.y, MIN_DIR_Y)
-	
 	rotation = direction.angle()
 	
 func update_accel():
@@ -78,14 +80,16 @@ func update_velocity(delta):
 
 func apply_modifiers(delta, turn_angle):
 	#Rock effect stuns player after falling
-	if rock_effect:
+	if stun_effect:
 		velocity = Vector2(0, 0)
 	if ice_effect:
 		if turn_angle > ICE_MAX_TURN_ANGLE:
 			_on_rock_collision()
 	if jump_effect:
 		sprite.scale += Vector2(delta * jump_scale_modifier, delta * jump_scale_modifier) 
-
+		sprite.rotation = (get_global_mouse_position() - global_position).normalized().angle()
+		sprite.rotation -= PI/2
+		
 func _physics_process(delta) -> void:
 	Globals.race_time += delta
 		
@@ -119,16 +123,9 @@ func _physics_process(delta) -> void:
 func _on_rock_collision() -> void:
 	# Needs to trigger a sound as feedback
 	# First timer its the "falling" animation, second its the stuntime, third its innmunity
-	object_rotation_effect = true #Player can't turn
+	stun_rotation_effect = true #Player can't turn
 	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
-	rock_effect = true #Player can't move
-	set_collision_mask_bit(2, false)
-	yield(get_tree().create_timer(ROCK_STUN), "timeout")
-	rock_effect = false #Player can move
-	object_rotation_effect = false
-	sprite.rotation = 0
-	yield(get_tree().create_timer(ROCK_INNMUNITY), "timeout")
-	set_collision_mask_bit(2, true) #Player can hit a rock again
+	object_stun()
 	
 func _on_ice_enter() -> void:
 	# Needs to trigger an animation and a sound as feedback
@@ -152,7 +149,21 @@ func _on_jump_exit() -> void:
 	set_collision_mask_bit(2, true) # Grounded, can collide again	
 	current_MAX_SPEED = MAX_SPEED
 	jump_effect = false
+	var dir = (get_global_mouse_position() - global_position).normalized()
+	if dir.y < MIN_DIR_Y:
+		stun_rotation_effect = true
+		object_stun()
+	sprite.rotation = 0
 
+func object_stun() -> void:
+	stun_effect = true #Player can't move
+	set_collision_mask_bit(2, false) # Player can't collide objects
+	yield(get_tree().create_timer(STUN_TIME), "timeout")
+	stun_effect = false #Player can move
+	stun_rotation_effect = false # Stop spinning
+	sprite.rotation = 0
+	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
+	set_collision_mask_bit(2, true) #Player can collide objects
 
 func flip() -> void:
 	facing_right = !facing_right
