@@ -10,6 +10,18 @@ func _ready():
 	get_tree().get_root().add_child(new_player) # Quizas se debiera hacer con call_deferred()
 	var info = Network.self_data
 	new_player.init(info.name, info.position, false)
+	
+	#Connect rock collision signal to player
+	var rock_group = get_tree().get_nodes_in_group("Rocks")
+	for rock in rock_group:
+		rock.connect("rock_collision", new_player, "_on_rock_collision")
+	var ice_group = get_tree().get_nodes_in_group("Ices")
+	for ice in ice_group:
+		ice.connect("ice_enter", new_player, "_on_ice_enter")
+		ice.connect("ice_exit", new_player, "_on_ice_exit")
+	var jump_group = get_tree().get_nodes_in_group("Jumps")
+	for jump in jump_group:
+		jump.connect("jump_exit", new_player, "_on_jump_exit")
 
 func _on_player_disconnected(id):
 	get_node(str(id)).queue_free()
