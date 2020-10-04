@@ -9,4 +9,5 @@ func _ready():
 
 
 func _on_Area2D_body_entered(body):
-	emit_signal("rock_collision")
+	if (body.name != "TileMap"):
+		emit_signal("rock_collision")

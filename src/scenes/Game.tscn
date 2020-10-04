@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/tiles.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/Ice.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Jump.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Rock.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
@@ -22,12 +22,12 @@ position = Vector2( 544.279, 3463.65 )
 [node name="Rock" parent="." groups=[
 "Rocks",
 ] instance=ExtResource( 5 )]
-position = Vector2( 722.935, 821.95 )
+position = Vector2( 522.802, 717.679 )
 
 [node name="Rock2" parent="." groups=[
 "Rocks",
 ] instance=ExtResource( 5 )]
-position = Vector2( 385.872, 962.196 )
+position = Vector2( 434.644, 1217.83 )
 
 [node name="Rock3" parent="." groups=[
 "Rocks",
@@ -44,7 +44,17 @@ position = Vector2( 362.429, 1880.2 )
 ] instance=ExtResource( 5 )]
 position = Vector2( 510.753, 2219.23 )
 
-[node name="Ice" parent="." groups=[
-"Ice",
-] instance=ExtResource( 3 )]
-position = Vector2( 558.674, 550.045 )
+[node name="Jump" parent="." groups=[
+"Jumps",
+] instance=ExtResource( 4 )]
+position = Vector2( 382.886, 1020.13 )
+
+[node name="Jump2" parent="." groups=[
+"Jumps",
+] instance=ExtResource( 4 )]
+position = Vector2( 512.384, 613.141 )
+
+[node name="Jump3" parent="." groups=[
+"Jumps",
+] instance=ExtResource( 4 )]
+position = Vector2( 436.703, 1132.82 )

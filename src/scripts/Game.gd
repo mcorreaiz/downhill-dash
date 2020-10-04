@@ -15,11 +15,13 @@ func _ready():
 	var rock_group = get_tree().get_nodes_in_group("Rocks")
 	for rock in rock_group:
 		rock.connect("rock_collision", new_player, "_on_rock_collision")
-		print("rock", rock)
-	var ice_group = get_tree().get_nodes_in_group("Ice")
+	var ice_group = get_tree().get_nodes_in_group("Ices")
 	for ice in ice_group:
-		ice.connect("ice_collision", new_player, "_on_ice_collision")
-		print("ice", ice)
+		ice.connect("ice_enter", new_player, "_on_ice_enter")
+		ice.connect("ice_exit", new_player, "_on_ice_exit")
+	var jump_group = get_tree().get_nodes_in_group("Jumps")
+	for jump in jump_group:
+		jump.connect("jump_exit", new_player, "_on_jump_exit")
 
 func _on_player_disconnected(id):
 	get_node(str(id)).queue_free()
