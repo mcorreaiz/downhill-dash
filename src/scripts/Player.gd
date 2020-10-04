@@ -62,7 +62,7 @@ func update_accel():
 	if ice_effect:
 		accel_mult = accel_mult * ICE_ACCEL_MULT
 		frict_mult = frict_mult * ICE_FRICT_MULT
-	
+
 	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle()) * accel_mult
 	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle()) * frict_mult
 	
@@ -152,6 +152,7 @@ func _on_jump_exit() -> void:
 	set_collision_mask_bit(2, true) # Grounded, can collide again	
 	current_MAX_SPEED = MAX_SPEED
 	jump_effect = false
+
 
 func flip() -> void:
 	facing_right = !facing_right

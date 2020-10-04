@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rock3.png-92824edf2124f3857ba734d61149b2f5.stex"
+path="res://.import/SkierRightTurn.png-2d96f66ab2a943802c711da13be4829d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Rock3.png"
-dest_files=[ "res://.import/Rock3.png-92824edf2124f3857ba734d61149b2f5.stex" ]
+source_file="res://assets/sprites/SkierRightTurn.png"
+dest_files=[ "res://.import/SkierRightTurn.png-2d96f66ab2a943802c711da13be4829d.stex" ]
 
 [params]
 
@@ -20,11 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-<<<<<<< HEAD
-flags/filter=false
-=======
 flags/filter=true
->>>>>>> develop
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -34,9 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-<<<<<<< HEAD
-detect_3d=false
-=======
 detect_3d=true
->>>>>>> develop
 svg/scale=1.0
