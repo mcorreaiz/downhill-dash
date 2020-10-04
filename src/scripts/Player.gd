@@ -47,7 +47,8 @@ func init(name, position, is_slave):
 	global_position = position
 
 func playCurveSound():
-	$CurveSound.play()
+	pass
+	#$CurveSound.play()
 
 
 func update_rotation(delta):
@@ -68,7 +69,7 @@ func update_accel():
 
 	#Sound effect when there is sudden change of direction
 	if sound_effect_playing == false:
-		if (turn_angle < PI/10) or (turn_angle > 4*PI/10) :
+		if (turn_angle < PI/20) or (turn_angle > 4*PI/20) :
 			sound_effect_playing = true
 			playCurveSound()
 
@@ -135,7 +136,6 @@ func _physics_process(delta) -> void:
 		Network.update_position(int(name), position)
 	
 func _on_rock_collision() -> void:
-	# Needs to trigger a sound as feedback
 	# First timer its the "falling" animation, second its the stuntime, third its innmunity
 	stun_rotation_effect = true #Player can't turn
 	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
@@ -151,7 +151,6 @@ func _on_ice_exit() -> void:
 	ice_effect = false 
 
 func _on_jump_exit() -> void:
-	# Needs to trigger a sound as feedback
 	var jump_time = JUMP_MAX_AIR_TIME*velocity.length()/current_MAX_SPEED
 	set_collision_mask_bit(2, false) #Air, can't collide
 	current_MAX_SPEED = MAX_SPEED * AIR_MAX_SPEED_MODIFIER
@@ -171,6 +170,7 @@ func _on_jump_exit() -> void:
 
 func object_stun() -> void:
 	stun_effect = true #Player can't move
+
 	set_collision_mask_bit(2, false) # Player can't collide objects
 	yield(get_tree().create_timer(STUN_TIME), "timeout")
 	stun_effect = false #Player can move
