@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-onready var sprite: Sprite = $Sprite
+onready var sprite: AnimatedSprite = $Sprite
 
 slave var slave_position: Vector2 = Vector2()
 slave var slave_movement: Vector2 = Vector2()
