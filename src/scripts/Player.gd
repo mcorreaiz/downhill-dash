@@ -35,12 +35,18 @@ var ice_effect: bool = false
 var jump_effect: bool = false
 var jump_scale_modifier: int = 0
 
+var sound_effect_playing: bool = false
+
 func _ready():
 	pass
 
 func init(name, position, is_slave):
-	$NameLabel.text = name
+	#$NameLabel.text = name
 	global_position = position
+
+#func playCurveSound():
+#	$CurveSound.play()
+
 
 func update_rotation(delta):
 	# Hardcoded Sprite anim for rock hit
@@ -57,12 +63,19 @@ func update_accel():
 	var angle_y_axis = rotation - (PI / 2)
 	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 
+	#Sound effect when there is sudden change of direction
+	#if sound_effect_playing == false:
+	#	if (turn_angle < PI/10) or (turn_angle > 4*PI/10) :
+	#		sound_effect_playing = true
+	#		playCurveSound()
+
+
 	var accel_mult = 1 + 2 * (current_MAX_SPEED - velocity.length()) / current_MAX_SPEED
 	var frict_mult = 2 - (current_MAX_SPEED - velocity.length()) / current_MAX_SPEED
 	if ice_effect:
 		accel_mult = accel_mult * ICE_ACCEL_MULT
 		frict_mult = frict_mult * ICE_FRICT_MULT
-
+	
 	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle()) * accel_mult
 	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle()) * frict_mult
 	
