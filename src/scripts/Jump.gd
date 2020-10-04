@@ -9,6 +9,6 @@ func _ready():
 
 
 func _on_Area2D_body_exited(body):
-	if (body.name != "TileMap"):
+	if (body is KinematicBody2D):
 		emit_signal("jump_exit")
 
