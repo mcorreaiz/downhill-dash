@@ -140,19 +140,15 @@ func _physics_process(delta) -> void:
 		# Movimiento
 		velocity = move_and_slide(velocity)
 
-		# Voltear sprite
-		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
-			flip()
-
 		# TODO: Hacer funcionar la actualización de posición con rset
-		rpc_unreliable("_update_slave", player_id, position, rotation, sprite.rotation, sprite.scale)
+		rpc_unreliable("_update_slave", player_id, position, sprite.frame, sprite.rotation, sprite.scale)
 
-remote func _update_slave(id, position, rotation, sprite_rotation, sprite_scale):
-	Network.update_position(id, position, rotation, sprite_rotation, sprite_scale)
+remote func _update_slave(id, position, frame, sprite_rotation, sprite_scale):
+	Network.update_position(id, position, frame, sprite_rotation, sprite_scale)
 
-func on_slave_update(new_pos, new_rot, new_sprite_rot, new_sprite_scale):
+func on_slave_update(new_pos, new_frame, new_sprite_rot, new_sprite_scale):
 	position = new_pos
-	rotation = new_rot
+	sprite.frame = new_frame
 	sprite.rotation = new_sprite_rot
 	sprite.scale = new_sprite_scale
 
