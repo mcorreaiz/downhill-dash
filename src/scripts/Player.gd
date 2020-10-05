@@ -50,8 +50,12 @@ func playCurveSound():
 	pass
 	$CurveSound.play()
 
+func update_animation_frame():
+	var frame_count = sprite.frames.get_frame_count("default")
+	var frame_idx = (PI - direction.angle()) * frame_count / PI
+	sprite.set_frame(frame_idx)
 
-func update_rotation(delta):
+func update_direction(delta):
 	# Hardcoded Sprite anim for rock hit
 	if stun_rotation_effect:
 		sprite.rotation += delta * SPRITE_ANGLE_ROTATION
@@ -64,7 +68,7 @@ func update_rotation(delta):
 	rotation = direction.angle()
 	
 func update_accel():
-	var angle_y_axis = rotation - (PI / 2)
+	var angle_y_axis = direction.angle() - (PI / 2)
 	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 
 	#Sound effect when there is sudden change of direction
@@ -109,10 +113,11 @@ func _physics_process(delta) -> void:
 	Globals.race_time += delta
 		
 	if is_network_master():
-		update_rotation(delta)
+		update_direction(delta)
 		var turn_angle = update_accel()
 		update_velocity(delta)
 		apply_modifiers(delta, turn_angle)
+		update_animation_frame()
 
 		#Movimiento
 		velocity = move_and_slide(velocity)
