@@ -8,7 +8,7 @@ const MAX_PLAYERS = 2
 
 var players = {}
 var times = {}
-var self_data = { name="", position=Vector2(300, 100)}
+var self_data = {name="", position=Vector2(300, 100), is_slave=false}
 
 signal player_disconnected
 signal server_disconnected
@@ -38,10 +38,10 @@ func _connected_to_server():
 	rpc('_send_player_info', local_player_id, self_data)
 
 func _on_player_disconnected(id):
-	# TODO: Remove player from game scene
 	players.erase(id)
 
 func _on_player_connected(connected_player_id):
+	print(players)
 	var local_player_id = get_tree().get_network_unique_id()
 	if not (get_tree().is_network_server()):
 		rpc_id(1, '_request_player_info', local_player_id, connected_player_id)
@@ -59,14 +59,19 @@ remote func _request_players(request_from_id):
 
 remote func _send_player_info(id, info):
 	players[id] = info
-	if players.size() == MAX_PLAYERS:
-		pre_configure_game()
+	players[id].is_slave = true
+	if players.size() == MAX_PLAYERS and get_tree().is_network_server():
+		start_game()
 
-func pre_configure_game():
+func start_game():
+	rpc("_pre_configure_game")
+
+sync func _pre_configure_game():
 	var selfPeerID = get_tree().get_network_unique_id()
 
 	# Load game
 	var game = preload("res://scenes/Game.tscn").instance()
+	game.load_players(players)
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
 	
@@ -74,21 +79,6 @@ func pre_configure_game():
 	var menu = get_tree().get_root().get_node("Control")
 	get_tree().get_root().remove_child(menu)
 	menu.call_deferred("free")
-
-	# Load players
-	for p in players:
-		players[p].instance = preload("res://scenes/Player.tscn").instance()
-		
-		var data = players[p]
-		var is_slave = p != selfPeerID
-		data.instance.set_network_master(p)
-		data.instance.init(p, data.name, data.position, is_slave)
-		game.add_child(data.instance)
-		
-		# Esto no supe como hacerlo de otra forma
-		if not is_slave:
-			var camera = preload("res://scenes/PlayerCamera.tscn").instance()
-			data.instance.add_child(camera)
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
@@ -120,9 +110,10 @@ sync func _update_time(id, time):
 		get_tree().get_root().remove_child(game)
 		game.call_deferred("free")
 		
-		players.clear()
-		times.clear()
-	
+func close_connections():
+	get_tree().set_network_peer(null)
+	players.clear()
+	times.clear()
 	
 func close():
 	players.clear()

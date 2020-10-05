@@ -18,7 +18,9 @@ func set_results(players):
 	_set_players(players)
 	
 	$MyTimeLabel.text = _get_time_label(my_player)
-	$OpponentTimeLabel.text = _get_time_label(opponent)
+	if opponent: 
+		$OpponentTimeLabel.text = _get_time_label(opponent)
+		
 	$ResultLabel.text = _get_result()
 	
 func _set_players(players):
@@ -30,14 +32,15 @@ func _set_players(players):
 			opponent = player
 	
 func _get_time_label(player):
-	return player.name + "'s time was: " + str(player.time) + " seconds"
+	return "El tiempo de {0} fue de:\n{1} segundos".format([player.name, str(player.time)])
 	
 func _get_result():
-	if my_player.time < opponent.time:
-		return "YOU WON! :)"
+	if opponent and opponent.time < my_player.time:
+		return "DERROTA :("
 	else:
-		return "YOU LOSE :("
+		return "VICTORIA :)"
 	
 func go_to_main() -> void:
+	Network.close_connections()
 	get_tree().change_scene("res://scenes/Base.tscn")
 	queue_free()

@@ -70,7 +70,7 @@ func apply_modifiers():
 		
 func _physics_process(delta) -> void:
 	if is_network_master():
-		if position.y + 3000 > get_node("../FinishLine").position.y:
+		if position.y > get_node("../FinishLine").position.y:
 			if not finished:
 				Network.notify_finish(player_id, race_time)
 				finished = true
