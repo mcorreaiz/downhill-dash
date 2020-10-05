@@ -113,23 +113,9 @@ func _physics_process(delta) -> void:
 		# Voltear sprite
 		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
-		
-		# Chequeo de colisión
-		var tm = get_node("../TileMap")
-		for i in get_slide_count():
-			var collision = get_slide_collision(i)
-			var tile_pos = tm.world_to_map(collision.position)
-			var tile = tm.get_cellv(tile_pos)
-			# get_tree().reload_current_scene()
-			if tile == ROCK and !rock_effect:
-				# Esto debiera vivir en Rock.gd
-				emit_signal("rock_collision")
 	
 		# TODO: Hacer funcionar la actualización de posición con rset
 		rpc_unreliable("_update_slave", player_id, position, rotation)
-		
-	else:
-		pass
 		
 remote func _update_slave(id, position, rotation):
 	Network.update_position(id, position, rotation)

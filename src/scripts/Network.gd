@@ -71,9 +71,9 @@ sync func _pre_configure_game():
 
 	# Load game
 	var game = preload("res://scenes/Game.tscn").instance()
-	game.load_players(players)
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
+	game.load_players(players)	
 	
 	# Remove menu
 	var menu = get_tree().get_root().get_node("Control")
