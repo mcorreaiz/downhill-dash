@@ -19,15 +19,18 @@ func load_players(players):
 		var data = players[p]
 		data.instance.set_network_master(p)
 		data.instance.init(p, data.name, data.position, data.is_slave)
-		connect_rock_collision(data.instance)
 		add_child(data.instance)
 		
-		# Esto no supe como hacerlo de otra forma
-		if not data.is_slave:
+		if data.is_slave:
+			data.instance.set_collision_mask_bit(2, false)
+			
+		else:
+			connect_collisions(data.instance)
+			
 			var camera = preload("res://scenes/PlayerCamera.tscn").instance()
 			data.instance.add_child(camera)
 	  
-func connect_rock_collision(player):
+func connect_collisions(player):
 	var rock_group = get_tree().get_nodes_in_group("Rocks")
 	for rock in rock_group:
 		rock.connect("rock_collision", player, "_on_rock_collision")

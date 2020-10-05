@@ -76,12 +76,12 @@ func update_accel():
 func update_velocity(delta):
 	velocity += accel * delta
 	
-	#Velocidad máxima
+	# Velocidad máxima
 	velocity = velocity.clamped(current_MAX_SPEED)
 	velocity.y = max(velocity.y, MIN_SPEED_Y)
 
 func apply_modifiers(delta, turn_angle):
-	#Rock effect stuns player after falling
+	# Rock effect stuns player after falling
 	if stun_effect:
 		velocity = Vector2(0, 0)
 	if ice_effect:
@@ -115,19 +115,21 @@ func _physics_process(delta) -> void:
 			flip()
 	
 		# TODO: Hacer funcionar la actualización de posición con rset
-		rpc_unreliable("_update_slave", player_id, position, rotation)
+		rpc_unreliable("_update_slave", player_id, position, rotation, sprite.rotation, sprite.scale)
 		
-remote func _update_slave(id, position, rotation):
-	Network.update_position(id, position, rotation)
+remote func _update_slave(id, position, rotation, sprite_rotation, sprite_scale):
+	Network.update_position(id, position, rotation, sprite_rotation, sprite_scale)
 	
-func on_slave_update(pos, rot):
-	position = pos
-	rotation = rot
+func on_slave_update(new_pos, new_rot, new_sprite_rot, new_sprite_scale):
+	position = new_pos
+	rotation = new_rot
+	sprite.rotation = new_sprite_rot
+	sprite.scale = new_sprite_scale
 	
 func _on_rock_collision() -> void:
 	# Needs to trigger a sound as feedback
 	# First timer its the "falling" animation, second its the stuntime, third its innmunity
-	stun_rotation_effect = true #Player can't turn
+	stun_rotation_effect = true # Player can't turn
 	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
 	object_stun()
 	
@@ -143,7 +145,7 @@ func _on_ice_exit() -> void:
 func _on_jump_exit() -> void:
 	# Needs to trigger a sound as feedback
 	var jump_time = JUMP_MAX_AIR_TIME*velocity.length()/current_MAX_SPEED
-	set_collision_mask_bit(2, false) #Air, can't collide
+	set_collision_mask_bit(2, false) # Air, can't collide
 	current_MAX_SPEED = MAX_SPEED * AIR_MAX_SPEED_MODIFIER
 	jump_effect = true
 	jump_scale_modifier = 1
@@ -160,14 +162,14 @@ func _on_jump_exit() -> void:
 	sprite.rotation = 0
 
 func object_stun() -> void:
-	stun_effect = true #Player can't move
+	stun_effect = true # Player can't move
 	set_collision_mask_bit(2, false) # Player can't collide objects
 	yield(get_tree().create_timer(STUN_TIME), "timeout")
-	stun_effect = false #Player can move
+	stun_effect = false # Player can move
 	stun_rotation_effect = false # Stop spinning
 	sprite.rotation = 0
 	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
-	set_collision_mask_bit(2, true) #Player can collide objects
+	set_collision_mask_bit(2, true) # Player can collide objects
 
 func flip() -> void:
 	facing_right = !facing_right
