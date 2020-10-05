@@ -32,7 +32,7 @@ func _set_players(players):
 			opponent = player
 	
 func _get_time_label(player):
-	return "El tiempo de {0} fue de:\n{1} segundos".format([player.name, str(player.time)])
+	return "El tiempo de {0} fue de:\n{1} segundos".format([player.name, str(stepify(player.time, 0.01))])
 	
 func _get_result():
 	if opponent and opponent.time < my_player.time:

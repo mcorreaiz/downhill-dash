@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/tiles.tres" type="TileSet" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scenes/Red_jawa.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/Blue_jawa.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=11]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=12]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -386,3 +387,5 @@ position = Vector2( 528, 3214 )
 
 [node name="Green_jawa5" parent="." instance=ExtResource( 8 )]
 position = Vector2( 488, 3176 )
+
+[node name="HUD" parent="." instance=ExtResource( 12 )]

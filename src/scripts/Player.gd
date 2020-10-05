@@ -51,9 +51,7 @@ func init(id, name, position, is_slave):
 	player_id = id
 
 func playCurveSound():
-	pass
 	$CurveSound.play()
-	
 	
 func get_turn_angle():
 	return clamp(abs(direction.angle_to(velocity)), 0, PI/2)
@@ -130,6 +128,8 @@ func _physics_process(delta) -> void:
 			return
 
 		race_time += delta
+		
+		get_node("../HUD").update_time(stepify(race_time, 0.01))
 
 		update_direction(delta)
 		update_accel()
@@ -138,10 +138,11 @@ func _physics_process(delta) -> void:
 		update_animation_frame()
 
 		# Movimiento
-		velocity = move_and_slide(velocity)
+		move_and_slide(velocity)
 
 		# TODO: Hacer funcionar la actualización de posición con rset
 		rpc_unreliable("_update_slave", player_id, position, sprite.frame, sprite.rotation, sprite.scale)
+		Network.update_position(player_id, position, sprite.frame, sprite.rotation, sprite.scale)
 
 remote func _update_slave(id, position, frame, sprite_rotation, sprite_scale):
 	Network.update_position(id, position, frame, sprite_rotation, sprite_scale)
