@@ -48,7 +48,7 @@ func init(name, position, is_slave):
 
 func playCurveSound():
 	pass
-	#$CurveSound.play()
+	$CurveSound.play()
 
 
 func update_rotation(delta):
