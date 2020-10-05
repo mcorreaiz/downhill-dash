@@ -7,7 +7,8 @@ const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
 var players = {}
-var self_data = { name="", position = Vector2(300, 100)}
+var times = {}
+var self_data = {name="", position=Vector2(300, 100), is_slave=false}
 
 signal player_disconnected
 signal server_disconnected
@@ -40,6 +41,7 @@ func _on_player_disconnected(id):
 	players.erase(id)
 
 func _on_player_connected(connected_player_id):
+	print(players)
 	var local_player_id = get_tree().get_network_unique_id()
 	if not (get_tree().is_network_server()):
 		rpc_id(1, '_request_player_info', local_player_id, connected_player_id)
@@ -57,14 +59,61 @@ remote func _request_players(request_from_id):
 
 remote func _send_player_info(id, info):
 	players[id] = info
-	var new_player = load('res://scenes/Player.tscn').instance()
-	new_player.name = str(id)
-	new_player.set_network_master(id)
-	$'.'.add_child(new_player)
-	new_player.init(info.name, info.position, true)
+	players[id].is_slave = true
+	if players.size() == MAX_PLAYERS and get_tree().is_network_server():
+		start_game()
 
-func update_position(id, position):
+func start_game():
+	rpc("_pre_configure_game")
+
+sync func _pre_configure_game():
+	var selfPeerID = get_tree().get_network_unique_id()
+
+	# Load game
+	var game = preload("res://scenes/Game.tscn").instance()
+	get_tree().get_root().add_child(game)
+	get_tree().set_current_scene(game)
+	game.load_players(players)	
+	
+	# Remove menu
+	var menu = get_tree().get_root().get_node("Control")
+	get_tree().get_root().remove_child(menu)
+	menu.call_deferred("free")
+
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
+	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	rpc_id(1, "done_preconfiguring")
+	
+remote func done_preconfiguring():
+	print("Iniciar juego")
+	
+func update_position(id, position, rotation, sprite_rotation, sprite_scale):
 	players[id].position = position
+	players[id].instance.on_slave_update(position, rotation, sprite_rotation, sprite_scale)
+	
+func notify_finish(id, time):
+	rpc('_update_time', id, time)
+	
+sync func _update_time(id, time):
+	var is_self = id == get_tree().get_network_unique_id()
+	times[id] = { time=time, name=players[id].name, is_self=is_self }
+	
+	if times.size() == players.size():
+		# Load end
+		var end_race = preload("res://scenes/EndRace.tscn").instance()
+		end_race.set_results(times)
+		get_tree().get_root().add_child(end_race)
+		get_tree().set_current_scene(end_race)
+		
+		# Remove game
+		var game = get_tree().get_root().get_node("Game")
+		get_tree().get_root().remove_child(game)
+		game.call_deferred("free")
+		
+func close_connections():
+	get_tree().set_network_peer(null)
+	players.clear()
+	times.clear()
 	
 func close():
 	players.clear()

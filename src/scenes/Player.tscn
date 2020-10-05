@@ -18,15 +18,7 @@ region_enabled = true
 region_rect = Rect2( 49, 42, 35, 43 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2.51985, 9.44941 )
 shape = SubResource( 1 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-limit_left = 0
-limit_top = 0
-limit_right = 866
-limit_smoothed = true
 
 [node name="NameLabel" type="Label" parent="."]
 margin_left = -19.8438
