@@ -119,7 +119,7 @@ func _physics_process(delta) -> void:
 
 		race_time += delta
 
-		update_rotation(delta)
+		update_direction(delta)
 		var turn_angle = update_accel()
 		update_velocity(delta)
 		apply_modifiers(delta, turn_angle)
