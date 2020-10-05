@@ -171,16 +171,15 @@ func _on_jump_exit() -> void:
 	if dir.y < MIN_DIR_Y:
 		stun_rotation_effect = true
 		object_stun()
-	sprite.rotation = 0
+	sprite.rotation = -PI/2
 
 func object_stun() -> void:
 	stun_effect = true #Player can't move
-
 	set_collision_mask_bit(2, false) # Player can't collide objects
 	yield(get_tree().create_timer(STUN_TIME), "timeout")
 	stun_effect = false #Player can move
 	stun_rotation_effect = false # Stop spinning
-	sprite.rotation = 0
+	sprite.rotation = -PI/2
 	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
 	set_collision_mask_bit(2, true) #Player can collide objects
 
