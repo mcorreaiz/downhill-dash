@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var sprite: AnimatedSprite = $Sprite
+var os_name: String = OS.get_name()
 
 var player_id
 var finished: bool = false
@@ -11,6 +12,7 @@ var facing_right: bool = true
 var accel: Vector2 = Vector2.DOWN
 var velocity: Vector2 = Vector2.DOWN
 var direction: Vector2 = Vector2.DOWN
+var accelerometer: Vector3
 
 const hill_slope: float = PI / 8
 const gravity: int = 2000
@@ -30,6 +32,7 @@ const ICE_MAX_TURN_ANGLE: float = 1.35
 const ICE_ACCEL_MULT: float = 1.5
 const ICE_FRICT_MULT: float = 0.5
 const JUMP_MAX_AIR_TIME: float = 1.0
+const ACCLR_READ_ADJUST: float = 0.35
 
 var stun_rotation_effect: bool = false
 var rock_effect: bool = false
@@ -43,6 +46,7 @@ remote var slave_position: Vector2 = Vector2(0, 0)
 
 func init(id, name, position, is_slave):
 	$NameLabel.text = name
+	$NameLabel.add_color_override("font_color", Color(0,0,0,1))
 	global_position = position
 	player_id = id
 
@@ -62,7 +66,15 @@ func update_direction(delta):
 		return
 	if jump_effect:
 		return
+		
 	# TODO: refactorear usando angulos
+	if os_name == "Android" or os_name == "iOS":
+		var acclr_read = Input.get_accelerometer().normalized()
+		accelerometer += ACCLR_READ_ADJUST * (acclr_read - accelerometer)
+		direction = Vector2(sin(accelerometer.x*PI/2),
+								max(abs(cos(accelerometer.x*PI/2)), MIN_DIR_Y))
+		rotation = direction.angle()
+		return
 	direction = (get_global_mouse_position() - global_position).normalized()
 	direction.y = max(direction.y, MIN_DIR_Y)
 	rotation = direction.angle()
