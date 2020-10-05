@@ -2,8 +2,9 @@ extends KinematicBody2D
 
 onready var sprite: AnimatedSprite = $Sprite
 
-slave var slave_position: Vector2 = Vector2()
-slave var slave_movement: Vector2 = Vector2()
+var player_id
+var finished: bool = false
+var race_time: float = 0
 
 var facing_right: bool = true
 
@@ -36,15 +37,14 @@ var ice_effect: bool = false
 var jump_effect: bool = false
 var stun_effect: bool = false
 var jump_scale_modifier: int = 0
-
 var sound_effect_playing: bool = false
 
-func _ready():
-	pass
+remote var slave_position: Vector2 = Vector2(0, 0)
 
-func init(name, position, is_slave):
-	#$NameLabel.text = name
+func init(id, name, position, is_slave):
+	$NameLabel.text = name
 	global_position = position
+	player_id = id
 
 func playCurveSound():
 	pass
@@ -66,7 +66,7 @@ func update_direction(delta):
 	direction = (get_global_mouse_position() - global_position).normalized()
 	direction.y = max(direction.y, MIN_DIR_Y)
 	rotation = direction.angle()
-	
+
 func update_accel():
 	var angle_y_axis = direction.angle() - (PI / 2)
 	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
@@ -83,69 +83,73 @@ func update_accel():
 	if ice_effect:
 		accel_mult = accel_mult * ICE_ACCEL_MULT
 		frict_mult = frict_mult * ICE_FRICT_MULT
-	
+
 	var dir_accel = Vector2(cos(angle_y_axis), 0).rotated(direction.angle()) * accel_mult
 	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle()) * frict_mult
-	
+
 	accel = (dir_accel - dir_friction) * sin(hill_slope) * gravity
 	return turn_angle
-	
+
 func update_velocity(delta):
 	velocity += accel * delta
-	
-	#Velocidad máxima
+
+	# Velocidad máxima
 	velocity = velocity.clamped(current_MAX_SPEED)
 	velocity.y = max(velocity.y, MIN_SPEED_Y)
 
 func apply_modifiers(delta, turn_angle):
-	#Rock effect stuns player after falling
+	# Rock effect stuns player after falling
 	if stun_effect:
 		velocity = Vector2(0, 0)
 	if ice_effect:
 		if turn_angle > ICE_MAX_TURN_ANGLE:
 			_on_rock_collision()
 	if jump_effect:
-		sprite.scale += Vector2(delta * jump_scale_modifier, delta * jump_scale_modifier) 
+		sprite.scale += Vector2(delta * jump_scale_modifier, delta * jump_scale_modifier)
 		sprite.rotation = (get_global_mouse_position() - global_position).normalized().angle()
 		sprite.rotation -= PI/2
-		
+
 func _physics_process(delta) -> void:
-	Globals.race_time += delta
-		
 	if is_network_master():
-		update_direction(delta)
+		if position.y > get_node("../FinishLine").position.y:
+			if not finished:
+				Network.notify_finish(player_id, race_time)
+				finished = true
+			return
+
+		race_time += delta
+
+		update_rotation(delta)
 		var turn_angle = update_accel()
 		update_velocity(delta)
 		apply_modifiers(delta, turn_angle)
 		update_animation_frame()
 
-		#Movimiento
+		# Movimiento
 		velocity = move_and_slide(velocity)
-		
-		#Voltear sprite
+
+		# Voltear sprite
 		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
 			flip()
 
-	else:
-		pass
-		# Ver como manejar el movimiento de los 'slaves'
-		
-	
-	if position.y > get_node("../Game/FinishLine").position.y:
-		Network.close()
-		emit_signal('server_disconnected')
-		get_tree().change_scene('res://scenes/EndRace.tscn')
-		queue_free()
+		# TODO: Hacer funcionar la actualización de posición con rset
+		rpc_unreliable("_update_slave", player_id, position, rotation, sprite.rotation, sprite.scale)
 
-	if get_tree().is_network_server():
-		Network.update_position(int(name), position)
-	
+remote func _update_slave(id, position, rotation, sprite_rotation, sprite_scale):
+	Network.update_position(id, position, rotation, sprite_rotation, sprite_scale)
+
+func on_slave_update(new_pos, new_rot, new_sprite_rot, new_sprite_scale):
+	position = new_pos
+	rotation = new_rot
+	sprite.rotation = new_sprite_rot
+	sprite.scale = new_sprite_scale
+
 func _on_rock_collision() -> void:
 	# First timer its the "falling" animation, second its the stuntime, third its innmunity
-	stun_rotation_effect = true #Player can't turn
+	stun_rotation_effect = true # Player can't turn
 	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
 	object_stun()
-	
+
 func _on_ice_enter() -> void:
 	# Needs to trigger an animation and a sound as feedback
 	current_MAX_SPEED = MAX_SPEED * MAX_SPEED_MODIFIER
@@ -153,18 +157,18 @@ func _on_ice_enter() -> void:
 
 func _on_ice_exit() -> void:
 	current_MAX_SPEED = MAX_SPEED
-	ice_effect = false 
+	ice_effect = false
 
 func _on_jump_exit() -> void:
 	var jump_time = JUMP_MAX_AIR_TIME*velocity.length()/current_MAX_SPEED
-	set_collision_mask_bit(2, false) #Air, can't collide
+	set_collision_mask_bit(2, false) # Air, can't collide
 	current_MAX_SPEED = MAX_SPEED * AIR_MAX_SPEED_MODIFIER
 	jump_effect = true
 	jump_scale_modifier = 1
 	yield(get_tree().create_timer(jump_time/2), "timeout") # Timer for "jupming" animation
 	jump_scale_modifier = -1
 	yield(get_tree().create_timer(jump_time/2), "timeout") # Timer for "falling" animation
-	set_collision_mask_bit(2, true) # Grounded, can collide again	
+	set_collision_mask_bit(2, true) # Grounded, can collide again
 	current_MAX_SPEED = MAX_SPEED
 	jump_effect = false
 	var dir = (get_global_mouse_position() - global_position).normalized()
@@ -174,14 +178,14 @@ func _on_jump_exit() -> void:
 	sprite.rotation = -PI/2
 
 func object_stun() -> void:
-	stun_effect = true #Player can't move
+	stun_effect = true # Player can't move
 	set_collision_mask_bit(2, false) # Player can't collide objects
 	yield(get_tree().create_timer(STUN_TIME), "timeout")
-	stun_effect = false #Player can move
+	stun_effect = false # Player can move
 	stun_rotation_effect = false # Stop spinning
 	sprite.rotation = -PI/2
 	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
-	set_collision_mask_bit(2, true) #Player can collide objects
+	set_collision_mask_bit(2, true) # Player can collide objects
 
 func flip() -> void:
 	facing_right = !facing_right

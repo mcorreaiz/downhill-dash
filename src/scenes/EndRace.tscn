@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/End.gd" type="Script" id=1]
+[ext_resource path="res://scripts/EndRace.gd" type="Script" id=1]
 
 [node name="EndRace" type="Control"]
 anchor_right = 1.0
@@ -19,7 +19,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WinLabel" type="Label" parent="."]
+[node name="ResultLabel" type="Label" parent="."]
 anchor_top = 0.2
 anchor_right = 1.0
 anchor_bottom = 0.3
@@ -27,20 +27,39 @@ margin_top = 0.199997
 margin_bottom = 0.039978
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "YOU WIN!!"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeLabel" type="Label" parent="."]
+[node name="MyTimeLabel" type="Label" parent="."]
 anchor_top = 0.3
 anchor_right = 1.0
 anchor_bottom = 0.4
+margin_top = -0.200012
+margin_right = -300.0
+margin_bottom = -0.600006
+rect_pivot_offset = Vector2( 120.005, 74 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Your Time was: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OpponentTimeLabel" type="Label" parent="."]
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.4
+margin_left = 298.0
+margin_top = 0.799988
+margin_right = -2.0
+margin_bottom = 0.399994
+rect_pivot_offset = Vector2( 120.005, 74 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 __meta__ = {

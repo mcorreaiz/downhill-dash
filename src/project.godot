@@ -15,14 +15,14 @@ _global_script_class_icons={
 
 [application]
 
-config/name="DownhillDash"
+config/name="DownillDash"
 run/main_scene="res://scenes/Base.tscn"
 config/icon="res://assets/sprites/icon.png"
 
 [autoload]
 
-Globals="*res://scripts/Globals.gd"
 Network="*res://scripts/Network.gd"
+Globals="*res://scripts/Globals.gd"
 
 [display]
 
