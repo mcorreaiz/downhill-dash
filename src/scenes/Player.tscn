@@ -75,8 +75,9 @@ shape = SubResource( 1 )
 current = true
 limit_left = 0
 limit_top = 0
-limit_right = 866
+limit_right = 896
 limit_smoothed = true
+smoothing_enabled = true
 
 [node name="NameLabel" type="Label" parent="."]
 margin_left = -19.8438
