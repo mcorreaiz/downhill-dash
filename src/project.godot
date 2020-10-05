@@ -29,6 +29,8 @@ Globals="*res://scripts/Globals.gd"
 window/size/width=600
 window/size/height=1024
 window/handheld/orientation="portrait"
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [input]
 
@@ -54,5 +56,6 @@ move_right={
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/2d/use_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"
