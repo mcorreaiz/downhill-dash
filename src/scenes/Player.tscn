@@ -4,8 +4,8 @@
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 18.2147
-height = 13.2334
+radius = 13.5838
+height = 0.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -14,8 +14,11 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 49, 42, 35, 43 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -2.51985, 9.44941 )
 shape = SubResource( 1 )
 
 [node name="NameLabel" type="Label" parent="."]

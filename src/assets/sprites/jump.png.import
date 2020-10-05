@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rock3.png-92824edf2124f3857ba734d61149b2f5.stex"
+path="res://.import/jump.png-3dbc7999c6ae3445588bd4e2733ed604.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Rock3.png"
-dest_files=[ "res://.import/Rock3.png-92824edf2124f3857ba734d61149b2f5.stex" ]
+source_file="res://assets/sprites/jump.png"
+dest_files=[ "res://.import/jump.png-3dbc7999c6ae3445588bd4e2733ed604.stex" ]
 
 [params]
 
