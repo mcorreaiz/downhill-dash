@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SnowHill"
+config/name="DownillDash"
 run/main_scene="res://scenes/Base.tscn"
 config/icon="res://assets/sprites/icon.png"
 
@@ -45,6 +45,14 @@ move_right={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="walls"
+2d_physics/layer_2="player"
+2d_physics/layer_3="obstacles"
+
 [rendering]
 
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"
