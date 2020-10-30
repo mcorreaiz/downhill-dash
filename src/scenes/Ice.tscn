@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Ice.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/ice-sound.wav" type="AudioStream" id=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 40.6892, -14.592, -40.6892, 14.592, -45.6989, -45.2089, -5.05108, -8.41846, 5.05108, 8.41846, -63.3777, -3.11656, -26.6585, 6.17354, 26.6585, -6.17354, -46.5407, 49.3585, -23.8523, 0, 23.8523, 0, 0.602661, 40.6594, -11.2246, 3.36739, 11.2246, -3.36739, 52.2359, 51.6035, 1.40308, 30.0259, -1.40308, -30.0259, 89.5578, 2.77636, 16.8369, 17.3982, -16.8369, -17.3982, 55.3227, -42.1221, 21.0462, 0.280615, -21.0462, -0.280615, 9.02112, -63.1683, 0, 0, 0, 0, -45.6989, -45.2089 )
+}
+
+[node name="Ice" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Path2D" type="Path2D" parent="Area2D"]
+position = Vector2( 0, -0.561226 )
+curve = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+color = Color( 0.380392, 0.984314, 1, 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -3.0759, -24.4314, 29.0521, -13.722, 14.248, 28.1704, -28.9043, 17.146 )
+
+[node name="IceSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
