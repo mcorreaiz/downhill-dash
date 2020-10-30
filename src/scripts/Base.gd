@@ -36,3 +36,8 @@ func _ready():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var response = parse_json(body.get_string_from_utf8())
 	print(response)
+	
+func _on_EditorButton_pressed():
+	# Go to level editor
+	get_tree().change_scene("res://scenes/Editor.tscn")
+	queue_free()
