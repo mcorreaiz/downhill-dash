@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_right = 205.0
+margin_bottom = 148.0
+rect_scale = Vector2( 0.996139, 1.01064 )
+text = "asdfasdfasdfa
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
