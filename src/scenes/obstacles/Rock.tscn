@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/sounds/Rock_hit.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/sprites/Rock3.png" type="Texture" id=3]
 
-
 [node name="Rock" type="Node2D"]
 script = ExtResource( 1 )
 

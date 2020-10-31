@@ -1,6 +1,7 @@
 extends TextureRect
 
 export(PackedScene) var this_scene
+
 onready var object_cursor = get_node("/root/Editor/EditorObject")
 onready var cursor_sprite = object_cursor.get_node("Sprite")
 

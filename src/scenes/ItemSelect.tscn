@@ -1,69 +1,42 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://items/ItemJump.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/items/ItemJump.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/items/ItemRock.tscn" type="PackedScene" id=3]
 
-[node name="ItemSelect" type="Control"]
-margin_right = 163.0
-margin_bottom = 342.0
+[node name="ItemSelect" type="PanelContainer"]
+margin_left = 1.68176
+margin_top = 0.840897
+margin_right = 147.682
+margin_bottom = 270.841
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 139.0
+margin_bottom = 263.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TabContainer" type="TabContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+margin_right = 125.0
+margin_bottom = 50.0
+custom_constants/hseparation = 25
+columns = 2
 
-[node name="Obstacles" type="Tabs" parent="TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+[node name="ItemRock" parent="ScrollContainer/GridContainer" instance=ExtResource( 3 )]
+margin_right = 50.0
+margin_bottom = 50.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Obstacles"]
-anchor_right = 14.098
-anchor_bottom = 8.619
-margin_right = -0.116028
-margin_bottom = -3.18903
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Obstacles/ScrollContainer"]
-margin_right = 32.0
-margin_bottom = 32.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Obstacles/ScrollContainer/VBoxContainer"]
-margin_right = 32.0
-margin_bottom = 32.0
-
-[node name="ItemJump" parent="TabContainer/Obstacles/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 1 )]
-margin_right = 32.0
-margin_bottom = 32.0
+[node name="ItemJump" parent="ScrollContainer/GridContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 75.0
+margin_right = 125.0
+margin_bottom = 50.0
 rect_scale = Vector2( 1, 1 )
-
-[node name="Snow" type="Tabs" parent="TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Snow"]
-anchor_right = 14.098
-anchor_bottom = 8.619
-margin_right = -0.116028
-margin_bottom = -3.18903
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Snow/ScrollContainer"]
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Snow/ScrollContainer/VBoxContainer"]
