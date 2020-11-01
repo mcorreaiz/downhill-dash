@@ -9,7 +9,7 @@ func _ready():
 	connect("gui_input", self, "_item_clicked")
 
 func _item_clicked(event):
-	if event is InputEvent:
+	if event is InputEventMouseButton:
 		if event.is_action_pressed("mb_left"):
-			object_cursor.current_item = this_scene
+			object_cursor.current_item = this_scene.instance()
 			cursor_sprite.texture = texture
