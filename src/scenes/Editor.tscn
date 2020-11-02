@@ -13,8 +13,9 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="EditorObject"]
 scale = Vector2( 0.966468, 1 )
 
+[node name="CamContainer" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="CamContainer"]
+anchor_mode = 0
+
 [node name="ItemSelect" parent="." instance=ExtResource( 2 )]
-margin_left = 432.221
-margin_top = 5.04538
-margin_right = 595.221
-margin_bottom = 347.045

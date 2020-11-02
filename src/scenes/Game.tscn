@@ -13,7 +13,6 @@
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=11]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=12]
 
-
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 

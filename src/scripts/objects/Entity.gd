@@ -8,8 +8,8 @@ func _ready():
 
 func _item_clicked(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		is_clicked = Globals.mode == Globals.EDIT and event.is_action_pressed("mb_left")
+		is_clicked = event.is_action_pressed("mb_left")
 		
 func _process(delta):
-	if is_clicked:
+	if Globals.mode == Globals.EDIT and is_clicked:
 		global_position = get_global_mouse_position()
