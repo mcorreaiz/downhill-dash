@@ -11,5 +11,5 @@ func _ready():
 func _item_clicked(event):
 	if event is InputEventMouseButton:
 		if event.is_action_pressed("mb_left"):
-			object_cursor.current_item = this_scene.instance()
+			object_cursor.current_item = this_scene
 			cursor_sprite.texture = texture
