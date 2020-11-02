@@ -19,3 +19,14 @@ scale = Vector2( 0.966468, 1 )
 anchor_mode = 0
 
 [node name="ItemSelect" parent="." instance=ExtResource( 2 )]
+
+[node name="Label" type="Label" parent="ItemSelect"]
+margin_left = 55.4347
+margin_top = 12.0315
+margin_right = 415.435
+margin_bottom = 49.0315
+text = "Drag and drop to create and move objects.
+Use mouse wheel and right button to control the camera."
+__meta__ = {
+"_edit_use_anchors_": false
+}
