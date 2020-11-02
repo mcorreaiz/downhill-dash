@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/sounds/jump_sound.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/sprites/jump.png" type="Texture" id=2]
+[ext_resource path="res://scripts/objects/Jump.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[node name="Jump" type="Area2D"]
+gravity = 0.0
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2( 2, 2 )
+stream = ExtResource( 1 )
+autoplay = true
+[connection signal="body_exited" from="." to="." method="_on_Jump_body_exited"]

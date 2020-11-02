@@ -2,16 +2,17 @@
 
 [ext_resource path="res://scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/tiles.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/obstacles/Ice.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/obstacles/Jump.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/obstacles/Rock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/objects/Ice.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/objects/Jump.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/objects/Rock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/music/main theme.ogg" type="AudioStream" id=6]
-[ext_resource path="res://scenes/obstacles/Tree.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/objects/Tree.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/jawas/Green_jawa.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/jawas/Red_jawa.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/jawas/Blue_jawa.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=11]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=12]
+
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )

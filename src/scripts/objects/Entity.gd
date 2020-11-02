@@ -1,16 +1,10 @@
-extends Node2D
+# Base class for all obstacles
+extends Area2D
 
-signal rock_collision
 var is_clicked
 
 func _ready():
-	$Area2D.connect("input_event", self, "_item_clicked")
-
-func _on_Area2D_body_entered(body):
-	if (body is KinematicBody2D):
-		# Needs to trigger a sound as feedback
-		$RockHitSound.play()
-		emit_signal("rock_collision")
+	connect("input_event", self, "_item_clicked")
 
 func _item_clicked(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
