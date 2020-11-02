@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/sprites/jump.png" type="Texture" id=1]
-[ext_resource path="res://scenes/obstacles/Jump.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/objects/Jump.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/items/ItemTexture.tscn" type="PackedScene" id=3]
+
 
 [node name="ItemJump" instance=ExtResource( 3 )]
 anchor_right = 0.108
