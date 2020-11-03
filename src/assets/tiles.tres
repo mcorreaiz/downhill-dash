@@ -1,4 +1,6 @@
-[gd_resource type="TileSet" load_steps=15 format=2]
+[gd_resource type="TileSet" load_steps=16 format=2]
+
+[ext_resource path="res://assets/sprites/Tilemap.png" type="Texture" id=1]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -44,6 +46,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [resource]
 1/name = "Tilemap.png 1"
+1/texture = ExtResource( 1 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 320, 32, 32, 32 )
@@ -70,6 +73,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 1/z_index = 0
 12/name = "Tilemap.png 12"
+12/texture = ExtResource( 1 )
 12/tex_offset = Vector2( 0, 0 )
 12/modulate = Color( 1, 1, 1, 1 )
 12/region = Rect2( 256, 192, 32, 32 )
@@ -96,6 +100,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 12/z_index = 0
 14/name = "Tilemap.png 14"
+14/texture = ExtResource( 1 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
 14/region = Rect2( 256, 224, 32, 32 )
@@ -122,6 +127,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 14/z_index = 0
 15/name = "Tilemap.png 15"
+15/texture = ExtResource( 1 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
 15/region = Rect2( 576, 320, 32, 32 )
@@ -148,6 +154,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 15/z_index = 0
 16/name = "Tilemap.png 16"
+16/texture = ExtResource( 1 )
 16/tex_offset = Vector2( 0, 0 )
 16/modulate = Color( 1, 1, 1, 1 )
 16/region = Rect2( 576, 288, 32, 32 )
@@ -174,6 +181,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 16/z_index = 0
 17/name = "Tilemap.png 17"
+17/texture = ExtResource( 1 )
 17/tex_offset = Vector2( 0, 0 )
 17/modulate = Color( 1, 1, 1, 1 )
 17/region = Rect2( 576, 256, 32, 32 )
@@ -200,6 +208,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 17/z_index = 0
 18/name = "Tilemap.png 18"
+18/texture = ExtResource( 1 )
 18/tex_offset = Vector2( 0, 0 )
 18/modulate = Color( 1, 1, 1, 1 )
 18/region = Rect2( 608, 320, 32, 32 )
@@ -226,6 +235,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 18/z_index = 0
 30/name = "Tilemap.png 30"
+30/texture = ExtResource( 1 )
 30/tex_offset = Vector2( 0, 0 )
 30/modulate = Color( 1, 1, 1, 1 )
 30/region = Rect2( 256, 0, 32, 32 )
@@ -239,6 +249,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 30/shapes = [  ]
 30/z_index = 0
 31/name = "Tilemap.png 31"
+31/texture = ExtResource( 1 )
 31/tex_offset = Vector2( 0, 0 )
 31/modulate = Color( 1, 1, 1, 1 )
 31/region = Rect2( 384, 192, 32, 32 )
@@ -252,6 +263,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 31/shapes = [  ]
 31/z_index = 0
 32/name = "Tilemap.png 32"
+32/texture = ExtResource( 1 )
 32/tex_offset = Vector2( 0, 0 )
 32/modulate = Color( 1, 1, 1, 1 )
 32/region = Rect2( 416, 192, 32, 32 )
