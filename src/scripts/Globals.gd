@@ -9,5 +9,7 @@ enum {
 
 var mode = PLAY
 
+var remove_trees = false
+
 func _ready():
 	pass # Replace with function body.

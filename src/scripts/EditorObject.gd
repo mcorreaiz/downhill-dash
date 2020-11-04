@@ -12,19 +12,23 @@ onready var camera = cam_container.get_node("Camera2D")
 func _ready():
 	Globals.mode = Globals.EDIT
 	camera.current = true
+	spawn_trees()
 
 func _process(delta):
 	global_position = get_global_mouse_position()
 	can_place = !item_select.get_rect().has_point(get_viewport().get_mouse_position())
 	
-	if Input.is_action_just_released("mb_left"):
-		if current_item != null and can_place:
-			var new_item = current_item.instance()
-			level.add_child(new_item)
-			new_item.global_position = global_position
-			
-		current_item = null
-		$Sprite.texture = null
+	if Globals.remove_trees:
+		pass
+	else:
+		if Input.is_action_just_released("mb_left"):
+			if current_item != null and can_place:
+				var new_item = current_item.instance()
+				level.add_child(new_item)
+				new_item.global_position = global_position
+				
+			current_item = null
+			$Sprite.texture = null
 		
 func _unhandled_input(event):
 	is_panning = Input.is_action_pressed("mb_right")
@@ -38,7 +42,19 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and is_panning:
 		var original = cam_container.global_position
 		cam_container.global_position = Vector2(
-			clamp(cam_container.global_position.x, -4000, 4000),
-			clamp(cam_container.global_position.y, -4000, 4000)
+			clamp(cam_container.global_position.x, -1000, 1000),
+			clamp(cam_container.global_position.y, 0, 4000)
 		)
 		cam_container.global_position -= event.relative * camera.zoom
+
+func spawn_trees():
+	var tree = preload("res://scenes/objects/Tree.tscn")
+	var bg = level.get_node("Background")
+	var size = bg.rect_size
+	var pos = bg.rect_position
+	for i in range(pos.x, pos.x + size.x, 100):
+		for j in range(pos.y, pos.y + size.y, 100):
+			if randf() > 0.3:
+				var new_tree = tree.instance()
+				level.add_child(new_tree)
+				new_tree.global_position = Vector2(i + (randi() % 50 - 25), j + (randi() % 50 - 25))
