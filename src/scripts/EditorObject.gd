@@ -54,7 +54,13 @@ func spawn_trees():
 	var pos = bg.rect_position
 	for i in range(pos.x, pos.x + size.x, 100):
 		for j in range(pos.y, pos.y + size.y, 100):
-			if randf() > 0.3:
+			if randf() > 0.3 and not_close_to_start_line(Vector2(i + 100, j - 200)):
 				var new_tree = tree.instance()
 				level.add_child(new_tree)
 				new_tree.global_position = Vector2(i + (randi() % 50 - 25), j + (randi() % 50 - 25))
+
+func not_close_to_start_line(p):
+	var sl = level.get_node("StartLine")
+	var scaled = Rect2(sl.position, sl.get_region_rect().size * sl.scale)
+	var p_rect = Rect2(p, Vector2(200, 400))
+	return ! scaled.intersects(p_rect)
