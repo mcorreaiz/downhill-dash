@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/sprites/Tilemap.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/snowTrees.png" type="Texture" id=1]
 [ext_resource path="res://scripts/objects/Tree.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 45.6707
+radius = 36.1351
 
 [node name="Tree" type="Area2D"]
 monitoring = false
@@ -12,10 +12,9 @@ monitorable = false
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2.1189, -4.6289 )
+position = Vector2( 3.1784, 2.25761 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-region_enabled = true
 region_rect = Rect2( 513, 131, 97, 119 )
