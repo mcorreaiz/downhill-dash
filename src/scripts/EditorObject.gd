@@ -4,10 +4,14 @@ var can_place = true
 var is_panning = false
 var current_item = null
 
+var do_save = false
+
 onready var level = get_node("../Level")
 onready var cam_container = get_node("../CamContainer")
 onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var camera = cam_container.get_node("Camera2D")
+
+onready var popup : FileDialog = get_node("../ItemSelect/FileDialog")
 
 func _ready():
 	Globals.mode = Globals.EDIT
@@ -21,17 +25,31 @@ func _process(delta):
 	if Globals.remove_trees or Globals.add_trees:
 		pass
 	else:
-		if Input.is_action_just_released("mb_left"):
-			if current_item != null and can_place:
-				var new_item = current_item.instance()
-				level.add_child(new_item)
-				new_item.global_position = global_position
-				
-			current_item = null
-			$Sprite.texture = null
+		if (!Globals.filesystem_shown):
+			if Input.is_action_just_released("mb_left"):
+				if current_item != null and can_place:
+					var new_item = current_item.instance()
+					level.add_child(new_item)
+					new_item.global_position = global_position
+					
+				current_item = null
+				$Sprite.texture = null
+		
+	if Input.is_action_pressed("save"):
+		Globals.filesystem_shown = true
+		do_save = true
+		popup.mode = 4
+		popup.show()
+	
+	if Input.is_action_pressed("load"):
+		Globals.filesystem_shown = true
+		do_save = true
+		popup.mode = 0
+		popup.show()
 		
 func _unhandled_input(event):
-	is_panning = Input.is_action_pressed("mb_right")
+	if (!Globals.filesystem_shown):
+		is_panning = Input.is_action_pressed("mb_right")
 	
 	if event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == BUTTON_WHEEL_UP:

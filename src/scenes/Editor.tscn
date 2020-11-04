@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/EditorObject.gd" type="Script" id=1]
 [ext_resource path="res://scenes/items/ItemSelect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sprites/snow.png" type="Texture" id=3]
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=4]
+[ext_resource path="res://scenes/FileDialog.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
@@ -68,6 +69,18 @@ Usa la rueda y el boton derecho del mouse para manejar
 la camara.
 Usa la herramienta \"Agregar/Quitar árboles\" para formar
 la pista. "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="ItemSelect"]
+visible = true
+margin_left = 34.0
+margin_top = 126.0
+margin_right = 406.0
+margin_bottom = 394.0
+filters = PoolStringArray( "*.tscn" )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

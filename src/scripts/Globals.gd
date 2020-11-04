@@ -13,5 +13,7 @@ var mode = PLAY
 var remove_trees = false
 var add_trees = false
 
+var filesystem_shown= false
+
 func _ready():
 	pass # Replace with function body.
