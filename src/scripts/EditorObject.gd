@@ -18,7 +18,7 @@ func _process(delta):
 	global_position = get_global_mouse_position()
 	can_place = !item_select.get_rect().has_point(get_viewport().get_mouse_position())
 	
-	if Globals.remove_trees:
+	if Globals.remove_trees or Globals.add_trees:
 		pass
 	else:
 		if Input.is_action_just_released("mb_left"):

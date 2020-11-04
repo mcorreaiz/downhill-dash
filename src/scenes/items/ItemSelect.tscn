@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/items/ItemJump.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/items/ItemAddTrees.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/items/ItemRock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/items/ItemRemoveTrees.tscn" type="PackedScene" id=4]
 
@@ -15,30 +16,35 @@ margin_right = -10.0
 margin_bottom = 280.0
 mouse_filter = 1
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 143.0
 margin_bottom = 263.0
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_constants/separation = 5
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/ScrollContainer"]
-margin_right = 125.0
-margin_bottom = 104.0
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 136.0
+margin_bottom = 31.0
+text = "Add Objects
+(Drag and Drop)"
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 136.0
+margin_bottom = 86.0
 custom_constants/hseparation = 25
 columns = 2
 
-[node name="ItemRock" parent="PanelContainer/ScrollContainer/GridContainer" instance=ExtResource( 3 )]
+[node name="ItemRock" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource( 3 )]
 margin_right = 50.0
 margin_bottom = 50.0
 
-[node name="ItemJump" parent="PanelContainer/ScrollContainer/GridContainer" instance=ExtResource( 1 )]
+[node name="ItemJump" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 75.0
@@ -46,8 +52,26 @@ margin_right = 125.0
 margin_bottom = 50.0
 rect_scale = Vector2( 1, 1 )
 
-[node name="ItemRemoveTrees" parent="PanelContainer/ScrollContainer/GridContainer" instance=ExtResource( 4 )]
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_top = 91.0
+margin_right = 136.0
+margin_bottom = 122.0
+text = "Add/Remove Trees
+(Mode On/Off)"
+
+[node name="GridContainer2" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 127.0
+margin_right = 136.0
+margin_bottom = 177.0
+custom_constants/hseparation = 25
+columns = 2
+
+[node name="ItemAddTrees" parent="PanelContainer/VBoxContainer/GridContainer2" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 54.0
-margin_bottom = 104.0
+
+[node name="ItemRemoveTrees" parent="PanelContainer/VBoxContainer/GridContainer2" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 75.0
+margin_right = 125.0

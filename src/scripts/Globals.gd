@@ -9,7 +9,9 @@ enum {
 
 var mode = PLAY
 
+# Editor vars
 var remove_trees = false
+var add_trees = false
 
 func _ready():
 	pass # Replace with function body.
