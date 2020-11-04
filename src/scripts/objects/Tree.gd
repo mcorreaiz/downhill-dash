@@ -1,8 +1,8 @@
 extends Area2D
 
 func _ready():
-	connect("mouse_entered", self, "_remove")
+	connect("area_entered", self, "_add_remove")
 
-func _remove():
-	if Globals.remove_trees and Input.is_action_pressed("mb_left"):
-		visible = false
+func _add_remove(a):
+	if Input.is_action_pressed("mb_left"):
+		$CollisionShape2D.visible = ($CollisionShape2D.visible or Globals.add_trees) and ! Globals.remove_trees
