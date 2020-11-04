@@ -7,6 +7,10 @@ var current_item = null
 var do_save = false
 
 onready var level = get_node("../Level")
+
+onready var bg = level.get_node("Background")
+onready var sl = level.get_node("StartLine")
+
 onready var cam_container = get_node("../CamContainer")
 onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var camera = cam_container.get_node("Camera2D")
@@ -30,6 +34,7 @@ func _process(delta):
 				if current_item != null and can_place:
 					var new_item = current_item.instance()
 					level.add_child(new_item)
+					new_item.owner = level
 					new_item.global_position = global_position
 					
 				current_item = null
@@ -82,3 +87,35 @@ func not_close_to_start_line(p):
 	var scaled = Rect2(sl.position, sl.get_region_rect().size * sl.scale)
 	var p_rect = Rect2(p, Vector2(200, 400))
 	return ! scaled.intersects(p_rect)
+
+func save_level():
+	var toSave : PackedScene = PackedScene.new()
+	#Make the level owner of child nodes so they get saved
+	bg.owner = level
+	sl.owner = level
+	#tile_map.owner = level
+	toSave.pack(level)
+	ResourceSaver.save(popup.current_path + ".tscn", toSave)
+
+func load_level():
+	var toLoad : PackedScene = PackedScene.new()
+	toLoad = ResourceLoader.load(popup.current_path)
+	var this_level = toLoad.instance()
+	get_parent().remove_child(level)
+	level.queue_free()
+	get_parent().add_child(this_level)
+	sl = get_parent().get_node("Level/StartLine")
+	bg = get_parent().get_node("Level/Background")
+	level = this_level
+
+func _on_FileDialog_confirmed():
+	if popup.window_title == "Save a File":
+		save_level()
+	else:
+		load_level()
+	pass # Replace with function body.
+
+func _on_FileDialog_hide():
+	Globals.filesystem_shown = false
+	do_save = false
+	pass # Replace with function body.
