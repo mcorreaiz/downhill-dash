@@ -31,7 +31,7 @@ __meta__ = {
 }
 
 [node name="StartLine" type="Sprite" parent="Level"]
-position = Vector2( 305, 119 )
+position = Vector2( -1, -134 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 4 )
 region_enabled = true
@@ -52,6 +52,7 @@ shape = SubResource( 1 )
 [node name="CamContainer" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="CamContainer"]
+zoom = Vector2( 1.5, 1.5 )
 
 [node name="ItemSelect" parent="." instance=ExtResource( 2 )]
 
@@ -65,7 +66,8 @@ custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 text = "Arrastra objetos para crear y ubicarlos.
 Usa la rueda y el boton derecho del mouse para manejar
 la camara.
-Usa la herramienta \"quitar árboles\" para formar la pista. "
+Usa la herramienta \"Agregar/Quitar árboles\" para formar
+la pista. "
 __meta__ = {
 "_edit_use_anchors_": false
 }
