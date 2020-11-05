@@ -35,16 +35,16 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 67.0
+margin_bottom = 52.0
 size_flags_vertical = 3
 text = "Crea una partida o bien únete a una ya existente"
 align = 1
 valign = 1
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
-margin_top = 71.0
+margin_top = 56.0
 margin_right = 600.0
-margin_bottom = 138.0
+margin_bottom = 108.0
 size_flags_vertical = 7
 text = "Unirse al juego"
 __meta__ = {
@@ -52,16 +52,16 @@ __meta__ = {
 }
 
 [node name="CreateButton" type="Button" parent="VBoxContainer"]
-margin_top = 142.0
+margin_top = 112.0
 margin_right = 600.0
-margin_bottom = 209.0
+margin_bottom = 164.0
 size_flags_vertical = 7
 text = "Crear juego"
 
 [node name="NameField" type="LineEdit" parent="VBoxContainer"]
-margin_top = 256.0
+margin_top = 199.0
 margin_right = 600.0
-margin_bottom = 280.0
+margin_bottom = 223.0
 size_flags_vertical = 10
 align = 1
 placeholder_text = "Nombre"
@@ -80,7 +80,6 @@ text = "Iniciar de todos modos"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="text_changed" from="VBoxContainer/NameField" to="." method="_on_NameField_text_changed"]

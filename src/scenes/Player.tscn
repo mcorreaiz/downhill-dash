@@ -6,51 +6,42 @@
 [ext_resource path="res://assets/sprites/Skier2LeftTurn.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 17.3413
+radius = 11.0417
 height = 15.502
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 0, 192, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=3]
-flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 96, 96, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=4]
-flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 0, 96, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=5]
-flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 96, 0, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=6]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=7]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 96, 0, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=8]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 96, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=9]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 96, 96, 96, 96 )
 
 [sub_resource type="AtlasTexture" id=10]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 192, 96, 96 )
 
@@ -68,6 +59,7 @@ collision_mask = 5
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.314972, -5.66965 )
 shape = SubResource( 1 )
 
 [node name="NameLabel" type="Label" parent="."]
@@ -81,6 +73,9 @@ __meta__ = {
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CurveSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )

@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 
 func _ready():
 	connect("area_entered", self, "_add_remove")
