@@ -1,5 +1,6 @@
 extends Node2D
 
+
 var can_place = true
 var is_panning = false
 var current_item = null
@@ -24,6 +25,13 @@ func _process(delta):
 		if Input.is_action_just_released("mb_left"):
 			if current_item != null and can_place:
 				var new_item = current_item.instance()
+				if new_item is RaceLine:
+					# There can only be one
+					var finish_line = level.get_node("FinishLine")
+					if finish_line == null:
+						new_item.name = "FinishLine"
+					else:
+						new_item = finish_line
 				level.add_child(new_item)
 				new_item.global_position = global_position
 				
@@ -54,13 +62,13 @@ func spawn_trees():
 	var pos = bg.rect_position
 	for i in range(pos.x, pos.x + size.x, 100):
 		for j in range(pos.y, pos.y + size.y, 100):
-			if randf() > 0.3 and not_close_to_start_line(Vector2(i + 100, j - 200)):
+			if randf() > 0.3 and not_close_to_start_line(Vector2(i + 200, j - 200)):
 				var new_tree = tree.instance()
 				level.add_child(new_tree)
 				new_tree.global_position = Vector2(i + (randi() % 50 - 25), j + (randi() % 50 - 25))
 
 func not_close_to_start_line(p):
 	var sl = level.get_node("StartLine")
-	var scaled = Rect2(sl.position, sl.get_region_rect().size * sl.scale)
+	var scaled = Rect2(sl.position, sl.get_node("Sprite").get_region_rect().size * sl.scale)
 	var p_rect = Rect2(p, Vector2(200, 400))
 	return ! scaled.intersects(p_rect)
