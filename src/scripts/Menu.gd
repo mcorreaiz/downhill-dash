@@ -15,9 +15,3 @@ func _on_JoinButton_pressed():
 
 func _on_StartButton_pressed():
 	Network.start_game()
-
-"""
-func _load_game():
-	get_tree().change_scene("res://scenes/Game.tscn")
-	queue_free()
-"""

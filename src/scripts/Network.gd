@@ -6,12 +6,11 @@ const DEFAULT_IP = '127.0.0.1'
 const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
+const track_path = "/users/juanito/tracks/primera-pista"
+
 var players = {}
 var times = {}
 var self_data = {name="", position=Vector2(300, 100), is_slave=false}
-
-signal player_disconnected
-signal server_disconnected
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -64,13 +63,27 @@ remote func _send_player_info(id, info):
 		start_game()
 
 func start_game():
-	rpc("_pre_configure_game")
+	rpc("_download_track")
 
-sync func _pre_configure_game():
-	var selfPeerID = get_tree().get_network_unique_id()
-
+sync func _download_track():
+	var http = HTTPRequest.new()
+	http.connect("request_completed", self, "_on_track_downloaded")
+	get_tree().get_root().add_child(http)
+	Firebase.get_document(track_path, http)
+	
+func _on_track_downloaded(result, response_code, headers, body):
+	var track = parse_json(body.get_string_from_utf8())
+	var track_content = track.fields.file.stringValue
+	var file = File.new()
+	file.open("res://tmp/Track.tscn", File.WRITE)
+	file.store_string(track_content)
+	file.close()
+	
+	pre_configure_game()
+	
+func pre_configure_game():
 	# Load game
-	var game = preload("res://scenes/Game.tscn").instance()
+	var game = load("res://tmp/Track.tscn").instance()
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
 	game.load_players(players)	

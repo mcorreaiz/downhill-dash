@@ -36,7 +36,6 @@ func _ready():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var response = parse_json(body.get_string_from_utf8())
-	print(response)
 
 
 func _on_NameEdit_text_changed(name):
