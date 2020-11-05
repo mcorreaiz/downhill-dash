@@ -23,6 +23,7 @@ config/icon="res://assets/sprites/icon.png"
 
 Network="*res://scripts/Network.gd"
 Globals="*res://scripts/Globals.gd"
+Firebase="*res://scripts/Firebase.gd"
 
 [display]
 
