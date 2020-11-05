@@ -1,20 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/EndRace.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/number-5.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/number-6.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/EndRaceBackground.jpg" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/number-4.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/medal-1.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/medal-2.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/medal-3.png" type="Texture" id=8]
 
 [node name="EndRace" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_clip_content = true
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.415924, 0.731337, 0.902344, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -33,14 +32,111 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MyTimeLabel" type="Label" parent="."]
-anchor_top = 0.3
+[node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
-anchor_bottom = 0.4
-margin_top = -0.200012
-margin_right = -300.0
-margin_bottom = -0.600006
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Positions" type="GridContainer" parent="."]
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.2
+anchor_bottom = 0.8
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="First" type="TextureRect" parent="Positions"]
+margin_right = 60.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+
+[node name="Second" type="TextureRect" parent="Positions"]
+margin_top = 84.0
+margin_right = 60.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
+
+[node name="Third" type="TextureRect" parent="Positions"]
+margin_top = 168.0
+margin_right = 60.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="Positions"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 252.0
+margin_right = 60.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fourth" type="TextureRect" parent="Positions"]
+margin_top = 260.0
+margin_right = 60.0
+margin_bottom = 340.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 5
+
+[node name="Fifth" type="TextureRect" parent="Positions"]
+margin_top = 344.0
+margin_right = 60.0
+margin_bottom = 424.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="Sixth" type="TextureRect" parent="Positions"]
+margin_top = 428.0
+margin_right = 60.0
+margin_bottom = 508.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+
+[node name="Names" type="GridContainer" parent="."]
+anchor_left = 0.2
+anchor_top = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.8
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="First" type="Label" parent="Names"]
+margin_right = 300.0
+margin_bottom = 80.0
 rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1
@@ -49,15 +145,183 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OpponentTimeLabel" type="Label" parent="."]
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.4
-margin_left = 298.0
-margin_top = 0.799988
-margin_right = -2.0
-margin_bottom = 0.399994
+[node name="Second" type="Label" parent="Names"]
+margin_top = 84.0
+margin_right = 300.0
+margin_bottom = 164.0
 rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Third" type="Label" parent="Names"]
+margin_top = 168.0
+margin_right = 300.0
+margin_bottom = 248.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator2" type="HSeparator" parent="Names"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 252.0
+margin_right = 300.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fourth" type="Label" parent="Names"]
+margin_top = 260.0
+margin_right = 300.0
+margin_bottom = 340.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fifth" type="Label" parent="Names"]
+margin_top = 344.0
+margin_right = 300.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sixth" type="Label" parent="Names"]
+margin_top = 428.0
+margin_right = 300.0
+margin_bottom = 508.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Times" type="GridContainer" parent="."]
+anchor_left = 0.7
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.8
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="First" type="Label" parent="Times"]
+margin_right = 120.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Second" type="Label" parent="Times"]
+margin_top = 84.0
+margin_right = 120.0
+margin_bottom = 164.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Third" type="Label" parent="Times"]
+margin_top = 168.0
+margin_right = 120.0
+margin_bottom = 248.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator3" type="HSeparator" parent="Times"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 252.0
+margin_right = 120.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fourth" type="Label" parent="Times"]
+margin_top = 260.0
+margin_right = 120.0
+margin_bottom = 340.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fifth" type="Label" parent="Times"]
+margin_top = 344.0
+margin_right = 120.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sixth" type="Label" parent="Times"]
+margin_top = 428.0
+margin_right = 120.0
+margin_bottom = 508.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1

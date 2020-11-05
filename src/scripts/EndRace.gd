@@ -1,17 +1,12 @@
-extends Control
-
-var timer: Timer = Timer.new()
+extends "Rewards.gd"
 
 var my_player
 var opponent
 
 func _ready():
 	#Timer para ejecutar cambio de escena
-	timer.set_wait_time(5)
-	timer.set_one_shot(true)
-	self.add_child(timer)
-	timer.start()
-	yield(timer, "timeout")
+	add_coins("juanito", 5, 2)
+	yield(get_tree().create_timer(10.0), "timeout")
 	go_to_main()
 	
 func set_results(players):
