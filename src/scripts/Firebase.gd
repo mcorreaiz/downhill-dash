@@ -8,11 +8,16 @@ const REGISTER_URL := "https://www.googleapis.com/identitytoolkit/v3/relyingpart
 const LOGIN_URL := "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=%s" % API_KEY
 const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents" % PROJECT_ID
 
+var user = {}
+
 func _get_request_headers() -> PoolStringArray:
 	print(API_KEY)
 	return PoolStringArray([
 		"Content-Type: application/json",
 	])
+
+func login(name):
+	user.name = name
 
 # Update or create a document
 func save_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
