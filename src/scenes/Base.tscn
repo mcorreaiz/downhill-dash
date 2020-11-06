@@ -56,13 +56,9 @@ __meta__ = {
 
 [node name="BaseTitleLabel" type="Label" parent="."]
 anchor_left = 0.4
-anchor_top = 0.4
+anchor_top = 0.1
 anchor_right = 0.6
-anchor_bottom = 0.45
-margin_left = -7.13519
-margin_top = -271.139
-margin_right = -7.13519
-margin_bottom = -271.139
+anchor_bottom = 0.1
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -74,9 +70,9 @@ __meta__ = {
 }
 
 [node name="InstructionsLabel" type="Label" parent="."]
-anchor_top = 0.6
+anchor_top = 0.2
 anchor_right = 1.0
-anchor_bottom = 0.6
+anchor_bottom = 0.2
 margin_left = 107.0
 margin_top = -38.5153
 margin_right = -122.0
@@ -94,10 +90,10 @@ __meta__ = {
 }
 
 [node name="NameEdit" type="LineEdit" parent="."]
-margin_left = 120.0
-margin_top = 451.923
-margin_right = 478.0
-margin_bottom = 475.923
+anchor_left = 0.3
+anchor_top = 0.6
+anchor_right = 0.7
+anchor_bottom = 0.6
 placeholder_text = "Ingresa tu nombre"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -152,8 +148,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
+[connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
 [connection signal="text_changed" from="NameEdit" to="." method="_on_NameEdit_text_changed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
-[connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
 [connection signal="pressed" from="Panel/GridContainer/Achievements" to="." method="_on_Achievements_pressed"]
 [connection signal="pressed" from="Panel/GridContainer/Settings" to="." method="_on_Settings_pressed"]

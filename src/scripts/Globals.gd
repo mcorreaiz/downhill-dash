@@ -16,7 +16,6 @@ var add_trees = false
 var filesystem_shown= false
 
 const PLAYER_NAME = "juanito"
-var track_owner = "juanito"
-var track_name = "primera-pista"
-var position = 3
+var track_owner = "admin"
+var track_name = "Tutorial"
 var race_bet = 5

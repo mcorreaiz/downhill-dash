@@ -8,7 +8,6 @@ const REWARDS_TABLE = {
 	180: ['360', '270', '90', '45', '-180', '-180'],
 }
 
-
 func _ready():
 	pass # Replace with function body.
 
