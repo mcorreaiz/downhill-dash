@@ -15,12 +15,15 @@ func _ready():
 	names = get_node("Names").get_children()
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
+	results = [{name="EL PEEPE", is_self=false, time=11.5},
+	{name="Otro PEEPE", is_self=false, time=12.5},
+	{name="YO", is_self=true, time=15.5},
+	{name="PEEPE", is_self=false, time=16.5}]
 	set_results(results)
 	yield(get_tree().create_timer(10.0), "timeout")
 	go_to_main()
 
 func set_results(results):
-	print(results)
 	for i in range(results.size()):
 		names[i].text = results[i].name
 		times[i].text = String(results[i].time)
@@ -41,7 +44,7 @@ func set_results(results):
 
 func _give_rewards(result, response_code, headers, body):
 	var response = parse_json(body.get_string_from_utf8())
-
+	print(response)
 	var earned_coins: int = int(REWARDS_TABLE[Globals.race_bet][self_position-1])
 	var current_coins: int = int(response.fields.coins.integerValue)
 
@@ -57,7 +60,8 @@ func _give_rewards(result, response_code, headers, body):
 	if int(response.fields.tier.integerValue) != new_tier:
 		change_tier(Firebase.user.name, new_tier)
 	# cambiar tiempo si es mejor que el anterior
-	if self_time < float(response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
+	var old_time = response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]
+	if not old_time or self_time < float(old_time):
 		change_track_time(Firebase.user.name, Globals.track_owner, Globals.track_name, self_time)
 	# actualizar cada uno de los achievements desbloqueados
 	achievement_checker(response.fields.achievements)
