@@ -15,10 +15,6 @@ func _ready():
 	names = get_node("Names").get_children()
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
-	results = [{name="EL PEEPE", is_self=false, time=11.5},
-	{name="Otro PEEPE", is_self=false, time=12.5},
-	{name="YO", is_self=true, time=15.5},
-	{name="PEEPE", is_self=false, time=16.5}]
 	set_results(results)
 	yield(get_tree().create_timer(10.0), "timeout")
 	go_to_main()
