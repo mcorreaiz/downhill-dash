@@ -45,5 +45,5 @@ func _set_self_achievements(results, response_code, headers, body):
 			textureButton.connect("pressed", self, "_achievement_set_text", ['unlocked'])
 
 func _on_backButton_pressed():
-	get_tree().change_scene("res://scenes/Base.tscn")
-	queue_free()
+	get_node(".").visible = false
+
