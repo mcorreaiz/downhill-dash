@@ -1,14 +1,9 @@
 extends Node2D
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Create Level editor
 var can_place = true
 var is_panning = false
 var current_item = null
 
-<<<<<<< HEAD
 var do_save = false
 
 onready var level = get_node("../Level")
@@ -16,13 +11,10 @@ onready var level = get_node("../Level")
 onready var bg = level.get_node("Background")
 onready var sl = level.get_node("StartLine")
 
-=======
-onready var level = get_node("../Level")
->>>>>>> Create Level editor
 onready var cam_container = get_node("../CamContainer")
-onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var camera = cam_container.get_node("Camera2D")
 
+onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var popup : FileDialog = get_node("../ItemSelect/FileDialog")
 
 func _ready():
@@ -135,3 +127,8 @@ func _on_FileDialog_hide():
 	Globals.filesystem_shown = false
 	do_save = false
 	pass # Replace with function body.
+
+
+func _on_BackButton_pressed():
+	get_tree().change_scene("res://scenes/Base.tscn")
+	queue_free()

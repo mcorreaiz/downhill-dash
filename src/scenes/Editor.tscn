@@ -36,6 +36,9 @@ is_start = true
 
 [node name="EditorObject" type="Node2D" parent="."]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="EditorObject"]
 scale = Vector2( 0.966468, 1 )
@@ -54,24 +57,7 @@ zoom = Vector2( 1.5, 1.5 )
 
 [node name="ItemSelect" parent="." instance=ExtResource( 2 )]
 
-[node name="Label" type="Label" parent="ItemSelect"]
-margin_left = 55.0
-margin_top = 12.0
-margin_right = 422.0
-margin_bottom = 49.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
-text = "Arrastra objetos para crear y ubicarlos.
-Usa la rueda y el boton derecho del mouse para manejar
-la camara.
-Usa la herramienta \"Agregar/Quitar árboles\" para formar
-la pista. "
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="FileDialog" type="FileDialog" parent="ItemSelect"]
-visible = true
 margin_left = 34.0
 margin_top = 126.0
 margin_right = 406.0
@@ -80,5 +66,44 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BackButton" type="Button" parent="ItemSelect"]
+margin_left = 22.0
+margin_top = 26.0
+margin_right = 105.0
+margin_bottom = 65.0
+text = "Volver"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="ItemSelect"]
+margin_left = 126.0
+margin_top = 12.0
+margin_right = 429.0
+margin_bottom = 114.0
+color = Color( 0.235294, 0.227451, 0.266667, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ItemSelect/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Arrastra objetos para crear y ubicarlos.
+Usa la rueda y el boton derecho del mouse 
+para manejar la camara.
+Usa la herramienta \"Agregar/Quitar árboles\"
+para formar la pista. "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="confirmed" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_confirmed"]
 [connection signal="hide" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_hide"]
+[connection signal="pressed" from="ItemSelect/BackButton" to="EditorObject" method="_on_BackButton_pressed"]
