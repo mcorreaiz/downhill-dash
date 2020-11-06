@@ -58,7 +58,7 @@ func _check_daily_request_completed(result, response_code, headers, body):
 
 func change_tier(player_name: String, new_tier: int) -> void:
 	var url := FIREBASE_FUNCTIONS_ENDPOINT_URL
-	url = url + '/checkDaily/' + player_name
+	url = url + '/changeTier/' + player_name + '/' + String(new_tier)
 	http_request(url, "_change_tier_request_completed")
 
 func _change_tier_request_completed(result, response_code, headers, body):

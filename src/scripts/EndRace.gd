@@ -16,7 +16,7 @@ func _ready():
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
 	# debugging line
-	results = [{name="EL pepe", time=10.2, is_self=false}, {name="ESTEE SEch", time=15.4, is_self=false}, {name="Yo", time=21.2, is_self=true}, {name="otro wn", time=99.2, is_self=false}]
+#	results = [{name="EL pepe", time=10.2, is_self=false}, {name="ESTEE SEch", time=15.4, is_self=false}, {name="Yo", time=21.2, is_self=true}, {name="otro wn", time=99.2, is_self=false}]
 	set_results(results)
 	#Timer para ejecutar cambio de escena
 	yield(get_tree().create_timer(10.0), "timeout")
@@ -59,7 +59,6 @@ func _give_rewards(result, response_code, headers, body):
 		new_tier = new_tier + 1
 	if int(response.fields.tier.integerValue) != new_tier:
 		change_tier(Globals.PLAYER_NAME, new_tier)
-
 	# cambiar tiempo si es mejor que el anterior
 	if self_time < float(response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
 		change_track_time(Globals.PLAYER_NAME, Globals.track_owner, Globals.track_name, self_time)
@@ -77,11 +76,6 @@ func background_highlight():
 
 func add_coin_sprite():
 	var coin_sprite = Sprite.new()
-#	var img = Image.new()
-#	var itex = ImageTexture.new()
-#	img.load('res://assets/sprites/coin.png')
-#	itex.create_from_image(img)
-
 	var stream_texture = load('res://assets/sprites/coin.png')
 	var image_texture = ImageTexture.new()
 	var image = stream_texture.get_data()
