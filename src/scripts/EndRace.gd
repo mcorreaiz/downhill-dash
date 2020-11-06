@@ -76,12 +76,11 @@ func background_highlight():
 
 func add_coin_sprite():
 	var coin_sprite = Sprite.new()
-	var stream_texture = load('res://assets/sprites/coin.png')
+	var stream_texture = load('res://assets/sprites/firstCoin.png')
 	var image_texture = ImageTexture.new()
 	var image = stream_texture.get_data()
 	image.lock() # so i can modify pixel data
 	image_texture.create_from_image(image, 0)
-
 	coin_sprite.texture = image_texture
 	coin_sprite.scale.x = 0.1
 	coin_sprite.scale.y = 0.1

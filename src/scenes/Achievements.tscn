@@ -1,0 +1,191 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/sprites/cruz.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/lock.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/AchievementsBackground.jpg" type="Texture" id=3]
+[ext_resource path="res://scripts/Achievements.gd" type="Script" id=10]
+
+[node name="Achievements" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="TextureRect"]
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="TextureRect/Panel"]
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.7
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="firstCoin" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_right = 190.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="firstPlace" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_left = 194.0
+margin_right = 384.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="creator" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_top = 108.0
+margin_right = 190.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="comeback" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_left = 194.0
+margin_top = 108.0
+margin_right = 384.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="login" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_top = 216.0
+margin_right = 190.0
+margin_bottom = 320.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="rich" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_left = 194.0
+margin_top = 216.0
+margin_right = 384.0
+margin_bottom = 320.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="addFriend" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_top = 324.0
+margin_right = 190.0
+margin_bottom = 428.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="secret" type="TextureButton" parent="TextureRect/Panel/GridContainer"]
+margin_left = 194.0
+margin_top = 324.0
+margin_right = 384.0
+margin_bottom = 428.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="AchievementLabel" type="Label" parent="TextureRect/Panel"]
+anchor_left = 0.1
+anchor_top = 0.7
+anchor_right = 0.9
+anchor_bottom = 0.85
+text = "Sala de trofeos
+Aprieta un logro para saber más"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="backButton" type="Button" parent="TextureRect/Panel"]
+anchor_left = 0.35
+anchor_top = 0.95
+anchor_right = 0.65
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer3" type="GridContainer" parent="TextureRect/Panel/backButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TextureRect/Panel/backButton/GridContainer3"]
+margin_right = 144.0
+margin_bottom = 35.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Back"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="backButton2" type="Button" parent="TextureRect/Panel"]
+anchor_left = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.08
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer2" type="GridContainer" parent="TextureRect/Panel/backButton2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/Panel/backButton2/GridContainer2"]
+margin_right = 48.0
+margin_bottom = 57.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+[connection signal="pressed" from="TextureRect/Panel/backButton" to="." method="_on_backButton_pressed"]
+[connection signal="pressed" from="TextureRect/Panel/backButton2" to="." method="_on_backButton_pressed"]
