@@ -7,7 +7,7 @@ const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
 var players = {}
-var times = {}
+var times = []
 var self_data = {name="", position=Vector2(300, 100), is_slave=false}
 
 signal player_disconnected
@@ -96,12 +96,12 @@ func notify_finish(id, time):
 	
 sync func _update_time(id, time):
 	var is_self = id == get_tree().get_network_unique_id()
-	times[id] = { time=time, name=players[id].name, is_self=is_self }
+	times.append( { time=time, name=players[id].name, is_self=is_self } )
 	
 	if times.size() == players.size():
 		# Load end
 		var end_race = preload("res://scenes/EndRace.tscn").instance()
-		end_race.set_results(times)
+		end_race.results = times
 		get_tree().get_root().add_child(end_race)
 		get_tree().set_current_scene(end_race)
 		

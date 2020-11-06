@@ -18,21 +18,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResultLabel" type="Label" parent="."]
-anchor_top = 0.2
-anchor_right = 1.0
-anchor_bottom = 0.3
-margin_top = 0.199997
-margin_bottom = 0.039978
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -40,6 +26,15 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Title" type="Label" parent="."]
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.2
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Texto detitulo"
+align = 1
+valign = 1
 
 [node name="Positions" type="GridContainer" parent="."]
 anchor_left = 0.1
@@ -54,76 +49,67 @@ __meta__ = {
 
 [node name="First" type="TextureRect" parent="Positions"]
 margin_right = 60.0
-margin_bottom = 80.0
+margin_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 6 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Second" type="TextureRect" parent="Positions"]
-margin_top = 84.0
+margin_top = 86.0
 margin_right = 60.0
-margin_bottom = 164.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 7 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Third" type="TextureRect" parent="Positions"]
-margin_top = 168.0
+margin_top = 172.0
 margin_right = 60.0
-margin_bottom = 248.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 8 )
 expand = true
-stretch_mode = 5
-
-[node name="HSeparator" type="HSeparator" parent="Positions"]
-modulate = Color( 0, 0, 0, 1 )
-margin_top = 252.0
-margin_right = 60.0
-margin_bottom = 256.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+stretch_mode = 6
 
 [node name="Fourth" type="TextureRect" parent="Positions"]
-margin_top = 260.0
+margin_top = 258.0
 margin_right = 60.0
 margin_bottom = 340.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 5 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Fifth" type="TextureRect" parent="Positions"]
 margin_top = 344.0
 margin_right = 60.0
-margin_bottom = 424.0
+margin_bottom = 426.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Sixth" type="TextureRect" parent="Positions"]
-margin_top = 428.0
+margin_top = 430.0
 margin_right = 60.0
-margin_bottom = 508.0
+margin_bottom = 512.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Names" type="GridContainer" parent="."]
-anchor_left = 0.2
+anchor_left = 0.25
 anchor_top = 0.3
-anchor_right = 0.7
+anchor_right = 0.68
 anchor_bottom = 0.8
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -132,66 +118,52 @@ __meta__ = {
 }
 
 [node name="First" type="Label" parent="Names"]
-margin_right = 300.0
-margin_bottom = 80.0
+margin_right = 258.0
+margin_bottom = 82.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
+text = "EL BROOOmas"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Second" type="Label" parent="Names"]
-margin_top = 84.0
-margin_right = 300.0
-margin_bottom = 164.0
+margin_top = 86.0
+margin_right = 258.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
+text = "Segundon"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Third" type="Label" parent="Names"]
-margin_top = 168.0
-margin_right = 300.0
-margin_bottom = 248.0
+margin_top = 172.0
+margin_right = 258.0
+margin_bottom = 254.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
+text = "YO"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSeparator2" type="HSeparator" parent="Names"]
-modulate = Color( 0, 0, 0, 1 )
-margin_top = 252.0
-margin_right = 300.0
-margin_bottom = 256.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Fourth" type="Label" parent="Names"]
-margin_top = 260.0
-margin_right = 300.0
+margin_top = 258.0
+margin_right = 258.0
 margin_bottom = 340.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -199,36 +171,32 @@ __meta__ = {
 
 [node name="Fifth" type="Label" parent="Names"]
 margin_top = 344.0
-margin_right = 300.0
-margin_bottom = 424.0
+margin_right = 258.0
+margin_bottom = 426.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Sixth" type="Label" parent="Names"]
-margin_top = 428.0
-margin_right = 300.0
-margin_bottom = 508.0
+margin_top = 430.0
+margin_right = 258.0
+margin_bottom = 512.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Times" type="GridContainer" parent="."]
-anchor_left = 0.7
+anchor_left = 0.65
 anchor_top = 0.3
-anchor_right = 0.9
+anchor_right = 0.8
 anchor_bottom = 0.8
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -237,13 +205,13 @@ __meta__ = {
 }
 
 [node name="First" type="Label" parent="Times"]
-margin_right = 120.0
-margin_bottom = 80.0
+margin_right = 90.0
+margin_bottom = 82.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "25.456"
 align = 1
 valign = 1
 __meta__ = {
@@ -251,14 +219,14 @@ __meta__ = {
 }
 
 [node name="Second" type="Label" parent="Times"]
-margin_top = 84.0
-margin_right = 120.0
-margin_bottom = 164.0
+margin_top = 86.0
+margin_right = 90.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "99.999"
 align = 1
 valign = 1
 __meta__ = {
@@ -266,36 +234,26 @@ __meta__ = {
 }
 
 [node name="Third" type="Label" parent="Times"]
-margin_top = 168.0
-margin_right = 120.0
-margin_bottom = 248.0
+margin_top = 172.0
+margin_right = 90.0
+margin_bottom = 254.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "255.555"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSeparator3" type="HSeparator" parent="Times"]
-modulate = Color( 0, 0, 0, 1 )
-margin_top = 252.0
-margin_right = 120.0
-margin_bottom = 256.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Fourth" type="Label" parent="Times"]
-margin_top = 260.0
-margin_right = 120.0
+margin_top = 258.0
+margin_right = 90.0
 margin_bottom = 340.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 __meta__ = {
@@ -304,12 +262,11 @@ __meta__ = {
 
 [node name="Fifth" type="Label" parent="Times"]
 margin_top = 344.0
-margin_right = 120.0
-margin_bottom = 424.0
+margin_right = 90.0
+margin_bottom = 426.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 __meta__ = {
@@ -317,13 +274,103 @@ __meta__ = {
 }
 
 [node name="Sixth" type="Label" parent="Times"]
-margin_top = 428.0
-margin_right = 120.0
-margin_bottom = 508.0
+margin_top = 430.0
+margin_right = 90.0
+margin_bottom = 512.0
 rect_pivot_offset = Vector2( 120.005, 74 )
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coins" type="GridContainer" parent="."]
+anchor_left = 0.8
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.8
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="First" type="Label" parent="Coins"]
+margin_right = 120.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Second" type="Label" parent="Coins"]
+margin_top = 86.0
+margin_right = 120.0
+margin_bottom = 168.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Third" type="Label" parent="Coins"]
+margin_top = 172.0
+margin_right = 120.0
+margin_bottom = 254.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "90"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fourth" type="Label" parent="Coins"]
+margin_top = 258.0
+margin_right = 120.0
+margin_bottom = 340.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fifth" type="Label" parent="Coins"]
+margin_top = 344.0
+margin_right = 120.0
+margin_bottom = 426.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sixth" type="Label" parent="Coins"]
+margin_top = 430.0
+margin_right = 120.0
+margin_bottom = 512.0
+rect_pivot_offset = Vector2( 120.005, 74 )
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 __meta__ = {

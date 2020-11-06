@@ -35,6 +35,13 @@ func add_achievement(player_name: String, achievement_name: String) -> void:
 	var url := FIREBASE_FUNCTIONS_ENDPOINT_URL
 	url = url + '/addAchievement/' + player_name + '/' + achievement_name
 	http_request(url, "_add_achievement_request_completed")
+	
+func achievement_checker(achievements):
+	var unlocked_achievements = []
+	
+	for new_achievement in unlocked_achievements:
+		add_achievement(Globals.PLAYER_NAME, new_achievement)
+
 
 func _add_achievement_request_completed(result, response_code, headers, body):
 	var response = body.get_string_from_utf8()
