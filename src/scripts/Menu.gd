@@ -39,10 +39,11 @@ func _on_TrackModal_confirmed():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var tracks = parse_json(body.get_string_from_utf8())
 	
-	for track in tracks.documents:
-		var track_name = track.name.split("/")[-1]
-		TrackList.add_item(track_name)
-		track_owner[track_name] = Firebase.user.name
+	if tracks:
+		for track in tracks.documents:
+			var track_name = track.name.split("/")[-1]
+			TrackList.add_item(track_name)
+			track_owner[track_name] = Firebase.user.name
 
 
 func _on_TrackList_nothing_selected():

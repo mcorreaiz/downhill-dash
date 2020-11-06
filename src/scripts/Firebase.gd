@@ -7,6 +7,7 @@ const PROJECT_ID := "downhill-dash"
 const REGISTER_URL := "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=%s" % API_KEY
 const LOGIN_URL := "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=%s" % API_KEY
 const FIRESTORE_URL := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents" % PROJECT_ID
+const FUNCTIONS_URL := "https://us-central1-downhill-dash.cloudfunctions.net/app"
 
 var user = {}
 
@@ -16,8 +17,9 @@ func _get_request_headers() -> PoolStringArray:
 		"Content-Type: application/json",
 	])
 
-func login(name):
-	user.name = name
+func login(name: String, http: HTTPRequest):
+	var url := FUNCTIONS_URL + "/login/" + name
+	http.request(url, ["Content-Length: 0"], false, HTTPClient.METHOD_POST)
 
 # Update or create a document
 func save_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
