@@ -13,7 +13,6 @@ var track_owner = {
 func _ready():
 	TrackList.add_item("Tutorial")
 	TrackList.select(0)
-	print(Firebase.user)
 	get_node("HUD/Coin/CoinLabel").text = String(Firebase.user.coins)
 	var path = "/users/%s/tracks?mask.fieldPaths=name" % Firebase.user.name
 	Firebase.get_document(path, http)

@@ -18,5 +18,4 @@ var filesystem_shown= false
 const PLAYER_NAME = "juanito"
 var track_owner = "admin"
 var track_name = "Tutorial"
-var position = 3
 var race_bet = 5

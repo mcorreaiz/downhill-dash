@@ -15,14 +15,12 @@ func _ready():
 	names = get_node("Names").get_children()
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
-	# debugging line
-#	results = [{name="EL pepe", time=10.2, is_self=false}, {name="ESTEE SEch", time=15.4, is_self=false}, {name="Yo", time=21.2, is_self=true}, {name="otro wn", time=99.2, is_self=false}]
 	set_results(results)
-	#Timer para ejecutar cambio de escena
 	yield(get_tree().create_timer(10.0), "timeout")
 	go_to_main()
 
 func set_results(results):
+	print(results)
 	for i in range(results.size()):
 		names[i].text = results[i].name
 		times[i].text = String(results[i].time)
