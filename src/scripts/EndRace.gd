@@ -20,7 +20,6 @@ func _ready():
 	go_to_main()
 
 func set_results(results):
-	print(results)
 	for i in range(results.size()):
 		names[i].text = results[i].name
 		times[i].text = String(results[i].time)

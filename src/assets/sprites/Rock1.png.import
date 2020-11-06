@@ -2,15 +2,24 @@
 
 importer="texture"
 type="StreamTexture"
+<<<<<<< HEAD:src/assets/sprites/Rock1.png.import
 path="res://.import/Rock1.png-c435425c42d1e3e9cac5f302e242a418.stex"
+=======
+path="res://.import/EndRaceBackground.jpg-141245b0e1ef65320dfc252d1da27989.stex"
+>>>>>>> Create Level editor:src/assets/images/EndRaceBackground.jpg.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< HEAD:src/assets/sprites/Rock1.png.import
 source_file="res://assets/sprites/Rock1.png"
 dest_files=[ "res://.import/Rock1.png-c435425c42d1e3e9cac5f302e242a418.stex" ]
+=======
+source_file="res://assets/images/EndRaceBackground.jpg"
+dest_files=[ "res://.import/EndRaceBackground.jpg-141245b0e1ef65320dfc252d1da27989.stex" ]
+>>>>>>> Create Level editor:src/assets/images/EndRaceBackground.jpg.import
 
 [params]
 

@@ -2,15 +2,33 @@
 
 importer="texture"
 type="StreamTexture"
+<<<<<<< HEAD
 path="res://.import/comeback.png-7f5cf4f5e319787abbeec96241c8ec7b.stex"
+=======
+<<<<<<< HEAD:src/assets/images/Skier BG.png.import
+path="res://.import/Skier BG.png-442bf7639d9884675142eb010b12eaed.stex"
+=======
+path="res://.import/comeback.png-7f5cf4f5e319787abbeec96241c8ec7b.stex"
+>>>>>>> Create Level editor:src/assets/sprites/comeback.png.import
+>>>>>>> Create Level editor
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< HEAD
 source_file="res://assets/sprites/comeback.png"
 dest_files=[ "res://.import/comeback.png-7f5cf4f5e319787abbeec96241c8ec7b.stex" ]
+=======
+<<<<<<< HEAD:src/assets/images/Skier BG.png.import
+source_file="res://assets/images/Skier BG.png"
+dest_files=[ "res://.import/Skier BG.png-442bf7639d9884675142eb010b12eaed.stex" ]
+=======
+source_file="res://assets/sprites/comeback.png"
+dest_files=[ "res://.import/comeback.png-7f5cf4f5e319787abbeec96241c8ec7b.stex" ]
+>>>>>>> Create Level editor:src/assets/sprites/comeback.png.import
+>>>>>>> Create Level editor
 
 [params]
 
