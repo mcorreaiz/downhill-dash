@@ -138,8 +138,8 @@ func _physics_process(delta) -> void:
 		update_animation_frame()
 
 		# Movimiento
-		move_and_slide(velocity)
-
+		velocity = move_and_slide(velocity)
+		
 		# TODO: Hacer funcionar la actualización de posición con rset
 		rpc_unreliable("_update_slave", player_id, position, sprite.frame, sprite.rotation, sprite.scale)
 		Network.update_position(player_id, position, sprite.frame, sprite.rotation, sprite.scale)

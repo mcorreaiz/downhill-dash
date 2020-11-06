@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "",
+"class": "RaceLine",
+"language": "GDScript",
+"path": "res://scripts/RaceLine.gd"
+} ]
 _global_script_class_icons={
-
+"RaceLine": ""
 }
 
 [application]
@@ -74,6 +79,7 @@ save={
 2d_physics/layer_1="walls"
 2d_physics/layer_2="player"
 2d_physics/layer_3="obstacles"
+2d_physics/layer_4="editor"
 
 [rendering]
 

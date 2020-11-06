@@ -9,7 +9,7 @@ const track_format = "/users/%s/tracks/%s"
 
 var track_path = ""
 var players = {}
-var times = {}
+var times = []
 var self_data = {name="", position=Vector2(300, 100), is_slave=false}
 
 # Called when the node enters the scene tree for the first time.
@@ -20,7 +20,6 @@ func _ready():
 func create_server(player_nickname, track_owner, track_name):
 	self_data.name = player_nickname
 	track_path = track_format % [track_owner, track_name]
-	print(track_path)
 	players[1] = self_data
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
@@ -111,12 +110,12 @@ func notify_finish(id, time):
 	
 sync func _update_time(id, time):
 	var is_self = id == get_tree().get_network_unique_id()
-	times[id] = { time=time, name=players[id].name, is_self=is_self }
+	times.append( { time=time, name=players[id].name, is_self=is_self } )
 	
 	if times.size() == players.size():
 		# Load end
 		var end_race = preload("res://scenes/EndRace.tscn").instance()
-		end_race.set_results(times)
+		end_race.results = times
 		get_tree().get_root().add_child(end_race)
 		get_tree().set_current_scene(end_race)
 		

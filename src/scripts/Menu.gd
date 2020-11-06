@@ -30,7 +30,7 @@ func _on_TrackModal_confirmed():
 	var track_index = TrackList.get_selected_items()[0]
 	var track_name = TrackList.get_item_text(track_index)
 	Network.create_server(Firebase.user.name, track_owner[track_name], track_name)
-	
+
 	CreateButton.disabled = true
 	CreateButton.text = "Hay 1 jugador en tu juego"
 	StartButton.visible = true
@@ -38,7 +38,7 @@ func _on_TrackModal_confirmed():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var tracks = parse_json(body.get_string_from_utf8())
-	
+
 	if tracks:
 		for track in tracks.documents:
 			var track_name = track.name.split("/")[-1]

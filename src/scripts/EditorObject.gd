@@ -25,7 +25,7 @@ func _ready():
 func _process(delta):
 	global_position = get_global_mouse_position()
 	can_place = !item_select.get_rect().has_point(get_viewport().get_mouse_position())
-	
+
 	if Globals.remove_trees or Globals.add_trees:
 		pass
 	else:
@@ -36,32 +36,32 @@ func _process(delta):
 					level.add_child(new_item)
 					new_item.owner = level
 					new_item.global_position = global_position
-					
+
 				current_item = null
 				$Sprite.texture = null
-		
+
 	if Input.is_action_pressed("save"):
 		Globals.filesystem_shown = true
 		do_save = true
 		popup.mode = 4
 		popup.show()
-	
+
 	if Input.is_action_pressed("load"):
 		Globals.filesystem_shown = true
 		do_save = true
 		popup.mode = 0
 		popup.show()
-		
+
 func _unhandled_input(event):
 	if (!Globals.filesystem_shown):
 		is_panning = Input.is_action_pressed("mb_right")
-	
+
 	if event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == BUTTON_WHEEL_UP:
 			camera.zoom /= 1.1 if camera.zoom.length() > 1 else 1
 		if event.is_pressed() and event.button_index == BUTTON_WHEEL_DOWN:
 			camera.zoom *= 1.1 if camera.zoom.length() < 5 else 1
-	
+
 	if event is InputEventMouseMotion and is_panning:
 		var original = cam_container.global_position
 		cam_container.global_position = Vector2(
