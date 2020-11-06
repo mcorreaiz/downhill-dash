@@ -22,9 +22,8 @@ func login(name):
 # Update or create a document
 func save_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
 	var document := { "fields": fields }
-	var body := to_json(document)
 	var url := FIRESTORE_URL + path
-	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH, body)
+	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH)
 
 
 func get_document(path: String, http: HTTPRequest) -> void:

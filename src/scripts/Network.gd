@@ -5,9 +5,9 @@ extends Node
 const DEFAULT_IP = '127.0.0.1'
 const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
+const track_format = "/users/%s/tracks/%s"
 
-const track_path = "/users/juanito/tracks/primera-pista"
-
+var track_path = ""
 var players = {}
 var times = {}
 var self_data = {name="", position=Vector2(300, 100), is_slave=false}
@@ -17,8 +17,10 @@ func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
 	get_tree().connect('network_peer_connected', self, '_on_player_connected')
 
-func create_server(player_nickname):
+func create_server(player_nickname, track_owner, track_name):
 	self_data.name = player_nickname
+	track_path = track_format % [track_owner, track_name]
+	print(track_path)
 	players[1] = self_data
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
@@ -86,7 +88,7 @@ func pre_configure_game():
 	var game = load("res://tmp/Track.tscn").instance()
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
-	game.load_players(players)	
+	game.load_players(players)
 	
 	# Remove menu
 	var menu = get_tree().get_root().get_node("Control")
