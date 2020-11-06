@@ -50,7 +50,6 @@ func _give_rewards(result, response_code, headers, body):
 	coins[self_position-1].text = String(earned_coins)
 	add_coins(Globals.PLAYER_NAME, Globals.race_bet, self_position)
 
-	var response = parse_json(body.get_string_from_utf8())
 	#esto esta muy feo pero debería funcionar
 	var new_tier = 1
 	if  current_coins+ earned_coins >= 25:

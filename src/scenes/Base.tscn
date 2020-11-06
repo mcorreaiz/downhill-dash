@@ -121,7 +121,7 @@ __meta__ = {
 
 [node name="Achievements" type="TextureButton" parent="Panel/GridContainer"]
 margin_right = 58.0
-margin_bottom = 81.0
+margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource( 5 )
@@ -131,7 +131,7 @@ stretch_mode = 5
 [node name="Settings" type="TextureButton" parent="Panel/GridContainer"]
 margin_left = 62.0
 margin_right = 120.0
-margin_bottom = 81.0
+margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource( 4 )
@@ -141,8 +141,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="Panel/GridContainer/Achievements" to="." method="_on_Achievements_pressed"]
 [connection signal="pressed" from="Panel/GridContainer/Settings" to="." method="_on_Settings_pressed"]
->>>>>>> f5c25f2 (feat(achievements): achievements on menu)
