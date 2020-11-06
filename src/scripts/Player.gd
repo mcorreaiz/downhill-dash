@@ -27,8 +27,8 @@ const MIN_DIR_Y: float = 0.4
 const ROCK_FALLING: float = 0.5
 const STUN_TIME: float = 1.5
 const STUN_INNMUNITY: float = 1.0
-const SPRITE_ANGLE_ROTATION: int = 7
-const ICE_MAX_TURN_ANGLE: float = 1.35
+const SPRITE_ANGLE_ROTATION: float = 2 * PI
+const ICE_MAX_TURN_ANGLE: float = 2 * PI / 5
 const ICE_ACCEL_MULT: float = 1.5
 const ICE_FRICT_MULT: float = 0.5
 const JUMP_MAX_AIR_TIME: float = 1.0
@@ -51,8 +51,10 @@ func init(id, name, position, is_slave):
 	player_id = id
 
 func playCurveSound():
-	pass
 	$CurveSound.play()
+	
+func get_turn_angle():
+	return clamp(abs(direction.angle_to(velocity)), 0, PI/2)
 
 func update_animation_frame():
 	var frame_count = sprite.frames.get_frame_count("default")
@@ -60,28 +62,24 @@ func update_animation_frame():
 	sprite.set_frame(frame_idx)
 
 func update_direction(delta):
-	# Hardcoded Sprite anim for rock hit
-	if stun_rotation_effect:
-		sprite.rotation += delta * SPRITE_ANGLE_ROTATION
-		return
-	if jump_effect:
+	if jump_effect or stun_rotation_effect:
 		return
 		
-	# TODO: refactorear usando angulos
+	# TODO: quizas tambien chequear si hay acelerometro en el telefono?
 	if os_name == "Android" or os_name == "iOS":
 		var acclr_read = Input.get_accelerometer().normalized()
 		accelerometer += ACCLR_READ_ADJUST * (acclr_read - accelerometer)
-		direction = Vector2(sin(accelerometer.x*PI/2),
-								max(abs(cos(accelerometer.x*PI/2)), MIN_DIR_Y))
-		rotation = direction.angle()
-		return
-	direction = (get_global_mouse_position() - global_position).normalized()
+		var acclr_angle = accelerometer.x*PI/2
+		direction = Vector2(sin(acclr_angle), abs(cos(acclr_angle)))
+	else:
+		direction = (get_global_mouse_position() - global_position)
+		
+	direction = direction.normalized()
 	direction.y = max(direction.y, MIN_DIR_Y)
-	rotation = direction.angle()
 
 func update_accel():
 	var angle_y_axis = direction.angle() - (PI / 2)
-	var turn_angle = clamp(abs(direction.angle_to(velocity)), 0, PI/2)
+	var turn_angle = get_turn_angle()
 
 	#Sound effect when there is sudden change of direction
 	if sound_effect_playing == false:
@@ -100,7 +98,6 @@ func update_accel():
 	var dir_friction = Vector2(sin(turn_angle), 0).rotated(velocity.angle()) * frict_mult
 
 	accel = (dir_accel - dir_friction) * sin(hill_slope) * gravity
-	return turn_angle
 
 func update_velocity(delta):
 	velocity += accel * delta
@@ -109,7 +106,8 @@ func update_velocity(delta):
 	velocity = velocity.clamped(current_MAX_SPEED)
 	velocity.y = max(velocity.y, MIN_SPEED_Y)
 
-func apply_modifiers(delta, turn_angle):
+func apply_modifiers(delta):
+	var turn_angle = get_turn_angle()
 	# Rock effect stuns player after falling
 	if stun_effect:
 		velocity = Vector2(0, 0)
@@ -118,8 +116,8 @@ func apply_modifiers(delta, turn_angle):
 			_on_rock_collision()
 	if jump_effect:
 		sprite.scale += Vector2(delta * jump_scale_modifier, delta * jump_scale_modifier)
-		sprite.rotation = (get_global_mouse_position() - global_position).normalized().angle()
-		sprite.rotation -= PI/2
+	if stun_rotation_effect:
+		sprite.rotation += delta * SPRITE_ANGLE_ROTATION
 
 func _physics_process(delta) -> void:
 	if is_network_master():
@@ -130,34 +128,33 @@ func _physics_process(delta) -> void:
 			return
 
 		race_time += delta
+		
+		get_node("../HUD").update_time(stepify(race_time, 0.01))
 
 		update_direction(delta)
-		var turn_angle = update_accel()
+		update_accel()
 		update_velocity(delta)
-		apply_modifiers(delta, turn_angle)
+		apply_modifiers(delta)
 		update_animation_frame()
 
 		# Movimiento
-		velocity = move_and_slide(velocity)
-
-		# Voltear sprite
-		if !facing_right and (rotation < PI/2) and (rotation > -PI/2):
-			flip()
+		move_and_slide(velocity)
 
 		# TODO: Hacer funcionar la actualización de posición con rset
-		rpc_unreliable("_update_slave", player_id, position, rotation, sprite.rotation, sprite.scale)
+		rpc_unreliable("_update_slave", player_id, position, sprite.frame, sprite.rotation, sprite.scale)
+		Network.update_position(player_id, position, sprite.frame, sprite.rotation, sprite.scale)
 
-remote func _update_slave(id, position, rotation, sprite_rotation, sprite_scale):
-	Network.update_position(id, position, rotation, sprite_rotation, sprite_scale)
+remote func _update_slave(id, position, frame, sprite_rotation, sprite_scale):
+	Network.update_position(id, position, frame, sprite_rotation, sprite_scale)
 
-func on_slave_update(new_pos, new_rot, new_sprite_rot, new_sprite_scale):
+func on_slave_update(new_pos, new_frame, new_sprite_rot, new_sprite_scale):
 	position = new_pos
-	rotation = new_rot
+	sprite.frame = new_frame
 	sprite.rotation = new_sprite_rot
 	sprite.scale = new_sprite_scale
 
 func _on_rock_collision() -> void:
-	# First timer its the "falling" animation, second its the stuntime, third its innmunity
+	# First timer is the "falling" animation, second is the stuntime, third is innmunity
 	stun_rotation_effect = true # Player can't turn
 	yield(get_tree().create_timer(ROCK_FALLING), "timeout")
 	object_stun()
@@ -172,7 +169,7 @@ func _on_ice_exit() -> void:
 	ice_effect = false
 
 func _on_jump_exit() -> void:
-	var jump_time = JUMP_MAX_AIR_TIME*velocity.length()/current_MAX_SPEED
+	var jump_time = JUMP_MAX_AIR_TIME * velocity.length() / current_MAX_SPEED
 	set_collision_mask_bit(2, false) # Air, can't collide
 	current_MAX_SPEED = MAX_SPEED * AIR_MAX_SPEED_MODIFIER
 	jump_effect = true
@@ -183,11 +180,9 @@ func _on_jump_exit() -> void:
 	set_collision_mask_bit(2, true) # Grounded, can collide again
 	current_MAX_SPEED = MAX_SPEED
 	jump_effect = false
-	var dir = (get_global_mouse_position() - global_position).normalized()
-	if dir.y < MIN_DIR_Y:
+	if direction.y < MIN_DIR_Y:
 		stun_rotation_effect = true
 		object_stun()
-	sprite.rotation = -PI/2
 
 func object_stun() -> void:
 	stun_effect = true # Player can't move
@@ -195,7 +190,7 @@ func object_stun() -> void:
 	yield(get_tree().create_timer(STUN_TIME), "timeout")
 	stun_effect = false # Player can move
 	stun_rotation_effect = false # Stop spinning
-	sprite.rotation = -PI/2
+	sprite.rotation = 0
 	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
 	set_collision_mask_bit(2, true) # Player can collide objects
 

@@ -19,3 +19,7 @@ func _on_NameEdit_text_changed(name):
 	$GameLobbyButton.disabled = isEmpty
 	$EditorButton.disabled = isEmpty
 	
+func _on_EditorButton_pressed():
+	# Go to level editor
+	get_tree().change_scene("res://scenes/Editor.tscn")
+	queue_free()

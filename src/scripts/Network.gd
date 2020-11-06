@@ -102,9 +102,9 @@ func pre_configure_game():
 remote func done_preconfiguring():
 	print("Iniciar juego")
 	
-func update_position(id, position, rotation, sprite_rotation, sprite_scale):
+func update_position(id, position, frame, sprite_rotation, sprite_scale):
 	players[id].position = position
-	players[id].instance.on_slave_update(position, rotation, sprite_rotation, sprite_scale)
+	players[id].instance.on_slave_update(position, frame, sprite_rotation, sprite_scale)
 	
 func notify_finish(id, time):
 	rpc('_update_time', id, time)

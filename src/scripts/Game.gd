@@ -10,6 +10,20 @@ func _on_player_disconnected(id):
 func _on_server_disconnected():
 	get_tree().change_scene('res://scenes/Base.tscn')
 	queue_free()
+	
+func update_hud_place():
+	var slave_pos = 0
+	var master_pos = 0
+	for player in Network.players.values():
+		if player.is_slave:
+			slave_pos = player.position.y
+		else:
+			master_pos = player.position.y
+			
+	$HUD.update_place(1 if master_pos >= slave_pos else 2)
+	
+func _process(delta):
+	update_hud_place()
 
 func load_players(players):
 	players = players
@@ -22,6 +36,7 @@ func load_players(players):
 		add_child(data.instance)
 		
 		if data.is_slave:
+			# Disable collisions
 			data.instance.set_collision_mask_bit(2, false)
 			
 		else:

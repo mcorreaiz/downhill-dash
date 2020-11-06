@@ -46,7 +46,6 @@ anchor_left = 0.6
 anchor_top = 0.5
 anchor_right = 0.8
 anchor_bottom = 0.55
-disabled = true
 text = "Crear pista"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -109,3 +108,4 @@ autoplay = true
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
 [connection signal="text_changed" from="NameEdit" to="." method="_on_NameEdit_text_changed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
