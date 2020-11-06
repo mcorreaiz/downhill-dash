@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/items/ItemSelect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sprites/snow.png" type="Texture" id=3]
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=4]
-[ext_resource path="res://scenes/FileDialog.gd" type="Script" id=5]
+[ext_resource path="res://scripts/FileDialog.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0

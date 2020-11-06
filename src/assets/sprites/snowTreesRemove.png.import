@@ -2,7 +2,6 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/EndRaceBackground.jpg-141245b0e1ef65320dfc252d1da27989.stex"
 path="res://.import/snowTreesRemove.png-fe8e491c8c23812dd995bbd895ea5353.stex"
 metadata={
 "vram_texture": false
@@ -10,8 +9,6 @@ metadata={
 
 [deps]
 
-source_file="res://assets/images/EndRaceBackground.jpg"
-dest_files=[ "res://.import/EndRaceBackground.jpg-141245b0e1ef65320dfc252d1da27989.stex" ]
 source_file="res://assets/sprites/snowTreesRemove.png"
 dest_files=[ "res://.import/snowTreesRemove.png-fe8e491c8c23812dd995bbd895ea5353.stex" ]
 

@@ -20,7 +20,6 @@ func _ready():
 func create_server(player_nickname, track_owner, track_name):
 	self_data.name = player_nickname
 	track_path = track_format % [track_owner, track_name]
-	print(track_path)
 	players[1] = self_data
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
