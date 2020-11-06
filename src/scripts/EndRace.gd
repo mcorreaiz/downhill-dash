@@ -40,7 +40,6 @@ func set_results(results):
 
 func _give_rewards(result, response_code, headers, body):
 	var response = parse_json(body.get_string_from_utf8())
-
 	var earned_coins: int = int(REWARDS_TABLE[Globals.race_bet][self_position-1])
 	var current_coins: int = int(response.fields.coins.integerValue)
 
@@ -56,7 +55,8 @@ func _give_rewards(result, response_code, headers, body):
 	if int(response.fields.tier.integerValue) != new_tier:
 		change_tier(Firebase.user.name, new_tier)
 	# cambiar tiempo si es mejor que el anterior
-	if self_time < float(response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
+	var old_times = response.fields.times.mapValue
+	if not old_times or self_time < float(old_times.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
 		change_track_time(Firebase.user.name, Globals.track_owner, Globals.track_name, self_time)
 	# actualizar cada uno de los achievements desbloqueados
 	achievement_checker(response.fields.achievements)
