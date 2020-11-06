@@ -30,7 +30,6 @@ func _achievement_set_text(key):
 func _set_self_achievements(results, response_code, headers, body):
 	var response = parse_json(body.get_string_from_utf8())
 	var achievements_dict = response.fields.achievements.mapValue.fields
-	print(achievements_dict)
 	for key in achievements_dict:
 		var textureButton = get_node("TextureRect/Panel/GridContainer/" + key)
 		if achievements_dict[key].booleanValue:

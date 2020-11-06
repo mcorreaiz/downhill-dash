@@ -35,7 +35,7 @@ func set_results(results):
 			coins[i].add_child(add_coin_sprite())
 			self_position = i + 1
 			self_time = results[i].time
-			var doc_path = '/users/' + Globals.PLAYER_NAME
+			var doc_path = '/users/' + Firebase.user.name
 			var http = HTTPRequest.new()
 			add_child(http)
 			http.connect("request_completed", self,"_give_rewards")
@@ -48,7 +48,7 @@ func _give_rewards(result, response_code, headers, body):
 	var current_coins: int = int(response.fields.coins.integerValue)
 
 	coins[self_position-1].text = String(earned_coins)
-	add_coins(Globals.PLAYER_NAME, Globals.race_bet, self_position)
+	add_coins(Firebase.user.name, Globals.race_bet, self_position)
 
 	#esto esta muy feo pero debería funcionar
 	var new_tier = 1
@@ -57,10 +57,10 @@ func _give_rewards(result, response_code, headers, body):
 	if current_coins + earned_coins >= 180:
 		new_tier = new_tier + 1
 	if int(response.fields.tier.integerValue) != new_tier:
-		change_tier(Globals.PLAYER_NAME, new_tier)
+		change_tier(Firebase.user.name, new_tier)
 	# cambiar tiempo si es mejor que el anterior
 	if self_time < float(response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
-		change_track_time(Globals.PLAYER_NAME, Globals.track_owner, Globals.track_name, self_time)
+		change_track_time(Firebase.user.name, Globals.track_owner, Globals.track_name, self_time)
 	# actualizar cada uno de los achievements desbloqueados
 	achievement_checker(response.fields.achievements)
 
