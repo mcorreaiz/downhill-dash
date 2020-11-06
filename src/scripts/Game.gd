@@ -36,6 +36,7 @@ func load_players(players):
 		add_child(data.instance)
 		
 		if data.is_slave:
+			# Disable collisions
 			data.instance.set_collision_mask_bit(2, false)
 			
 		else:

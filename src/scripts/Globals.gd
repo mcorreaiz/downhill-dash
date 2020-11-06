@@ -2,11 +2,18 @@
 
 extends Node
 
-# Called when the node enters the scene tree for the first time.
+enum {
+	PLAY
+	EDIT
+}
+
+var mode = PLAY
+
+# Editor vars
+var remove_trees = false
+var add_trees = false
+
+var filesystem_shown= false
+
 func _ready():
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/Ice.gd" type="Script" id=1]
-[ext_resource path="res://assets/sounds/ice-sound.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/ice-sound.wav" type="AudioStream" id=1]
+[ext_resource path="res://scripts/objects/Ice.gd" type="Script" id=2]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -9,7 +9,7 @@ _data = {
 }
 
 [node name="Ice" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -24,6 +24,6 @@ color = Color( 0.380392, 0.984314, 1, 1 )
 polygon = PoolVector2Array( -3.0759, -24.4314, 29.0521, -13.722, 14.248, 28.1704, -28.9043, 17.146 )
 
 [node name="IceSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 2 )
+stream = ExtResource( 1 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/sprites/snowTrees.png" type="Texture" id=1]
+[ext_resource path="res://scripts/objects/Tree.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 36.1351
+
+[node name="Tree" type="Area2D"]
+monitorable = false
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2.47955e-05, 0.668415 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="CollisionShape2D"]
+position = Vector2( -2.47955e-05, -0.668415 )
+texture = ExtResource( 1 )
+region_rect = Rect2( 513, 131, 97, 119 )
+__meta__ = {
+"_edit_lock_": true
+}
