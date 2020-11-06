@@ -1,40 +1,50 @@
 extends Control
 
-var _player_name = ""
-
 onready var CreateButton = $VBoxContainer/CreateButton
+onready var TrackList = $TrackModal/TrackList
 onready var StartButton = $StartButton
+onready var TrackModal = $TrackModal
+onready var http = $HTTPRequest
+
+var track_owner = {
+	"Tutorial": "admin",
+}
 
 func _ready():
-	_TEST_default_username() # Comment for production
-	pass
-
-func _on_NameField_text_changed(new_text):
-	_player_name = new_text
+	TrackList.add_item("Tutorial")
+	TrackList.select(0)
+	
+	var path = "/users/%s/tracks?mask.fieldPaths=name" % Firebase.user.name
+	Firebase.get_document(path, http)
 
 func _on_CreateButton_pressed():
-	if _player_name == "":
-		return
-	Network.create_server(_player_name)
-	
-	CreateButton.disabled = true
-	CreateButton.text = "Hay 1 jugador en tu juego"
-	StartButton.visible = true
+	$TrackModal.popup()
 
 func _on_JoinButton_pressed():
-	if _player_name == "":
-		return
-	Network.connect_to_server(_player_name)
+	Network.connect_to_server(Firebase.user.name)
 
 func _on_StartButton_pressed():
 	Network.start_game()
 
-"""
-func _load_game():
-	get_tree().change_scene("res://scenes/Game.tscn")
-	queue_free()
-"""
+func _on_TrackModal_confirmed():
+	var track_index = TrackList.get_selected_items()[0]
+	var track_name = TrackList.get_item_text(track_index)
+	Network.create_server(Firebase.user.name, track_owner[track_name], track_name)
 
-func _TEST_default_username():
-	_player_name = "Test"
-	$VBoxContainer/NameField.set_text("Test")
+	CreateButton.disabled = true
+	CreateButton.text = "Hay 1 jugador en tu juego"
+	StartButton.visible = true
+
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var tracks = parse_json(body.get_string_from_utf8())
+
+	if tracks:
+		for track in tracks.documents:
+			var track_name = track.name.split("/")[-1]
+			TrackList.add_item(track_name)
+			track_owner[track_name] = Firebase.user.name
+
+
+func _on_TrackList_nothing_selected():
+	TrackList.select(0)

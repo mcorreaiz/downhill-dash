@@ -13,6 +13,7 @@ var mode = PLAY
 # Editor vars
 var remove_trees = false
 var add_trees = false
+var filesystem_shown= false
 
 const PLAYER_NAME = "juanito"
 var track_owner = "juanito"

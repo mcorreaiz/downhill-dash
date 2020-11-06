@@ -27,7 +27,7 @@ anchor_top = 0.3
 anchor_right = 1.0
 anchor_bottom = 0.55
 margin_top = 68.8
-margin_bottom = 92.8
+margin_bottom = 61.8
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -35,16 +35,16 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 52.0
+margin_bottom = 80.0
 size_flags_vertical = 3
 text = "Crea una partida o bien únete a una ya existente"
 align = 1
 valign = 1
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
-margin_top = 56.0
+margin_top = 84.0
 margin_right = 600.0
-margin_bottom = 108.0
+margin_bottom = 164.0
 size_flags_vertical = 7
 text = "Unirse al juego"
 __meta__ = {
@@ -52,35 +52,56 @@ __meta__ = {
 }
 
 [node name="CreateButton" type="Button" parent="VBoxContainer"]
-margin_top = 112.0
+margin_top = 168.0
 margin_right = 600.0
-margin_bottom = 164.0
+margin_bottom = 249.0
 size_flags_vertical = 7
 text = "Crear juego"
 
-[node name="NameField" type="LineEdit" parent="VBoxContainer"]
-margin_top = 199.0
-margin_right = 600.0
-margin_bottom = 223.0
-size_flags_vertical = 10
-align = 1
-placeholder_text = "Nombre"
-
-[node name="MusicTheme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
-autoplay = true
-
 [node name="StartButton" type="Button" parent="."]
 visible = false
-anchor_top = 0.6
-anchor_right = 1.0
-anchor_bottom = 0.65
+margin_top = 672.905
+margin_right = 600.0
+margin_bottom = 739.905
 size_flags_vertical = 7
 text = "Iniciar de todos modos"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MusicTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+autoplay = true
+
+[node name="TrackModal" type="ConfirmationDialog" parent="."]
+visible = true
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.7
+window_title = "Elige la pista"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TrackList" type="ItemList" parent="TrackModal"]
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.9
+margin_left = -16.0
+margin_top = -12.48
+margin_right = 16.0
+margin_bottom = 4.96002
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
-[connection signal="text_changed" from="VBoxContainer/NameField" to="." method="_on_NameField_text_changed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="confirmed" from="TrackModal" to="." method="_on_TrackModal_confirmed"]
+[connection signal="nothing_selected" from="TrackModal/TrackList" to="." method="_on_TrackList_nothing_selected"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

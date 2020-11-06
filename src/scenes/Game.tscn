@@ -10,7 +10,7 @@
 [ext_resource path="res://scenes/jawas/Green_jawa.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/jawas/Red_jawa.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/jawas/Blue_jawa.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/RaceLine.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=11]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=12]
 
 [node name="Game" type="Node2D"]

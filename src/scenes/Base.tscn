@@ -38,6 +38,7 @@ anchor_left = 0.2
 anchor_top = 0.5
 anchor_right = 0.4
 anchor_bottom = 0.55
+disabled = true
 text = "Lobby"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -92,6 +93,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="NameEdit" type="LineEdit" parent="."]
+margin_left = 120.0
+margin_top = 451.923
+margin_right = 478.0
+margin_bottom = 475.923
+placeholder_text = "Ingresa tu nombre"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MusicTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 autoplay = true
@@ -141,7 +152,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
-[connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
+[connection signal="text_changed" from="NameEdit" to="." method="_on_NameEdit_text_changed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
 [connection signal="pressed" from="Panel/GridContainer/Achievements" to="." method="_on_Achievements_pressed"]
 [connection signal="pressed" from="Panel/GridContainer/Settings" to="." method="_on_Settings_pressed"]

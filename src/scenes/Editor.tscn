@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/EditorObject.gd" type="Script" id=1]
 [ext_resource path="res://scenes/items/ItemSelect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sprites/snow.png" type="Texture" id=3]
-[ext_resource path="res://scenes/RaceLine.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=4]
+[ext_resource path="res://scenes/FileDialog.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 75.0
+radius = 50.0
 
 [node name="Editor" type="Node2D"]
 
@@ -30,8 +31,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartLine" parent="Level" instance=ExtResource( 4 )]
-is_start = true
+[node name="StartLine" type="Sprite" parent="Level"]
+position = Vector2( -1, -134 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( -0.627319, 175, 2003.5, 79 )
+region_filter_clip = true
 
 [node name="EditorObject" type="Node2D" parent="."]
 script = ExtResource( 1 )
@@ -40,8 +46,6 @@ script = ExtResource( 1 )
 scale = Vector2( 0.966468, 1 )
 
 [node name="Area2D" type="Area2D" parent="EditorObject"]
-collision_layer = 0
-collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditorObject/Area2D"]
 shape = SubResource( 1 )
@@ -68,3 +72,16 @@ la pista. "
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FileDialog" type="FileDialog" parent="ItemSelect"]
+visible = true
+margin_left = 34.0
+margin_top = 126.0
+margin_right = 406.0
+margin_bottom = 394.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="confirmed" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_confirmed"]
+[connection signal="hide" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_hide"]
