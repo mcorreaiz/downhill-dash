@@ -132,3 +132,15 @@ func _on_FileDialog_hide():
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://scenes/Base.tscn")
 	queue_free()
+
+func _on_SaveButton_pressed():
+	Globals.filesystem_shown = true
+	do_save = true
+	popup.mode = 4
+	popup.show()
+
+func _on_LoadButton_pressed():
+	Globals.filesystem_shown = true
+	do_save = true
+	popup.mode = 0
+	popup.show()

@@ -77,6 +77,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LoadButton" type="Button" parent="ItemSelect"]
+margin_left = 444.0
+margin_top = 285.0
+margin_right = 511.0
+margin_bottom = 342.0
+text = "Cargar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveButton" type="Button" parent="ItemSelect"]
+margin_left = 521.0
+margin_top = 285.0
+margin_right = 590.0
+margin_bottom = 341.0
+text = "Guardar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ColorRect" type="ColorRect" parent="ItemSelect"]
 margin_left = 126.0
 margin_top = 12.0
@@ -107,3 +127,5 @@ __meta__ = {
 [connection signal="confirmed" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_confirmed"]
 [connection signal="hide" from="ItemSelect/FileDialog" to="EditorObject" method="_on_FileDialog_hide"]
 [connection signal="pressed" from="ItemSelect/BackButton" to="EditorObject" method="_on_BackButton_pressed"]
+[connection signal="pressed" from="ItemSelect/LoadButton" to="EditorObject" method="_on_LoadButton_pressed"]
+[connection signal="pressed" from="ItemSelect/SaveButton" to="EditorObject" method="_on_SaveButton_pressed"]

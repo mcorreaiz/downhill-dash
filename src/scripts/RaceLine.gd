@@ -17,3 +17,5 @@ func _item_clicked(viewport, event, shape_idx):
 		return
 	else:
 		._item_clicked(viewport, event, shape_idx)
+
+
