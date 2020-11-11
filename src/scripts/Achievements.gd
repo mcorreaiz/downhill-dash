@@ -18,21 +18,20 @@ var achievements_textures: Array
 func _ready():
 	ach_label = get_node("TextureRect/Panel/AchievementLabel")
 	achievements_textures = get_node("TextureRect/Panel/GridContainer").get_children()
-	
-	var http = HTTPRequest.new()
-	add_child(http)
-	http.connect("request_completed", self, "_set_self_achievements")
-	Firebase.get_document("/users/" + Globals.PLAYER_NAME, http)
+	_set_self_achievements(Firebase.user)
 
 func _achievement_set_text(key):
 	ach_label.text = "Sala de trofeos\n" + ACHIEVEMENTS_TEXT[key]
 
-func _set_self_achievements(results, response_code, headers, body):
-	var response = parse_json(body.get_string_from_utf8())
-	var achievements_dict = response.fields.achievements.mapValue.fields
+func _set_self_achievements(user):
+	print(user)
+	print(user.name)
+	print(user.achievements)
+	var achievements_dict = user.achievements
 	for key in achievements_dict:
+		print(key)
 		var textureButton = get_node("TextureRect/Panel/GridContainer/" + key)
-		if achievements_dict[key].booleanValue:
+		if achievements_dict[key]:
 			var stream_texture = load('res://assets/sprites/' + key +'.png')
 			var image_texture = ImageTexture.new()
 			var image = stream_texture.get_data()

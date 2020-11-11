@@ -1,7 +1,6 @@
 extends Control
 
 onready var http: HTTPRequest = $HTTPRequest
-var achievements_scene = preload("res://scenes/Achievements.tscn")
 
 func _on_GameLobbyButton_pressed():
 	Firebase.login($NameEdit.text, http)
@@ -24,9 +23,3 @@ func _on_EditorButton_pressed():
 	# Go to level editor
 	get_tree().change_scene("res://scenes/Editor.tscn")
 	queue_free()
-
-func _on_Achievements_pressed():
-	get_node("Achievements").visible = true
-
-func _on_Settings_pressed():
-	pass # Replace with function body.

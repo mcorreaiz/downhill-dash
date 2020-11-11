@@ -13,7 +13,7 @@ var track_owner = {
 func _ready():
 	TrackList.add_item("Tutorial")
 	TrackList.select(0)
-	get_node("HUD/Coin/CoinLabel").text = String(Firebase.user.coins)
+	get_node("Panel/GridContainer/Coin/CoinLabel").text = String(Firebase.user.coins)
 	var path = "/users/%s/tracks?mask.fieldPaths=name" % Firebase.user.name
 	Firebase.get_document(path, http)
 
@@ -34,7 +34,6 @@ func _on_TrackModal_confirmed():
 	CreateButton.disabled = true
 	CreateButton.text = "Hay 1 jugador en tu juego"
 	StartButton.visible = true
-
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var tracks = parse_json(body.get_string_from_utf8())
