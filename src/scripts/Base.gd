@@ -5,7 +5,9 @@ onready var http: HTTPRequest = $HTTPRequest
 func _ready():
 	if Firebase.user:
 		$NameEdit.text = Firebase.user.name
-
+		$GameLobbyButton.disabled = false
+		$EditorButton.disabled = false
+		
 func _on_GameLobbyButton_pressed():
 	Firebase.login($NameEdit.text, http)
 

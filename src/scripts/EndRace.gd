@@ -16,13 +16,13 @@ func _ready():
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
 	set_results(results)
-	yield(get_tree().create_timer(10.0), "timeout")
+	yield(get_tree().create_timer(5.0), "timeout")
 	go_to_main()
 
 func set_results(results):
 	for i in range(results.size()):
 		names[i].text = results[i].name
-		times[i].text = String(results[i].time)
+		times[i].text = String(stepify(results[i].time, 0.01))
 		if results[i].is_self:
 			names[i].modulate.a = 2
 			times[i].modulate.a = 2
