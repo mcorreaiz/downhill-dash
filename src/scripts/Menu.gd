@@ -34,6 +34,9 @@ func _on_TrackModal_confirmed():
 	CreateButton.disabled = true
 	CreateButton.text = "Hay 1 jugador en tu juego"
 	StartButton.visible = true
+	
+	Rewards.current_track_name = track_name
+	Rewards.current_track_owner = track_owner[track_name]
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var tracks = parse_json(body.get_string_from_utf8())
