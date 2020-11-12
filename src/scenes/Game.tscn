@@ -27,7 +27,6 @@ tile_data = PoolIntArray( -983041, 15, 0, -1048576, -1073741806, 0, -1048575, -1
 [node name="FinishLine" parent="." instance=ExtResource( 11 )]
 position = Vector2( 449.6, 4140.62 )
 scale = Vector2( 0.448927, 0.25 )
-is_finish = true
 
 [node name="Rock" parent="." groups=[
 "Rocks",

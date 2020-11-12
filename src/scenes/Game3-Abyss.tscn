@@ -1,18 +1,21 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://scenes/Green_jawa.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/jawas/Green_jawa.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Game.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Rock.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/Jump.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/Ice.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/Blue_jawa.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/objects/Rock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/objects/Jump.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/objects/Ice.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/jawas/Blue_jawa.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/music/main theme.ogg" type="AudioStream" id=8]
-[ext_resource path="res://scenes/Red_jawa.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/jawas/Red_jawa.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/tiles.tres" type="TileSet" id=10]
 [ext_resource path="res://assets/sprites/finish_line.png" type="Texture" id=11]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1
