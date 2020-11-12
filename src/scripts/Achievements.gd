@@ -18,18 +18,13 @@ var achievements_textures: Array
 func _ready():
 	ach_label = get_node("TextureRect/Panel/AchievementLabel")
 	achievements_textures = get_node("TextureRect/Panel/GridContainer").get_children()
-	_set_self_achievements(Firebase.user)
+	_set_self_achievements(Firebase.user.achievements)
 
 func _achievement_set_text(key):
 	ach_label.text = "Sala de trofeos\n" + ACHIEVEMENTS_TEXT[key]
 
-func _set_self_achievements(user):
-	print(user)
-	print(user.name)
-	print(user.achievements)
-	var achievements_dict = user.achievements
+func _set_self_achievements(achievements_dict):
 	for key in achievements_dict:
-		print(key)
 		var textureButton = get_node("TextureRect/Panel/GridContainer/" + key)
 		if achievements_dict[key]:
 			var stream_texture = load('res://assets/sprites/' + key +'.png')

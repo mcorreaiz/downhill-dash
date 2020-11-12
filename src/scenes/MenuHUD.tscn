@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/sprites/achievementsIcon.png" type="Texture" id=1]
 [ext_resource path="res://assets/sprites/settings.png" type="Texture" id=2]
 [ext_resource path="res://assets/sprites/firstCoin.png" type="Texture" id=3]
-[ext_resource path="res://scenes/MenuHUD.gd" type="Script" id=4]
+[ext_resource path="res://scripts/MenuHUD.gd" type="Script" id=4]
 
 [node name="Panel" type="Panel"]
 anchor_left = 0.75
