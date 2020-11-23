@@ -12,9 +12,9 @@ onready var bg = level.get_node("Background")
 onready var sl = level.get_node("StartLine")
 
 onready var cam_container = get_node("../CamContainer")
-onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var camera = cam_container.get_node("Camera2D")
 
+onready var item_select = get_node("../ItemSelect/PanelContainer")
 onready var popup : FileDialog = get_node("../ItemSelect/FileDialog")
 
 func _ready():
@@ -33,6 +33,13 @@ func _process(delta):
 			if Input.is_action_just_released("mb_left"):
 				if current_item != null and can_place:
 					var new_item = current_item.instance()
+					if new_item is RaceLine:
+						# There can only be one
+						var finish_line = level.get_node("FinishLine")
+						if finish_line == null:
+							new_item.name = "FinishLine"
+						else:
+							new_item = finish_line
 					level.add_child(new_item)
 					new_item.owner = level
 					new_item.global_position = global_position
@@ -61,7 +68,7 @@ func _unhandled_input(event):
 			camera.zoom /= 1.1 if camera.zoom.length() > 1 else 1
 		if event.is_pressed() and event.button_index == BUTTON_WHEEL_DOWN:
 			camera.zoom *= 1.1 if camera.zoom.length() < 5 else 1
-
+	
 	if event is InputEventMouseMotion and is_panning:
 		var original = cam_container.global_position
 		cam_container.global_position = Vector2(
@@ -77,7 +84,7 @@ func spawn_trees():
 	var pos = bg.rect_position
 	for i in range(pos.x, pos.x + size.x, 100):
 		for j in range(pos.y, pos.y + size.y, 100):
-			if randf() > 0.3 and not_close_to_start_line(Vector2(i + 100, j - 200)):
+			if randf() > 0.3 and not_close_to_start_line(Vector2(i + 200, j - 200)):
 				var new_tree = tree.instance()
 				level.add_child(new_tree)
 				new_tree.owner = level
@@ -85,7 +92,7 @@ func spawn_trees():
 
 func not_close_to_start_line(p):
 	var sl = level.get_node("StartLine")
-	var scaled = Rect2(sl.position, sl.get_region_rect().size * sl.scale)
+	var scaled = Rect2(sl.position, sl.get_node("Sprite").get_region_rect().size * sl.scale)
 	var p_rect = Rect2(p, Vector2(200, 400))
 	return ! scaled.intersects(p_rect)
 
@@ -120,3 +127,20 @@ func _on_FileDialog_hide():
 	Globals.filesystem_shown = false
 	do_save = false
 	pass # Replace with function body.
+
+
+func _on_BackButton_pressed():
+	get_tree().change_scene("res://scenes/Base.tscn")
+	queue_free()
+
+func _on_SaveButton_pressed():
+	Globals.filesystem_shown = true
+	do_save = true
+	popup.mode = 4
+	popup.show()
+
+func _on_LoadButton_pressed():
+	Globals.filesystem_shown = true
+	do_save = true
+	popup.mode = 0
+	popup.show()

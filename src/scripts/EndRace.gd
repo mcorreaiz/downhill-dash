@@ -15,17 +15,14 @@ func _ready():
 	names = get_node("Names").get_children()
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
-	# debugging line
-#	results = [{name="EL pepe", time=10.2, is_self=false}, {name="ESTEE SEch", time=15.4, is_self=false}, {name="Yo", time=21.2, is_self=true}, {name="otro wn", time=99.2, is_self=false}]
 	set_results(results)
-	#Timer para ejecutar cambio de escena
-	yield(get_tree().create_timer(10.0), "timeout")
+	yield(get_tree().create_timer(5.0), "timeout")
 	go_to_main()
 
 func set_results(results):
 	for i in range(results.size()):
 		names[i].text = results[i].name
-		times[i].text = String(results[i].time)
+		times[i].text = String(stepify(results[i].time, 0.01))
 		if results[i].is_self:
 			names[i].modulate.a = 2
 			times[i].modulate.a = 2
@@ -35,36 +32,38 @@ func set_results(results):
 			coins[i].add_child(add_coin_sprite())
 			self_position = i + 1
 			self_time = results[i].time
-			var doc_path = '/users/' + Globals.PLAYER_NAME
-			var http = HTTPRequest.new()
-			add_child(http)
-			http.connect("request_completed", self,"_give_rewards")
-			Firebase.get_document(doc_path, http)
+			_give_rewards(Firebase.user)
 
-func _give_rewards(result, response_code, headers, body):
-	var response = parse_json(body.get_string_from_utf8())
-
+func _give_rewards(user):
 	var earned_coins: int = int(REWARDS_TABLE[Globals.race_bet][self_position-1])
-	var current_coins: int = int(response.fields.coins.integerValue)
+	var current_coins: int = int(user.coins)
 
 	coins[self_position-1].text = String(earned_coins)
-	add_coins(Globals.PLAYER_NAME, Globals.race_bet, self_position)
+	add_coins(user.name, Globals.race_bet, self_position)
 
 	#esto esta muy feo pero debería funcionar
-	var new_tier = 1
+	var new_tier = 3
 	if  current_coins+ earned_coins >= 25:
-		new_tier = new_tier + 1
+		new_tier = 2
 	if current_coins + earned_coins >= 180:
-		new_tier = new_tier + 1
-	if int(response.fields.tier.integerValue) != new_tier:
-		change_tier(Globals.PLAYER_NAME, new_tier)
+		new_tier = 1
+	if int(user.tier) != new_tier:
+		change_tier(user.name, new_tier)
 	# cambiar tiempo si es mejor que el anterior
-	if self_time < float(response.fields.times.mapValue.fields[Globals.track_owner].mapValue.fields[Globals.track_name].values()[0]):
-		change_track_time(Globals.PLAYER_NAME, Globals.track_owner, Globals.track_name, self_time)
+	var old_times = user.times
+	if !old_times.has(Rewards.current_track_owner) or !old_times[Rewards.current_track_owner].has(Rewards.current_track_name) or self_time < float(old_times[Rewards.current_track_owner][Rewards.current_track_name]):
+		change_track_time(user.name, Rewards.current_track_owner, Rewards.current_track_name, self_time)
+	
 	# actualizar cada uno de los achievements desbloqueados
-	achievement_checker(response.fields.achievements)
-
-
+	if self_position == 1 && !user.achievements.firstPlace:
+		add_achievement(user.name, "firstPlace")
+	if earned_coins > 0 && !user.achievements.firstCoin:
+		add_achievement(user.name, "firstCoin")
+	if current_coins + earned_coins >= 500 && !user.achievements.rich:
+		add_achievement(user.name, "rich")
+	if new_tier == 1:
+		add_achievement(user.name, "tierOne")
+	
 func background_highlight():
 	var background = ColorRect.new()
 	background.color = Color8(90, 90, 90, 120)
@@ -74,19 +73,18 @@ func background_highlight():
 	return background
 
 func add_coin_sprite():
-	var coin_sprite = Sprite.new()
+	var coin_sprite = TextureRect.new()
 	var stream_texture = load('res://assets/sprites/firstCoin.png')
 	var image_texture = ImageTexture.new()
 	var image = stream_texture.get_data()
 	image.lock() # so i can modify pixel data
 	image_texture.create_from_image(image, 0)
 	coin_sprite.texture = image_texture
-	coin_sprite.scale.x = 0.1
-	coin_sprite.scale.y = 0.1
-	coin_sprite.position.x = 32.0
-	coin_sprite.position.y = 15.0
+	coin_sprite.expand = true
+	coin_sprite.stretch_mode = 6
+	coin_sprite.anchor_bottom = 1
+	coin_sprite.anchor_right = 1
 	coin_sprite.show_behind_parent = true
-	coin_sprite.centered = false
 	return coin_sprite
 
 func go_to_main() -> void:
