@@ -91,8 +91,8 @@ func pre_configure_game():
 	
 	# Remove menu
 	var menu = get_tree().get_root().get_node("Control")
-	get_tree().get_root().remove_child(menu)
 	menu.call_deferred("free")
+	get_tree().get_root().remove_child(menu)
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
