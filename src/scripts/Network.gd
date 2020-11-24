@@ -22,7 +22,7 @@ func create_server(player_nickname, track_owner, track_name):
 	track_path = track_format % [track_owner, track_name]
 	players[1] = self_data
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
+	print(peer.create_server(DEFAULT_PORT, MAX_PLAYERS) == OK)
 	get_tree().set_network_peer(peer)
 
 func connect_to_server(player_nickname):
@@ -41,25 +41,26 @@ func _on_player_disconnected(id):
 	players.erase(id)
 
 func _on_player_connected(connected_player_id):
-	print(players)
 	var local_player_id = get_tree().get_network_unique_id()
 	if not (get_tree().is_network_server()):
 		rpc_id(1, '_request_player_info', local_player_id, connected_player_id)
 
 remote func _request_player_info(request_from_id, player_id):
-	if get_tree().is_network_server():
-		rpc_id(request_from_id, '_send_player_info', player_id, players[player_id])
 
-# A function to be used if needed. The purpose is to request all players in the current session.
+	if get_tree().is_network_server():
+		rpc_id(request_from_id, '_send_player_info', player_id, players[player_id], track_path)
+
+# A function to be used if eventually needed. Requests all players'info in the current session.
 remote func _request_players(request_from_id):
 	if get_tree().is_network_server():
 		for peer_id in players:
 			if (peer_id != request_from_id):
-				rpc_id(request_from_id, '_send_player_info', peer_id, players[peer_id])
+				rpc_id(request_from_id, '_send_player_info', peer_id, players[peer_id], track_path)
 
-remote func _send_player_info(id, info):
+remote func _send_player_info(id, info, track_url):
 	players[id] = info
 	players[id].is_slave = true
+	track_path = track_url
 	if players.size() == MAX_PLAYERS and get_tree().is_network_server():
 		start_game()
 
@@ -67,6 +68,7 @@ func start_game():
 	rpc("_download_track")
 
 sync func _download_track():
+	print("track: ", track_path)
 	var http = HTTPRequest.new()
 	http.connect("request_completed", self, "_on_track_downloaded")
 	get_tree().get_root().add_child(http)
