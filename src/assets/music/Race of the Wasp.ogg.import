@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Race of the Wasp.ogg-b6632e266c98763feca475eb7b6afbff.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Race of the Wasp.ogg"
+dest_files=[ "res://.import/Race of the Wasp.ogg-b6632e266c98763feca475eb7b6afbff.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

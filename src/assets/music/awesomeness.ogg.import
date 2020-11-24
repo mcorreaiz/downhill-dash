@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/awesomeness.ogg-e827389743ea4a15c5c4bc622ccbd8c5.oggstr"
+
+[deps]
+
+source_file="res://assets/music/awesomeness.ogg"
+dest_files=[ "res://.import/awesomeness.ogg-e827389743ea4a15c5c4bc622ccbd8c5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
