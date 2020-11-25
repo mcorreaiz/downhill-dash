@@ -10,6 +10,8 @@ var track_owner = {
 	"Tutorial": "admin",
 }
 
+var peer = NetworkedMultiplayerENet.new()
+
 func _ready():
 	TrackList.add_item("Tutorial")
 	TrackList.select(0)
@@ -18,10 +20,14 @@ func _ready():
 	Firebase.get_document(path, http)
 
 func _on_CreateButton_pressed():
-	$TrackModal.popup()
+	if peer.create_server(Network.DEFAULT_PORT, Network.MAX_PLAYERS) == ERR_CANT_CREATE:
+		Network.connect_to_server(Firebase.user.name)
+	else:
+		peer.close_connection()
+		$TrackModal.popup()
 
 func _on_JoinButton_pressed():
-	Network.connect_to_server(Firebase.user.name)
+	pass
 
 func _on_StartButton_pressed():
 	Network.start_game()
