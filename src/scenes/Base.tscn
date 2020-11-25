@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Base.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/awesomeness.ogg" type="AudioStream" id=2]
-[ext_resource path="res://assets/images/Skier BG.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/21141.jpg" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/Nerko_One/NerkoOne-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 4 )
 
 [node name="Base" type="Control"]
 anchor_right = 1.0
@@ -35,6 +44,7 @@ anchor_left = 0.2
 anchor_top = 0.5
 anchor_right = 0.4
 anchor_bottom = 0.55
+custom_fonts/font = ExtResource( 5 )
 disabled = true
 text = "Lobby"
 __meta__ = {
@@ -46,6 +56,7 @@ anchor_left = 0.6
 anchor_top = 0.5
 anchor_right = 0.8
 anchor_bottom = 0.55
+custom_fonts/font = ExtResource( 5 )
 text = "Crear pista"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -56,9 +67,14 @@ anchor_left = 0.4
 anchor_top = 0.1
 anchor_right = 0.6
 anchor_bottom = 0.1
+margin_left = -109.681
+margin_top = 5.50204
+margin_right = 101.319
+margin_bottom = 79.502
 size_flags_horizontal = 3
 size_flags_vertical = 6
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.141176, 0.494118, 0.54902, 1 )
 text = "Downhill Dash"
 align = 1
 valign = 1
@@ -70,10 +86,11 @@ __meta__ = {
 anchor_top = 0.2
 anchor_right = 1.0
 anchor_bottom = 0.2
-margin_left = 107.0
-margin_top = -38.5153
-margin_right = -122.0
-margin_bottom = 55.4847
+margin_left = 135.272
+margin_top = 394.381
+margin_right = -113.728
+margin_bottom = 511.381
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Compite con tus amigos para ver quién
 logra bajar más rápidamente por la pista.
@@ -91,6 +108,7 @@ anchor_left = 0.3
 anchor_top = 0.6
 anchor_right = 0.7
 anchor_bottom = 0.6
+custom_fonts/font = ExtResource( 5 )
 placeholder_text = "Ingresa tu nombre"
 __meta__ = {
 "_edit_use_anchors_": false

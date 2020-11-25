@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/EditorObject.gd" type="Script" id=1]
 [ext_resource path="res://scenes/items/ItemSelect.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/RaceLine.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/FileDialog.gd" type="Script" id=5]
 [ext_resource path="res://assets/music/chill_editor_music (1).ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 75.0
@@ -73,6 +74,7 @@ margin_left = 22.0
 margin_top = 26.0
 margin_right = 105.0
 margin_bottom = 65.0
+custom_fonts/font = ExtResource( 7 )
 text = "Volver"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -83,6 +85,7 @@ margin_left = 444.0
 margin_top = 285.0
 margin_right = 511.0
 margin_bottom = 342.0
+custom_fonts/font = ExtResource( 7 )
 text = "Cargar"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -93,6 +96,7 @@ margin_left = 521.0
 margin_top = 285.0
 margin_right = 590.0
 margin_bottom = 341.0
+custom_fonts/font = ExtResource( 7 )
 text = "Guardar"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -102,7 +106,7 @@ __meta__ = {
 margin_left = 126.0
 margin_top = 12.0
 margin_right = 429.0
-margin_bottom = 114.0
+margin_bottom = 144.0
 color = Color( 0.235294, 0.227451, 0.266667, 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -116,6 +120,7 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = -5.0
 margin_bottom = -5.0
+custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Arrastra objetos para crear y ubicarlos.
 Usa la rueda y el boton derecho del mouse 
