@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/awesomeness.ogg" type="AudioStream" id=2]
-[ext_resource path="res://assets/images/Skier BG3.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/21141.jpg" type="Texture" id=3]
 [ext_resource path="res://scenes/MenuHUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Achievements.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=6]
@@ -39,6 +39,7 @@ margin_right = 600.0
 margin_bottom = 63.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.0745098, 0.172549, 0.188235, 1 )
 text = "Crea una partida o bien únete a una ya existente"
 align = 1
 valign = 1
@@ -84,6 +85,10 @@ anchor_left = 0.1
 anchor_top = 0.3
 anchor_right = 0.9
 anchor_bottom = 0.7
+margin_left = 4.495
+margin_top = 41.9526
+margin_right = 4.495
+margin_bottom = 41.9526
 window_title = "Elige la pista"
 __meta__ = {
 "_edit_use_anchors_": false
