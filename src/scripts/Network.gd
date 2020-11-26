@@ -93,10 +93,14 @@ func _on_track_downloaded(result, response_code, headers, body):
 	
 func pre_configure_game():
 	# Load game
-	var game = load(tmp_track_name()).instance()
+	# var game = load(tmp_track_name()).instance()
+	var game = load("test.tscn").instance()
+	game.set_name("Game")
+	var game_script = load("scripts/Game.gd")
+	game.set_script(game_script)
+	
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
-	game.load_players(players)
 	
 	# Remove menu
 	var menu = get_tree().get_root().get_node("Control")

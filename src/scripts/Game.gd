@@ -5,6 +5,12 @@ var players = {}
 func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
 	get_tree().connect('server_disconnected', self, '_on_server_disconnected')
+	
+	var HUD = load("scenes/HUD.tscn").instance()
+	HUD.set_name("HUD")
+	add_child(HUD)
+	
+	load_players(Network.players)
   
 func _on_player_disconnected(id):
 	players[id].instance.queue_free()
