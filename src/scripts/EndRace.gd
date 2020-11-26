@@ -9,14 +9,14 @@ var self_time: float
 var self_position: int
 
 func _ready():
-	$Title.text = "FIN DE CARRERA"
+	$Title.text = "FIN DE LA CARRERA"
 	$Title.modulate.a = 2
 	positions = get_node("Positions").get_children()
 	names = get_node("Names").get_children()
 	times = get_node("Times").get_children()
 	coins = get_node("Coins").get_children()
 	set_results(results)
-	yield(get_tree().create_timer(5.0), "timeout")
+	yield(get_tree().create_timer(6.0), "timeout")
 	go_to_main()
 
 func set_results(results):
@@ -40,10 +40,12 @@ func _give_rewards(user):
 
 	coins[self_position-1].text = String(earned_coins)
 	add_coins(user.name, Globals.race_bet, self_position)
+	
+	if earned_coins > 0:
+		$AudioStreamPlayer2D.set_stream(load('res://assets/music/end_race_win.wav'))
 
-	#esto esta muy feo pero debería funcionar
 	var new_tier = 3
-	if  current_coins+ earned_coins >= 25:
+	if  current_coins + earned_coins >= 25:
 		new_tier = 2
 	if current_coins + earned_coins >= 180:
 		new_tier = 1
