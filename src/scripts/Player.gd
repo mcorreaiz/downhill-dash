@@ -7,7 +7,7 @@ var player_id
 var finished: bool = false
 var race_time: float = 0
 
-var facing_right: bool = true
+var is_slave: bool = false
 
 var accel: Vector2 = Vector2.DOWN
 var velocity: Vector2 = Vector2.DOWN
@@ -44,11 +44,16 @@ var sound_effect_playing: bool = false
 
 remote var slave_position: Vector2 = Vector2(0, 0)
 
+func _ready():
+	if is_slave:
+		sprite.set_animation("red")
+
 func init(id, name, position, is_slave):
 	$NameLabel.text = name
 	$NameLabel.add_color_override("font_color", Color(0,0,0,1))
 	global_position = position
 	player_id = id
+	self.is_slave = is_slave
 
 func playCurveSound():
 	$CurveSound.play()
@@ -193,7 +198,3 @@ func object_stun() -> void:
 	sprite.rotation = 0
 	yield(get_tree().create_timer(STUN_INNMUNITY), "timeout")
 	set_collision_mask_bit(2, true) # Player can collide objects
-
-func flip() -> void:
-	facing_right = !facing_right
-	sprite.flip_h = !sprite.flip_h
