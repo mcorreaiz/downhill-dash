@@ -13,4 +13,4 @@ export_presets.cfg
 data_*/
 
 # tmp files
-src/tmp/
+src/tmp/*
