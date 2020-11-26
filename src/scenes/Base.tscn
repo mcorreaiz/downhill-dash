@@ -1,16 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Base.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/awesomeness.ogg" type="AudioStream" id=2]
 [ext_resource path="res://assets/images/21141.jpg" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/Nerko_One/NerkoOne-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://scenes/MenuHUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Settings.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Achievements.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 4 )
 
 [node name="Base" type="Control"]
@@ -45,8 +45,7 @@ anchor_top = 0.5
 anchor_right = 0.4
 anchor_bottom = 0.55
 custom_fonts/font = ExtResource( 5 )
-disabled = true
-text = "Lobby"
+text = "Jugar"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -82,44 +81,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InstructionsLabel" type="Label" parent="."]
-anchor_top = 0.2
-anchor_right = 1.0
-anchor_bottom = 0.2
-margin_left = 135.272
-margin_top = 394.381
-margin_right = -113.728
-margin_bottom = 511.381
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Compite con tus amigos para ver quién
-logra bajar más rápidamente por la pista.
-Para controlar tu dirección, mueve el mouse
-o toca las secciones
-laterales de la pantalla  de tu teléfono."
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="NameEdit" type="LineEdit" parent="."]
-anchor_left = 0.3
-anchor_top = 0.6
-anchor_right = 0.7
-anchor_bottom = 0.6
-custom_fonts/font = ExtResource( 5 )
-placeholder_text = "Ingresa tu nombre"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="MusicTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 autoplay = true
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="Panel" parent="." instance=ExtResource( 6 )]
+anchor_bottom = 0.08
+
+[node name="Achievements" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="Settings" parent="." instance=ExtResource( 7 )]
+visible = false
 [connection signal="pressed" from="GameLobbyButton" to="." method="_on_GameLobbyButton_pressed"]
 [connection signal="pressed" from="EditorButton" to="." method="_on_EditorButton_pressed"]
-[connection signal="text_changed" from="NameEdit" to="." method="_on_NameEdit_text_changed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
