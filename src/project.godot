@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="DownhillDash"
-run/main_scene="res://scenes/Base.tscn"
+run/main_scene="res://scenes/Login.tscn"
 config/icon="res://assets/sprites/icon.png"
 
 [autoload]
