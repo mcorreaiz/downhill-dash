@@ -49,6 +49,8 @@ func init(id, name, position, is_slave):
 	$NameLabel.add_color_override("font_color", Color(0,0,0,1))
 	global_position = position
 	player_id = id
+	if is_slave:
+		sprite.animation = "red"
 
 func playCurveSound():
 	$CurveSound.play()
