@@ -12,5 +12,3 @@ export_presets.cfg
 .mono/
 data_*/
 
-# tmp files
-src/tmp/*
