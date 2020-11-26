@@ -34,6 +34,7 @@ __meta__ = {
 }
 
 [node name="StartLine" parent="Level" instance=ExtResource( 4 )]
+position = Vector2( 284, 20.9012 )
 is_start = true
 
 [node name="EditorObject" type="Node2D" parent="."]
@@ -55,6 +56,7 @@ shape = SubResource( 1 )
 [node name="CamContainer" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="CamContainer"]
+position = Vector2( 284, 394 )
 zoom = Vector2( 1.5, 1.5 )
 
 [node name="ItemSelect" parent="." instance=ExtResource( 2 )]
@@ -64,6 +66,7 @@ margin_left = 34.0
 margin_top = 126.0
 margin_right = 406.0
 margin_bottom = 394.0
+window_title = "Guardar un Archivo"
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
