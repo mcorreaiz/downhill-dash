@@ -6,6 +6,8 @@ var current_item = null
 
 var do_save = false
 
+const TREE_PATH = "res://scenes/objects/Tree.tscn"
+
 onready var level = get_node("../Level")
 
 onready var bg = level.get_node("Background")
@@ -78,7 +80,7 @@ func _unhandled_input(event):
 		cam_container.global_position -= event.relative * camera.zoom
 
 func spawn_trees():
-	var tree = preload("res://scenes/objects/Tree.tscn")
+	var tree = preload(TREE_PATH)
 	var bg = level.get_node("Background")
 	var size = bg.rect_size
 	var pos = bg.rect_position
@@ -102,6 +104,14 @@ func save_level():
 	# Make the level owner of child nodes so they get saved
 	bg.owner = level
 	sl.owner = level
+	
+	# Delete removed trees
+	for node in level.get_children():
+		var sprite = node.get_node("CollisionShape2D")
+		if node.get_filename() == TREE_PATH and !sprite.visible:
+			print(node.get_name())
+			level.remove_child(node)
+			node.free()
 	
 	to_save.pack(level)
 	var track_name = "MyTrack"
