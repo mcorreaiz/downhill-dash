@@ -9,12 +9,12 @@ func _ready():
 	http = $HTTPRequest
 	config = ConfigFile.new()
 	var err = config.load("user://settings.cfg")
-	if err == OK:
-		if config.has_section_key("user", "playerName"):
-			playerName = config.get_value("user","playerName")
-			Firebase.login(playerName, http)
-		else:
-			$LoadingScreen.visible = false
+	if err == OK && config.has_section_key("user", "playerName"):
+		playerName = config.get_value("user","playerName")
+		Firebase.login(playerName, http)
+	else:
+		$LoadingScreen.visible = false
+	
 
 func _on_LoginButton_pressed():
 	playerName = $NameEdit.text
