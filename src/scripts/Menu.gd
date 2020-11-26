@@ -5,7 +5,6 @@ onready var TrackList = $TrackModal/TrackList
 onready var StartButton = $StartButton
 onready var TrackModal = $TrackModal
 onready var http = $HTTPRequest
-onready var Coins = $Panel/GridContainer/Coin/CoinLabel
 
 var track_owner = {
 	"Tutorial": "admin",
@@ -14,7 +13,6 @@ var track_owner = {
 func _ready():
 	TrackList.add_item("Tutorial")
 	TrackList.select(0)
-	Coins.text = String(Firebase.user.coins)
 	var path = "/users/%s/tracks?mask.fieldPaths=name" % Firebase.user.name
 	Firebase.get_document(path, http)
 	
@@ -42,7 +40,6 @@ func _on_TrackModal_confirmed():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var tracks = parse_json(body.get_string_from_utf8())
-
 	if tracks:
 		for track in tracks.documents:
 			var track_name = track.name.split("/")[-1]
@@ -54,6 +51,11 @@ func _on_TrackList_nothing_selected():
 	TrackList.select(0)
 
 func _on_player_connected():
-
 	var names = PoolStringArray(Network.get_player_names()).join(", ")
 	PlayButton.text = "Jugadores en la sala: %s" % names
+
+
+func _on_BackButton_pressed():
+	# Go to Base
+	get_tree().change_scene("res://scenes/Base.tscn")
+	queue_free()

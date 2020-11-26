@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/awesomeness.ogg" type="AudioStream" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://scenes/MenuHUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Achievements.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=6]
+[ext_resource path="res://scenes/Settings.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/return.png" type="Texture" id=8]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -108,11 +110,34 @@ __meta__ = {
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="Panel" parent="." instance=ExtResource( 4 )]
+anchor_bottom = 0.08
 
 [node name="Achievements" parent="." instance=ExtResource( 5 )]
 visible = false
+
+[node name="Settings" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[node name="BackPanel" type="Panel" parent="."]
+anchor_right = 0.08
+anchor_bottom = 0.08
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="TextureButton" parent="BackPanel"]
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+texture_normal = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="confirmed" from="TrackModal" to="." method="_on_TrackModal_confirmed"]
 [connection signal="nothing_selected" from="TrackModal/TrackList" to="." method="_on_TrackList_nothing_selected"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="pressed" from="BackPanel/BackButton" to="." method="_on_BackButton_pressed"]
