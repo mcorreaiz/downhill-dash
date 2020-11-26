@@ -93,8 +93,7 @@ func _on_track_downloaded(result, response_code, headers, body):
 	
 func pre_configure_game():
 	# Load game
-	# var game = load(tmp_track_name()).instance()
-	var game = load("test.tscn").instance()
+	var game = load(tmp_track_name()).instance()
 	game.set_name("Game")
 	var game_script = load("scripts/Game.gd")
 	game.set_script(game_script)
