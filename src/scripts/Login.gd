@@ -14,7 +14,7 @@ func _ready():
 		Firebase.login(playerName, http)
 	else:
 		$LoadingScreen.visible = false
-	
+
 
 func _on_LoginButton_pressed():
 	playerName = $NameEdit.text

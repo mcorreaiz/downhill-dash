@@ -12,34 +12,30 @@ const FUNCTIONS_URL := "https://us-central1-downhill-dash.cloudfunctions.net/app
 var user = {}
 
 func _get_request_headers() -> PoolStringArray:
-	print(API_KEY)
 	return PoolStringArray([
 		"Content-Type: application/json",
 	])
 
 func login(name: String, http: HTTPRequest):
 	var url := FUNCTIONS_URL + "/login/" + name
-	http.request(url, ["Content-Length: 0"], false, HTTPClient.METHOD_POST)
+	return http.request(url, ["Content-Length: 0"], false, HTTPClient.METHOD_POST)
 
 # Update or create a document
-func save_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
+func save_document(path: String, fields: Dictionary, http: HTTPRequest):
 	var document := { "fields": fields }
 	var url := FIRESTORE_URL + path
-	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH)
+	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH)
 
-
-func get_document(path: String, http: HTTPRequest) -> void:
+func get_document(path: String, http: HTTPRequest):
 	var url := FIRESTORE_URL + path
-	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_GET)
+	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_GET)
 
-
-func update_document(path: String, fields: Dictionary, http: HTTPRequest) -> void:
+func update_document(path: String, fields: Dictionary, http: HTTPRequest):
 	var document := { "fields": fields }
 	var body := to_json(document)
 	var url := FIRESTORE_URL + path
-	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH, body)
+	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH, body)
 
-
-func delete_document(path: String, http: HTTPRequest) -> void:
+func delete_document(path: String, http: HTTPRequest):
 	var url := FIRESTORE_URL + path
-	http.request(url, _get_request_headers(), false, HTTPClient.METHOD_DELETE)
+	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_DELETE)

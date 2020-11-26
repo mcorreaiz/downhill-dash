@@ -78,7 +78,7 @@ sync func _download_track():
 	var http = HTTPRequest.new()
 	http.connect("request_completed", self, "_on_track_downloaded")
 	get_tree().get_root().add_child(http)
-	Firebase.get_document(track_path, http)
+	var error = Firebase.get_document(track_path, http)
 	
 func _on_track_downloaded(result, response_code, headers, body):
 	var track = parse_json(body.get_string_from_utf8())
