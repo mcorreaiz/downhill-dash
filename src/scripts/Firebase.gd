@@ -14,25 +14,21 @@ var user = {}
 func _get_request_headers() -> PoolStringArray:
 	return PoolStringArray([
 		"Content-Type: application/json",
+		"Accept: application/json"
 	])
 
 func login(name: String, http: HTTPRequest):
 	var url := FUNCTIONS_URL + "/login/" + name
 	return http.request(url, ["Content-Length: 0"], false, HTTPClient.METHOD_POST)
 
-# Update or create a document
-func save_document(path: String, fields: Dictionary, http: HTTPRequest):
-	var document := { "fields": fields }
-	var url := FIRESTORE_URL + path
-	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH)
-
 func get_document(path: String, http: HTTPRequest):
 	var url := FIRESTORE_URL + path
 	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_GET)
 
+# Update or create a document
 func update_document(path: String, fields: Dictionary, http: HTTPRequest):
 	var document := { "fields": fields }
-	var body := to_json(document)
+	var body := JSON.print(document)
 	var url := FIRESTORE_URL + path
 	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH, body)
 

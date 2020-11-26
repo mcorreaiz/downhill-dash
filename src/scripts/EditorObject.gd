@@ -97,13 +97,37 @@ func not_close_to_start_line(p):
 	return ! scaled.intersects(p_rect)
 
 func save_level():
-	var toSave : PackedScene = PackedScene.new()
-	#Make the level owner of child nodes so they get saved
+	# Create file
+	var to_save : PackedScene = PackedScene.new()
+	# Make the level owner of child nodes so they get saved
 	bg.owner = level
 	sl.owner = level
-	#tile_map.owner = level
-	toSave.pack(level)
-	ResourceSaver.save(popup.current_path + ".tscn", toSave)
+	
+	to_save.pack(level)
+	var track_name = "MyTrack"
+	ResourceSaver.save(track_name + ".tscn", to_save)
+	
+	# Read file
+	var file: File = File.new()
+	file.open(track_name + ".tscn", File.READ)
+	var fileAsString: String = file.get_as_text()
+	file.close()
+	
+	# Upload file
+	var http: HTTPRequest = HTTPRequest.new()
+	add_child(http)
+	http.connect("request_completed", self, "_on_save_completed")
+	var track_format = "/users/%s/tracks/%s"
+	var track_path = track_format % [Firebase.user.name, track_name]
+	var body = {
+		"file": {
+		  "stringValue": fileAsString
+		}
+	}
+	var error = Firebase.update_document(track_path, body, http)
+
+func _on_save_completed(result, response_code, headers, body):
+	_on_BackButton_pressed()
 
 func load_level():
 	var toLoad : PackedScene = PackedScene.new()
@@ -128,16 +152,12 @@ func _on_FileDialog_hide():
 	do_save = false
 	pass # Replace with function body.
 
-
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://scenes/Base.tscn")
 	queue_free()
 
 func _on_SaveButton_pressed():
-	Globals.filesystem_shown = true
-	do_save = true
-	popup.mode = 4
-	popup.show()
+	save_level()
 
 func _on_LoadButton_pressed():
 	Globals.filesystem_shown = true
