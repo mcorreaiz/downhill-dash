@@ -78,7 +78,7 @@ sync func _download_track():
 	var http = HTTPRequest.new()
 	http.connect("request_completed", self, "_on_track_downloaded")
 	get_tree().get_root().add_child(http)
-	Firebase.get_document(track_path, http)
+	var error = Firebase.get_document(track_path, http)
 	
 func _on_track_downloaded(result, response_code, headers, body):
 	var track = parse_json(body.get_string_from_utf8())
@@ -94,9 +94,12 @@ func _on_track_downloaded(result, response_code, headers, body):
 func pre_configure_game():
 	# Load game
 	var game = load(tmp_track_name()).instance()
+	game.set_name("Game")
+	var game_script = load("scripts/Game.gd")
+	game.set_script(game_script)
+	
 	get_tree().get_root().add_child(game)
 	get_tree().set_current_scene(game)
-	game.load_players(players)
 	
 	# Remove menu
 	var menu = get_tree().get_root().get_node("Control")

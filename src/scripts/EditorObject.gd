@@ -6,6 +6,8 @@ var current_item = null
 
 var do_save = false
 
+const TREE_PATH = "res://scenes/objects/Tree.tscn"
+
 onready var level = get_node("../Level")
 
 onready var bg = level.get_node("Background")
@@ -15,7 +17,7 @@ onready var cam_container = get_node("../CamContainer")
 onready var camera = cam_container.get_node("Camera2D")
 
 onready var item_select = get_node("../ItemSelect/PanelContainer")
-onready var popup : FileDialog = get_node("../ItemSelect/FileDialog")
+onready var popup : ConfirmationDialog = get_node("../ItemSelect/SaveDialog")
 
 func _ready():
 	Globals.mode = Globals.EDIT
@@ -47,18 +49,6 @@ func _process(delta):
 				current_item = null
 				$Sprite.texture = null
 
-	if Input.is_action_pressed("save"):
-		Globals.filesystem_shown = true
-		do_save = true
-		popup.mode = 4
-		popup.show()
-
-	if Input.is_action_pressed("load"):
-		Globals.filesystem_shown = true
-		do_save = true
-		popup.mode = 0
-		popup.show()
-
 func _unhandled_input(event):
 	if (!Globals.filesystem_shown):
 		is_panning = Input.is_action_pressed("mb_right")
@@ -78,7 +68,7 @@ func _unhandled_input(event):
 		cam_container.global_position -= event.relative * camera.zoom
 
 func spawn_trees():
-	var tree = preload("res://scenes/objects/Tree.tscn")
+	var tree = preload(TREE_PATH)
 	var bg = level.get_node("Background")
 	var size = bg.rect_size
 	var pos = bg.rect_position
@@ -96,14 +86,44 @@ func not_close_to_start_line(p):
 	var p_rect = Rect2(p, Vector2(200, 400))
 	return ! scaled.intersects(p_rect)
 
-func save_level():
-	var toSave : PackedScene = PackedScene.new()
-	#Make the level owner of child nodes so they get saved
+func save_level(track_name):
+	# Create file
+	var to_save : PackedScene = PackedScene.new()
+	# Make the level owner of child nodes so they get saved
 	bg.owner = level
 	sl.owner = level
-	#tile_map.owner = level
-	toSave.pack(level)
-	ResourceSaver.save(popup.current_path + ".tscn", toSave)
+	
+	# Delete removed trees
+	for node in level.get_children():
+		var sprite = node.get_node("CollisionShape2D")
+		if node.get_filename() == TREE_PATH and !sprite.visible:
+			level.remove_child(node)
+			node.free()
+	
+	to_save.pack(level)
+	ResourceSaver.save(track_name + ".tscn", to_save)
+	
+	# Read file
+	var file: File = File.new()
+	file.open(track_name + ".tscn", File.READ)
+	var fileAsString: String = file.get_as_text()
+	file.close()
+	
+	# Upload file
+	var http: HTTPRequest = HTTPRequest.new()
+	add_child(http)
+	http.connect("request_completed", self, "_on_save_completed")
+	var track_format = "/users/%s/tracks/%s"
+	var track_path = track_format % [Firebase.user.name, track_name]
+	var body = {
+		"file": {
+		  "stringValue": fileAsString
+		}
+	}
+	var error = Firebase.update_document(track_path, body, http)
+
+func _on_save_completed(result, response_code, headers, body):
+	_on_BackButton_pressed()
 
 func load_level():
 	var toLoad : PackedScene = PackedScene.new()
@@ -116,31 +136,25 @@ func load_level():
 	bg = get_parent().get_node("Level/Background")
 	level = this_level
 
-func _on_FileDialog_confirmed():
-	if popup.window_title == "Save a File":
-		save_level()
-	else:
-		load_level()
-	pass # Replace with function body.
+func _on_SaveDialog_confirmed():
+	var track_name = popup.get_node("TrackNameEdit").text
+	save_level(track_name)
 
 func _on_FileDialog_hide():
 	Globals.filesystem_shown = false
 	do_save = false
 	pass # Replace with function body.
 
-
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://scenes/Base.tscn")
 	queue_free()
 
 func _on_SaveButton_pressed():
-	Globals.filesystem_shown = true
-	do_save = true
-	popup.mode = 4
-	popup.show()
+	popup.window_title = "Guardar pista"
+	popup.popup_centered()
 
 func _on_LoadButton_pressed():
+	popup.window_title = "Cargar pista"
 	Globals.filesystem_shown = true
 	do_save = true
-	popup.mode = 0
 	popup.show()

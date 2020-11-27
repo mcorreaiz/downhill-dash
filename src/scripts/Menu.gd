@@ -8,10 +8,13 @@ onready var http = $HTTPRequest
 
 var track_owner = {
 	"Tutorial": "admin",
+	"Abyss": "admin",
+	"Etosdeur": "admin",
 }
 
 func _ready():
-	TrackList.add_item("Tutorial")
+	for track in track_owner.keys():
+		TrackList.add_item(track)
 	TrackList.select(0)
 	var path = "/users/%s/tracks?mask.fieldPaths=name" % Firebase.user.name
 	Firebase.get_document(path, http)
