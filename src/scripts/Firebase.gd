@@ -22,16 +22,16 @@ func login(name: String, http: HTTPRequest):
 	return http.request(url, ["Content-Length: 0"], false, HTTPClient.METHOD_POST)
 
 func get_document(path: String, http: HTTPRequest):
-	var url := FIRESTORE_URL + path
+	var url := FIRESTORE_URL + path.replace(" ", "%20")
 	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_GET)
 
 # Update or create a document
 func update_document(path: String, fields: Dictionary, http: HTTPRequest):
 	var document := { "fields": fields }
 	var body := JSON.print(document)
-	var url := FIRESTORE_URL + path
+	var url := FIRESTORE_URL + path.replace(" ", "%20")
 	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_PATCH, body)
 
 func delete_document(path: String, http: HTTPRequest):
-	var url := FIRESTORE_URL + path
+	var url := FIRESTORE_URL + path.replace(" ", "%20")
 	return http.request(url, _get_request_headers(), false, HTTPClient.METHOD_DELETE)

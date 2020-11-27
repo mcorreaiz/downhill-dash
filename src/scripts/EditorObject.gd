@@ -17,7 +17,7 @@ onready var cam_container = get_node("../CamContainer")
 onready var camera = cam_container.get_node("Camera2D")
 
 onready var item_select = get_node("../ItemSelect/PanelContainer")
-onready var popup : FileDialog = get_node("../ItemSelect/FileDialog")
+onready var popup : ConfirmationDialog = get_node("../ItemSelect/SaveDialog")
 
 func _ready():
 	Globals.mode = Globals.EDIT
@@ -98,7 +98,7 @@ func not_close_to_start_line(p):
 	var p_rect = Rect2(p, Vector2(200, 400))
 	return ! scaled.intersects(p_rect)
 
-func save_level():
+func save_level(track_name):
 	# Create file
 	var to_save : PackedScene = PackedScene.new()
 	# Make the level owner of child nodes so they get saved
@@ -109,12 +109,10 @@ func save_level():
 	for node in level.get_children():
 		var sprite = node.get_node("CollisionShape2D")
 		if node.get_filename() == TREE_PATH and !sprite.visible:
-			print(node.get_name())
 			level.remove_child(node)
 			node.free()
 	
 	to_save.pack(level)
-	var track_name = "MyTrack"
 	ResourceSaver.save(track_name + ".tscn", to_save)
 	
 	# Read file
@@ -150,12 +148,9 @@ func load_level():
 	bg = get_parent().get_node("Level/Background")
 	level = this_level
 
-func _on_FileDialog_confirmed():
-	if popup.window_title == "Save a File":
-		save_level()
-	else:
-		load_level()
-	pass # Replace with function body.
+func _on_SaveDialog_confirmed():
+	var track_name = popup.get_node("TrackNameEdit").text
+	save_level(track_name)
 
 func _on_FileDialog_hide():
 	Globals.filesystem_shown = false
@@ -167,7 +162,7 @@ func _on_BackButton_pressed():
 	queue_free()
 
 func _on_SaveButton_pressed():
-	save_level()
+	popup.popup_centered()
 
 func _on_LoadButton_pressed():
 	Globals.filesystem_shown = true
