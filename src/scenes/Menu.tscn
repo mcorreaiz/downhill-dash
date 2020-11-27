@@ -38,7 +38,7 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 95.0
+margin_bottom = 63.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.0745098, 0.172549, 0.188235, 1 )
@@ -49,18 +49,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayButton" type="Button" parent="VBoxContainer"]
-margin_top = 99.0
+[node name="CreateButton" type="Button" parent="VBoxContainer"]
+margin_top = 67.0
 margin_right = 600.0
-margin_bottom = 194.0
+margin_bottom = 130.0
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 6 )
-text = "Juega en línea!"
+text = "Crea una partida"
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-margin_top = 198.0
+[node name="JoinButton" type="Button" parent="VBoxContainer"]
+margin_top = 134.0
 margin_right = 600.0
-margin_bottom = 198.0
+margin_bottom = 199.0
+size_flags_vertical = 7
+custom_fonts/font = ExtResource( 6 )
+text = "Unete a una partida"
 
 [node name="StartButton" type="Button" parent="."]
 visible = false
@@ -135,7 +138,8 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="confirmed" from="TrackModal" to="." method="_on_TrackModal_confirmed"]
 [connection signal="nothing_selected" from="TrackModal/TrackList" to="." method="_on_TrackList_nothing_selected"]

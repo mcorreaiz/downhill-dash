@@ -1,6 +1,7 @@
 extends Control
 
-onready var PlayButton = $VBoxContainer/PlayButton
+onready var CreateButton = $VBoxContainer/CreateButton
+onready var JoinButton = $VBoxContainer/JoinButton
 onready var TrackList = $TrackModal/TrackList
 onready var StartButton = $StartButton
 onready var TrackModal = $TrackModal
@@ -12,7 +13,10 @@ var track_owner = {
 	"Etosdeur": "admin",
 }
 
+var hosting = false
+
 func _ready():
+	hosting = false
 	for track in track_owner.keys():
 		TrackList.add_item(track)
 	TrackList.select(0)
@@ -21,11 +25,12 @@ func _ready():
 	
 	Network.connect('notify_lobby', self, '_on_player_connected')
 
-func _on_PlayButton_pressed():
-	if Network.test_create_server():
+func _on_CreateButton_pressed():
+	if not hosting:
 		$TrackModal.popup()
-	else:
-		Network.connect_to_server(Firebase.user.name)
+		
+func _on_JoinButton_pressed():
+	Network.connect_to_server(Firebase.user.name)
 
 func _on_StartButton_pressed():
 	Network.start_game()
@@ -35,8 +40,10 @@ func _on_TrackModal_confirmed():
 	var track_name = TrackList.get_item_text(track_index)
 	Network.setup_server(Firebase.user.name, track_owner[track_name], track_name)
 
-	PlayButton.text = "Jugadores en la sala: %s" % Firebase.user.name
+	JoinButton.disabled = true
+	CreateButton.text = "Jugadores en la sala: %s" % Firebase.user.name
 	StartButton.visible = true
+	hosting = true
 	
 	Rewards.current_track_name = track_name
 	Rewards.current_track_owner = track_owner[track_name]
@@ -55,7 +62,7 @@ func _on_TrackList_nothing_selected():
 
 func _on_player_connected():
 	var names = PoolStringArray(Network.get_player_names()).join(", ")
-	PlayButton.text = "Jugadores en la sala: %s" % names
+	CreateButton.text = "Jugadores en la sala: %s" % names
 
 
 func _on_BackButton_pressed():

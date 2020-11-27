@@ -32,6 +32,7 @@ func test_create_server():
 
 func setup_server(player_nickname, track_owner, track_name):
 	# Note: server is already created because test_create_server() was called
+	network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	self_data.name = player_nickname
 	track_path = track_format % [track_owner, track_name]
 	players[SERVER_ID] = self_data
