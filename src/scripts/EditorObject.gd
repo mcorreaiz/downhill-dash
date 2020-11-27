@@ -49,18 +49,6 @@ func _process(delta):
 				current_item = null
 				$Sprite.texture = null
 
-	if Input.is_action_pressed("save"):
-		Globals.filesystem_shown = true
-		do_save = true
-		popup.mode = 4
-		popup.show()
-
-	if Input.is_action_pressed("load"):
-		Globals.filesystem_shown = true
-		do_save = true
-		popup.mode = 0
-		popup.show()
-
 func _unhandled_input(event):
 	if (!Globals.filesystem_shown):
 		is_panning = Input.is_action_pressed("mb_right")
@@ -162,11 +150,11 @@ func _on_BackButton_pressed():
 	queue_free()
 
 func _on_SaveButton_pressed():
-	get_parent().get_node("ItemSelect/SaveDialog").window_title = "Guardar psita"
+	popup.window_title = "Guardar pista"
 	popup.popup_centered()
 
 func _on_LoadButton_pressed():
-	get_parent().get_node("ItemSelect/SaveDialog").window_title = "Cargar pista"
+	popup.window_title = "Cargar pista"
 	Globals.filesystem_shown = true
 	do_save = true
 	popup.show()
