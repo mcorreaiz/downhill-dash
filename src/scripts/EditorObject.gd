@@ -162,10 +162,11 @@ func _on_BackButton_pressed():
 	queue_free()
 
 func _on_SaveButton_pressed():
+	get_parent().get_node("ItemSelect/SaveDialog").window_title = "Guardar psita"
 	popup.popup_centered()
 
 func _on_LoadButton_pressed():
+	get_parent().get_node("ItemSelect/SaveDialog").window_title = "Cargar pista"
 	Globals.filesystem_shown = true
 	do_save = true
-	popup.mode = 0
 	popup.show()
