@@ -82,6 +82,11 @@ sync func _download_track():
 	var error = Firebase.get_document(track_path, http)
 	
 func _on_track_downloaded(result, response_code, headers, body):
+	# Remove old file
+	var dir = Directory.new()
+	if dir.file_exists(tmp_track_name()):
+		dir.remove(tmp_track_name())
+	
 	var track = parse_json(body.get_string_from_utf8())
 	var track_content = track.fields.file.stringValue
 	var file = File.new()
