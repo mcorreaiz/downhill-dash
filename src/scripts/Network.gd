@@ -159,4 +159,4 @@ func get_player_names():
 	return names
 	
 func tmp_track_name():
-	return "res://tmp/Track-%d.tscn" % network_id
+	return "user://Track-%d.tscn" % network_id
