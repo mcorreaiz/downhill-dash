@@ -13,11 +13,7 @@ var network_id = -1
 var track_path = ""
 var players = {}
 var times = []
-var self_data = {
-	name="",
-	position=Vector2(300, 100),
-	is_slave=false
-}
+var self_data = {}
 
 signal notify_lobby
 
@@ -31,19 +27,22 @@ func test_create_server():
 	return network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS) == OK
 
 func setup_server(player_nickname, track_owner, track_name):
-	# Note: server is already created because test_create_server() was called
 	network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
+	get_tree().set_network_peer(network_peer)
+	network_id = get_tree().get_network_unique_id()
+	
+	reset_players()
 	self_data.name = player_nickname
 	track_path = track_format % [track_owner, track_name]
 	players[SERVER_ID] = self_data
-	get_tree().set_network_peer(network_peer)
-	network_id = get_tree().get_network_unique_id()
 
 func connect_to_server(player_nickname):
-	self_data.name = player_nickname
 	network_peer.create_client(DEFAULT_IP, DEFAULT_PORT)
 	get_tree().set_network_peer(network_peer)
 	network_id = get_tree().get_network_unique_id()
+	
+	reset_players()
+	self_data.name = player_nickname
 
 func _connected_to_server():
 	players[network_id] = self_data
@@ -148,10 +147,14 @@ func close_connections():
 	players.clear()
 	times.clear()
 	
-func close():
+func reset_players():
 	players.clear()
-	self_data = { name="", position = Vector2(300, 100) }
-	get_tree().get_network_peer().close_connection()
+	self_data = {
+		name="",
+		position=Vector2(300, 100),
+		is_slave=false
+	}
+	# get_tree().get_network_peer().close_connection()
 
 func get_player_names():
 	var names = []
