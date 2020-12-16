@@ -8,7 +8,6 @@ const MAX_PLAYERS = 6
 const SERVER_ID = 1
 const track_format = "/users/%s/tracks/%s"
 
-var network_peer = NetworkedMultiplayerENet.new()
 var network_id = -1
 var track_path = ""
 var players = {}
@@ -23,10 +22,11 @@ func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
 	get_tree().connect('network_peer_connected', self, '_on_player_connected')
 
-func test_create_server():
-	return network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS) == OK
+#func test_create_server():
+#	return network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS) == OK
 
 func setup_server(player_nickname, track_owner, track_name):
+	var network_peer = NetworkedMultiplayerENet.new()
 	network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(network_peer)
 	network_id = get_tree().get_network_unique_id()
@@ -37,6 +37,7 @@ func setup_server(player_nickname, track_owner, track_name):
 	players[SERVER_ID] = self_data
 
 func connect_to_server(player_nickname):
+	var network_peer = NetworkedMultiplayerENet.new()
 	network_peer.create_client(DEFAULT_IP, DEFAULT_PORT)
 	get_tree().set_network_peer(network_peer)
 	network_id = get_tree().get_network_unique_id()
@@ -143,18 +144,17 @@ sync func _update_time(id, time):
 		game.call_deferred("free")
 		
 func close_connections():
+	get_tree().get_network_peer().close_connection()
 	get_tree().set_network_peer(null)
-	players.clear()
-	times.clear()
 	
 func reset_players():
 	players.clear()
+	times.clear()
 	self_data = {
 		name="",
 		position=Vector2(300, 100),
 		is_slave=false
 	}
-	# get_tree().get_network_peer().close_connection()
 
 func get_player_names():
 	var names = []
