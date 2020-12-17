@@ -151,7 +151,7 @@ margin_right = 231.0
 margin_bottom = 46.0
 popup_exclusive = true
 window_title = "No se encontró una partida"
-dialog_text = "No encontramos una aprtida en línea. Crea tu propia sala, y espera a que entren tus contrincantes.
+dialog_text = "No encontramos una partida en línea. Crea tu propia sala, y espera a que entren tus contrincantes.
 Si lo deseas, también puedes correr solo!"
 dialog_autowrap = true
 __meta__ = {

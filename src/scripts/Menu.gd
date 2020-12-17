@@ -22,15 +22,19 @@ func _ready():
 	
 	Network.connect('match_not_found', self, '_on_match_not_found')
 	Network.connect('notify_lobby', self, '_on_notify_lobby')
+	
+	StartButton.disabled = false
+	StartButton.text = "Iniciar carrera"
 		
 func _on_PlayButton_pressed():
 	if not Network.connected:
-		print(1)
 		Network.connect_to_server(Firebase.user.name)
 	
 func _on_StartButton_pressed():
 	Network.start_game()
-
+	StartButton.disabled = true
+	StartButton.text = "Cargando..."
+	
 func _on_TrackModal_confirmed():
 	var track_index = TrackList.get_selected_items()[0]
 	var track_name = TrackList.get_item_text(track_index)
