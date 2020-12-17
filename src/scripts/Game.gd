@@ -70,6 +70,7 @@ func load_players(players):
 		players[p].instance = preload("res://scenes/Player.tscn").instance()
 		
 		var data = players[p]
+		print(data)
 		data.instance.set_network_master(p)
 		data.instance.init(p, data.name, data.position, data.is_slave)
 		add_child(data.instance)
