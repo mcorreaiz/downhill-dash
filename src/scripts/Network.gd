@@ -82,6 +82,11 @@ sync func _download_track():
 	var error = Firebase.get_document(track_path, http)
 	
 func _on_track_downloaded(result, response_code, headers, body):
+	# Remove old file
+	var dir = Directory.new()
+	if dir.file_exists(tmp_track_name()):
+		dir.remove(tmp_track_name())
+	
 	var track = parse_json(body.get_string_from_utf8())
 	var track_content = track.fields.file.stringValue
 	var file = File.new()
@@ -119,6 +124,7 @@ func update_position(id, position, frame, sprite_rotation, sprite_scale):
 	players[id].instance.on_slave_update(position, frame, sprite_rotation, sprite_scale)
 	
 func notify_finish(id, time):
+	get_tree().get_root().get_node("Game").show_finish()
 	rpc('_update_time', id, time)
 	
 sync func _update_time(id, time):
@@ -154,4 +160,4 @@ func get_player_names():
 	return names
 	
 func tmp_track_name():
-	return "res://tmp/Track-%d.tscn" % network_id
+	return "user://Track-%d.tscn" % network_id

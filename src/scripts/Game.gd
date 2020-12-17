@@ -1,6 +1,8 @@
 extends Node2D
 
 var players = {}
+var seconds_timer = 3
+var instructions
 
 func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
@@ -10,7 +12,7 @@ func _ready():
 	HUD.set_name("HUD")
 	add_child(HUD)
 	
-	load_players(Network.players)
+	show_instructions()
   
 func _on_player_disconnected(id):
 	players[id].instance.queue_free()
@@ -33,6 +35,34 @@ func update_hud_place():
 	
 func _process(delta):
 	update_hud_place()
+
+func show_instructions():
+	instructions = load("scenes/GameInstructions.tscn").instance()
+	instructions.set_name("instructions")
+	get_tree().get_root().add_child(instructions)
+	
+	var timer = Timer.new()
+	timer.connect("timeout",self,"_on_initial_timer_timeout") 
+	timer.set_wait_time( 1 )
+	add_child(timer) # to process
+	timer.set_name("timer")
+	timer.start() # to start
+	
+func _on_initial_timer_timeout():
+	seconds_timer -= 1
+	
+	var counter = instructions.get_node("Counter")
+	if seconds_timer > 0:
+		counter.text = str(seconds_timer)
+	
+	if seconds_timer == 0:
+		counter.text = "¡GO!"
+	
+	if seconds_timer == -1:
+		instructions.queue_free()
+		get_node("timer").queue_free()
+		load_players(Network.players)
+	
 
 func load_players(players):
 	self.players = players.duplicate()
@@ -65,3 +95,7 @@ func connect_collisions(player):
 	var jump_group = get_tree().get_nodes_in_group("Jumps")
 	for jump in jump_group:
 		jump.connect("jump_exit", player, "_on_jump_exit")
+		
+func show_finish():
+	var goal_reached = load("scenes/GoalReached.tscn").instance()
+	add_child(goal_reached)
