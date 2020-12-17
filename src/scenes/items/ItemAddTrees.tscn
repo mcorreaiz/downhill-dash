@@ -6,3 +6,8 @@
 [node name="ItemAddTrees" instance=ExtResource( 2 )]
 texture = ExtResource( 1 )
 add_trees = true
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Agregar arbol"

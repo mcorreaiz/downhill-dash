@@ -12,3 +12,11 @@ margin_bottom = -21.6
 rect_scale = Vector2( 1.6141, 1.53413 )
 texture = ExtResource( 1 )
 this_scene = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Salto mágico"
+__meta__ = {
+"_edit_use_anchors_": false
+}

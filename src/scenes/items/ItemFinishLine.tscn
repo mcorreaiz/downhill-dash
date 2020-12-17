@@ -15,3 +15,8 @@ margin_right = 52.2448
 margin_bottom = 56.7348
 texture = SubResource( 1 )
 this_scene = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Esta es una linea"

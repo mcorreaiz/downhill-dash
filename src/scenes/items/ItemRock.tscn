@@ -4,7 +4,6 @@
 [ext_resource path="res://scenes/items/ItemTexture.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/objects/Rock.tscn" type="PackedScene" id=3]
 
-
 [node name="ItemRock" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -12,3 +11,8 @@ margin_right = 96.0
 margin_bottom = 96.0
 texture = ExtResource( 1 )
 this_scene = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Esta Roca Rocosa"

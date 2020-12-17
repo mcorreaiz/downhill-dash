@@ -6,3 +6,8 @@
 [node name="ItemRemoveTrees" instance=ExtResource( 1 )]
 texture = ExtResource( 2 )
 remove_trees = true
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Quitar árbol"
