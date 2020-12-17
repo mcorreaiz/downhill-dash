@@ -13,7 +13,6 @@ a = Vector2( 0.11344, -4.35003 )
 b = Vector2( 0.11344, 25.8447 )
 
 [node name="Tree" type="StaticBody2D"]
-z_index = 1
 collision_layer = 4
 collision_mask = 0
 constant_linear_velocity = Vector2( 0, 100 )
