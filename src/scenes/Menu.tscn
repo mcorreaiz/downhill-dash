@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/awesomeness.ogg" type="AudioStream" id=2]
@@ -8,6 +8,13 @@
 [ext_resource path="res://assets/fonts/NerkoOneButtonFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://scenes/Settings.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/sprites/return.png" type="Texture" id=8]
+[ext_resource path="res://assets/fonts/Nerko_One/NerkoOne-Regular.ttf" type="DynamicFontData" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 26
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 9 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -40,8 +47,8 @@ __meta__ = {
 margin_right = 600.0
 margin_bottom = 63.0
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 6 )
-custom_colors/font_color = Color( 0.0745098, 0.172549, 0.188235, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.141176, 0.494118, 0.54902, 1 )
 text = "Crea una partida o bien únete a una ya existente"
 align = 1
 valign = 1
@@ -124,6 +131,7 @@ visible = false
 [node name="BackPanel" type="Panel" parent="."]
 anchor_right = 0.08
 anchor_bottom = 0.08
+margin_right = 36.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
