@@ -95,3 +95,7 @@ func connect_collisions(player):
 	var jump_group = get_tree().get_nodes_in_group("Jumps")
 	for jump in jump_group:
 		jump.connect("jump_exit", player, "_on_jump_exit")
+		
+func show_finish():
+	var goal_reached = load("scenes/GoalReached.tscn").instance()
+	add_child(goal_reached)

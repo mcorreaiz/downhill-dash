@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/sprites/cursor.png" type="Texture" id=4]
 [ext_resource path="res://assets/fonts/new_dynamicfont.tres" type="DynamicFont" id=5]
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=9]
 size = 96
 outline_color = Color( 1, 0, 0, 1 )
 font_data = ExtResource( 1 )
@@ -80,7 +80,7 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 96, 96, 96, 96 )
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="SpriteFrames" id=11]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 3 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 7 ), SubResource( 6 ) ],
 "loop": true,
@@ -116,10 +116,13 @@ anchor_top = 0.7
 anchor_right = 0.8
 anchor_bottom = 0.9
 rect_pivot_offset = Vector2( -320.811, 0 )
-custom_fonts/font = SubResource( 11 )
-custom_colors/font_color = Color( 0.992157, 0.313726, 0.313726, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
 text = "3
 "
 align = 1
@@ -147,5 +150,5 @@ autoplay = "Nueva Animación"
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="CenterContainer"]
 position = Vector2( 0, -50 )
-frames = SubResource( 9 )
+frames = SubResource( 11 )
 animation = "New Anim"

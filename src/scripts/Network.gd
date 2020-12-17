@@ -124,6 +124,7 @@ func update_position(id, position, frame, sprite_rotation, sprite_scale):
 	players[id].instance.on_slave_update(position, frame, sprite_rotation, sprite_scale)
 	
 func notify_finish(id, time):
+	get_tree().get_root().get_node("Game").show_finish()
 	rpc('_update_time', id, time)
 	
 sync func _update_time(id, time):
