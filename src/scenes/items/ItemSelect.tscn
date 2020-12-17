@@ -12,10 +12,10 @@
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -160.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 280.0
+margin_left = -222.663
+margin_top = 2.0
+margin_right = -2.66321
+margin_bottom = 306.0
 mouse_filter = 1
 __meta__ = {
 "_edit_group_": true,
@@ -25,21 +25,20 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 143.0
-margin_bottom = 266.0
+margin_right = 213.0
+margin_bottom = 297.0
 custom_constants/separation = 5
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 136.0
-margin_bottom = 45.0
+margin_right = 206.0
+margin_bottom = 33.0
 custom_fonts/font = ExtResource( 6 )
-text = "Add Objects
-(Drag and Drop)"
+text = "Objetos"
 
 [node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 50.0
-margin_right = 136.0
-margin_bottom = 154.0
+margin_top = 38.0
+margin_right = 206.0
+margin_bottom = 142.0
 custom_constants/hseparation = 25
 columns = 2
 
@@ -64,17 +63,17 @@ margin_right = 50.0
 margin_bottom = 104.0
 
 [node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_top = 159.0
-margin_right = 136.0
-margin_bottom = 204.0
+margin_top = 147.0
+margin_right = 206.0
+margin_bottom = 216.0
 custom_fonts/font = ExtResource( 6 )
-text = "Add/Remove Trees
-(Mode On/Off)"
+text = "Árboles
+(Agregar/Quitar)"
 
 [node name="GridContainer2" type="GridContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 209.0
-margin_right = 136.0
-margin_bottom = 259.0
+margin_top = 221.0
+margin_right = 206.0
+margin_bottom = 271.0
 custom_constants/hseparation = 25
 columns = 2
 
