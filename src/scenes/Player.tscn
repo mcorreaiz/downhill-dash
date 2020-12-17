@@ -13,7 +13,6 @@ radius = 11.0417
 height = 15.502
 
 [sub_resource type="DynamicFont" id=2]
-size = 20
 font_data = ExtResource( 5 )
 
 [sub_resource type="AtlasTexture" id=3]
@@ -111,10 +110,10 @@ position = Vector2( 0.314972, -5.66965 )
 shape = SubResource( 1 )
 
 [node name="NameLabel" type="Label" parent="."]
-margin_left = -30.0
-margin_top = -52.0
-margin_right = 32.0
-margin_bottom = -27.0
+margin_left = -19.8438
+margin_top = -43.4673
+margin_right = 20.1562
+margin_bottom = -29.4673
 custom_fonts/font = SubResource( 2 )
 align = 1
 __meta__ = {
