@@ -13,8 +13,10 @@ var track_path = ""
 var players = {}
 var times = []
 var self_data = {}
+var connected = false
 
 signal notify_lobby
+signal match_not_found
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,6 +32,7 @@ func setup_server(player_nickname, track_owner, track_name):
 	network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(network_peer)
 	network_id = get_tree().get_network_unique_id()
+	connected = true
 	
 	reset_players()
 	self_data.name = player_nickname
@@ -44,8 +47,15 @@ func connect_to_server(player_nickname):
 	
 	reset_players()
 	self_data.name = player_nickname
-
+	
+	emit_signal("notify_lobby", "Buscando...")
+	yield(get_tree().create_timer(3.0), "timeout")
+	
+	if not connected:
+		emit_signal("match_not_found")
+		
 func _connected_to_server():
+	connected = true
 	players[network_id] = self_data
 	# Send my data to the server
 	rpc_id(SERVER_ID, '_receive_player_info', network_id, self_data)
@@ -67,7 +77,8 @@ remote func _receive_player_info(id, info, track_url=track_path):
 		# Server notifies everyone of the newcomer
 		rpc('_receive_player_info', id, info, track_path)
 		
-	emit_signal("notify_lobby")
+	var names = PoolStringArray(get_player_names()).join(", ")
+	emit_signal("notify_lobby", "Jugadores en la sala: %s" % names)
 	
 	if players.size() == MAX_PLAYERS and is_server:
 		start_game()
@@ -146,6 +157,7 @@ sync func _update_time(id, time):
 func close_connections():
 	get_tree().get_network_peer().close_connection()
 	get_tree().set_network_peer(null)
+	connected = false
 	
 func reset_players():
 	players.clear()

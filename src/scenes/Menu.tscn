@@ -45,32 +45,24 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 63.0
+margin_bottom = 97.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.141176, 0.494118, 0.54902, 1 )
-text = "Crea una partida o bien únete a una ya existente"
+text = "Presiona el botón para buscar una partida en línea"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CreateButton" type="Button" parent="VBoxContainer"]
-margin_top = 67.0
-margin_right = 600.0
-margin_bottom = 130.0
-size_flags_vertical = 7
-custom_fonts/font = ExtResource( 6 )
-text = "Crea una partida"
-
-[node name="JoinButton" type="Button" parent="VBoxContainer"]
-margin_top = 134.0
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+margin_top = 101.0
 margin_right = 600.0
 margin_bottom = 199.0
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 6 )
-text = "Unete a una partida"
+text = "Juega en línea!"
 
 [node name="StartButton" type="Button" parent="."]
 visible = false
@@ -97,7 +89,8 @@ margin_left = 4.495
 margin_top = 41.9526
 margin_right = 4.495
 margin_bottom = 41.9526
-window_title = "Elige la pista"
+popup_exclusive = true
+window_title = "Elige una pista"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -146,8 +139,25 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
+
+[node name="MatchNotFoundPopup" type="AcceptDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -231.0
+margin_top = -46.0
+margin_right = 231.0
+margin_bottom = 46.0
+popup_exclusive = true
+window_title = "No se encontró una partida"
+dialog_text = "No encontramos una aprtida en línea. Crea tu propia sala, y espera a que entren tus contrincantes.
+Si lo deseas, también puedes correr solo!"
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="confirmed" from="TrackModal" to="." method="_on_TrackModal_confirmed"]
 [connection signal="nothing_selected" from="TrackModal/TrackList" to="." method="_on_TrackList_nothing_selected"]
