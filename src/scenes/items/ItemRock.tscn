@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/sprites/Rock3.png" type="Texture" id=1]
 [ext_resource path="res://scenes/items/ItemTexture.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/objects/Rock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/fonts/NerkoOneEditorItemFont.tres" type="DynamicFont" id=4]
 
 [node name="ItemRock" instance=ExtResource( 2 )]
 anchor_right = 0.0
@@ -12,7 +13,18 @@ margin_bottom = 96.0
 texture = ExtResource( 1 )
 this_scene = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="." index="0"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Esta Roca Rocosa"
+[node name="Node2D" type="Node2D" parent="." index="0"]
+z_index = 1
+
+[node name="Label" type="Label" parent="Node2D" index="0"]
+margin_left = -0.27951
+margin_top = 79.043
+margin_right = 108.72
+margin_bottom = 128.043
+custom_fonts/font = ExtResource( 4 )
+text = "Roca que
+hace tropezar"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

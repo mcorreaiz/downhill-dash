@@ -11,13 +11,13 @@ func _ready():
 	connect("gui_input", self, "_item_clicked")
 	connect("mouse_entered", self, "_on_mouse_entered")
 	connect("mouse_exited", self, "_on_mouse_exited")
-	$Label.hide()
+	$Node2D/Label.hide()
 
 func _on_mouse_entered():
-	$Label.show()
+	$Node2D/Label.show()
 	
 func _on_mouse_exited():
-	$Label.hide()
+	$Node2D/Label.hide()
 
 func _item_clicked(event):
 	if event is InputEventMouseButton:
