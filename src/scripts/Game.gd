@@ -54,7 +54,7 @@ func show_instructions():
 func _on_initial_timer_timeout():
 	seconds_timer -= 1
 	
-	var counter = instructions.get_node("Counter")
+	var counter = instructions.get_node("Panel/Counter")
 	if seconds_timer > 0:
 		counter.text = str(seconds_timer)
 	
