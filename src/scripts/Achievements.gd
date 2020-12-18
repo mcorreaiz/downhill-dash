@@ -9,7 +9,7 @@ const ACHIEVEMENTS_TEXT = {
 	rich = "Eres rico, tienes más de 500 de oro",
 	addFriend = "Añade a un amigo",
 	secret = "Secretooo...",
-	unlocked = "No está desloqueado"
+	unlocked = "Bloqueado"
 }
 
 var ach_label
