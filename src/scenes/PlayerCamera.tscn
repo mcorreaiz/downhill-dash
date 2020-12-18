@@ -2,7 +2,6 @@
 
 [node name="Camera2D" type="Camera2D"]
 current = true
-limit_left = 0
 limit_top = 0
 limit_right = 4000
 limit_smoothed = true

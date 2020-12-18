@@ -21,9 +21,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -1125.15
-margin_top = -1360.28
+margin_top = -360.28
 margin_right = 1716.85
-margin_bottom = 3300.72
+margin_bottom = 7639.72
 mouse_filter = 2
 texture = ExtResource( 3 )
 stretch_mode = 2
@@ -32,7 +32,7 @@ __meta__ = {
 }
 
 [node name="StartLine" parent="Level" instance=ExtResource( 4 )]
-position = Vector2( 284, 20.9012 )
+position = Vector2( 300, 100 )
 is_start = true
 
 [node name="EditorObject" type="Node2D" parent="."]
@@ -74,9 +74,9 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -221.0
-margin_top = 304.0
+margin_top = 258.615
 margin_right = -111.0
-margin_bottom = 359.0
+margin_bottom = 313.615
 custom_fonts/font = ExtResource( 7 )
 text = "Cargar"
 __meta__ = {
@@ -86,10 +86,10 @@ __meta__ = {
 [node name="SaveButton" type="Button" parent="ItemSelect"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -111.663
-margin_top = 303.532
-margin_right = -1.66315
-margin_bottom = 358.532
+margin_left = -114.333
+margin_top = 259.482
+margin_right = -4.33282
+margin_bottom = 314.482
 custom_fonts/font = ExtResource( 7 )
 text = "Guardar"
 __meta__ = {
@@ -119,9 +119,9 @@ anchor_top = 0.25
 anchor_right = 0.9
 anchor_bottom = 0.6
 margin_left = -31.3
-margin_top = -53.75
+margin_top = -53.7501
 margin_right = 31.3
-margin_bottom = 85.2
+margin_bottom = 85.2001
 custom_fonts/font = ExtResource( 7 )
 align = 1
 placeholder_text = "Ejemplo Pista1"
