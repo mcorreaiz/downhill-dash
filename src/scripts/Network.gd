@@ -28,6 +28,7 @@ func _ready():
 #	return network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS) == OK
 
 func setup_server(player_nickname, track_owner, track_name):
+	close_connections()
 	var network_peer = NetworkedMultiplayerENet.new()
 	network_peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(network_peer)
@@ -40,6 +41,7 @@ func setup_server(player_nickname, track_owner, track_name):
 	players[SERVER_ID] = self_data
 
 func connect_to_server(player_nickname):
+	close_connections()
 	var network_peer = NetworkedMultiplayerENet.new()
 	network_peer.create_client(DEFAULT_IP, DEFAULT_PORT)
 	get_tree().set_network_peer(network_peer)
@@ -155,7 +157,9 @@ sync func _update_time(id, time):
 		game.call_deferred("free")
 		
 func close_connections():
-	get_tree().get_network_peer().close_connection()
+	var peer = get_tree().get_network_peer()
+	if peer != null:
+		peer.close_connection()
 	get_tree().set_network_peer(null)
 	connected = false
 	
