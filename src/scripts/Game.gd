@@ -12,7 +12,9 @@ func _ready():
 	HUD.set_name("HUD")
 	add_child(HUD)
 	
+	get_tree().paused = true
 	show_instructions()
+	load_players(Network.players)
   
 func _on_player_disconnected(id):
 	players[id].instance.queue_free()
@@ -46,6 +48,7 @@ func show_instructions():
 	timer.set_wait_time( 1 )
 	add_child(timer) # to process
 	timer.set_name("timer")
+	timer.pause_mode = Node.PAUSE_MODE_PROCESS # make unaffected by pause mode
 	timer.start() # to start
 	
 func _on_initial_timer_timeout():
@@ -61,7 +64,7 @@ func _on_initial_timer_timeout():
 	if seconds_timer == -1:
 		instructions.queue_free()
 		get_node("timer").queue_free()
-		load_players(Network.players)
+		get_tree().paused = false
 	
 
 func load_players(players):
