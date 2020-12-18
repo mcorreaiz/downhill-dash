@@ -11,6 +11,7 @@ var track_owner = {
 	"Tutorial": "admin",
 	"Abyss": "admin",
 	"Etosdeur": "admin",
+	"Dash": "admin",
 }
 
 var hosting = false
