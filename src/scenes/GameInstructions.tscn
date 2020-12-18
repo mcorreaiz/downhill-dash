@@ -88,7 +88,9 @@ animations = [ {
 "speed": 3.0
 } ]
 
+
 [node name="CanvasLayer" type="CanvasLayer"]
+pause_mode = 2
 
 [node name="Panel" type="Panel" parent="."]
 anchor_left = 0.2
