@@ -65,8 +65,10 @@ func _on_notify_lobby(msg):
 func _on_match_not_found():
 	$TrackModal.popup()
 	$MatchNotFoundPopup.popup()
+	PlayButton.set_text("Juega en línea!")
 
 func _on_BackButton_pressed():
 	# Go to Base
+	Network.close_connections()
 	get_tree().change_scene("res://scenes/Base.tscn")
 	queue_free()
